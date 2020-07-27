@@ -14,4 +14,6 @@ Route::namespace('Auth')->group(function () {
     Route::post('password/reset', 'ResetPasswordController@reset')->name('password.update');
 });
 
-Route::get('/', 'IndexController')->name('index');
+Route::middleware('auth')->group(function () {
+    Route::get('/', 'IndexController')->name('index');
+});

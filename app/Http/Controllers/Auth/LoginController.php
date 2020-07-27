@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Auth\Authenticatable;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -20,7 +20,7 @@ class LoginController extends Controller
     |
     */
 
-    use Authenticatable;
+    use AuthenticatesUsers;
 
     /**
      * Where to redirect users after login.
