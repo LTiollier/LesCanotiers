@@ -85,9 +85,9 @@
                     <v-list>
                         <v-list-item>
                             <v-list-item-title>
-                                <!--                                <inertia-link :href="route('admin.admins.edit', {'admin': 'me'})">-->
-                                <!--                                    Profile-->
-                                <!--                                </inertia-link>-->
+                                <inertia-link :href="route('users.edit', {'user': 'me'})">
+                                    Profile
+                                </inertia-link>
                             </v-list-item-title>
                         </v-list-item>
                         <v-list-item>

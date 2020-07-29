@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\Http\Resources\NavigationResource;
+use App\Http\Resources\UserResource;
+use App\Services\NavigationService;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Testing\TestResponse;
@@ -18,6 +22,8 @@ class InertiaServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $menuService = app(NavigationService::class);
+
         // If you're using Laravel Mix, you can
         // use the mix-manifest.json for this.
         Inertia::version(function () {
@@ -30,10 +36,18 @@ class InertiaServiceProvider extends ServiceProvider
                     ? Session::get('errors')->getBag('default')->getMessages()
                     : (object) [];
             },
-            //'auth' => function () {
-            //    $user = auth()->user();
-            //    return $user ? AdminResource::make($admin) : null;
-            //},
+            'auth' => function () {
+                $user = auth()->user();
+                return $user ? UserResource::make($user) : null;
+            },
+            'navigation' => function () use ($menuService) {
+                return NavigationResource::collection($menuService->getNav());
+            },
+            'activeNavigation' => function () use ($menuService) {
+                /** @var \Illuminate\Routing\Route $route */
+                $route = Route::current();
+                return $menuService->getActiveKey($route->getName());
+            },
         ]);
     }
     /**

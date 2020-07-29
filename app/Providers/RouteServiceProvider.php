@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\User;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
@@ -21,7 +23,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/home';
+    public const HOME = '/';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -30,9 +32,15 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
         parent::boot();
+
+        Route::bind('user', function ($value) {
+            if ($value === "me") {
+                return Auth::guard()->user();
+            }
+
+            return User::findOrFail($value);
+        });
     }
 
     /**
@@ -46,7 +54,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        //
+        $this->mapJsonRoutes();
     }
 
     /**
@@ -76,5 +84,17 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware('api')
             ->namespace($this->namespace)
             ->group(base_path('routes/api.php'));
+    }
+
+    /**
+     * @return void
+     */
+    protected function mapJsonRoutes()
+    {
+        Route::middleware('json')
+            ->namespace($this->namespace . '\Json')
+            ->name('json.')
+            ->prefix('json/')
+            ->group(base_path('routes/json.php'));
     }
 }

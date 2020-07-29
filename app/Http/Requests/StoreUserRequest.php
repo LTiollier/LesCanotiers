@@ -1,0 +1,42 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
+class StoreUserRequest extends FormRequest
+{
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        $rules = [
+            'name' => 'required|string|max:100',
+        ];
+
+        if ($this->getMethod() == 'PUT') {
+            $rules = array_merge($rules, [
+                'password' => 'nullable|string|confirmed|min:6',
+                'email' => [
+                    'required',
+                    'email',
+                    Rule::unique('users', 'email')
+                        ->ignore($this->user->getKey(), $this->user->getKeyName()),
+                ]
+            ]);
+        }
+        if ($this->getMethod() == 'POST') {
+            $rules = array_merge($rules, [
+                'password' => 'required|string|confirmed|min:6',
+                'email' => 'required|email|unique:users,email',
+            ]);
+        }
+
+        return $rules;
+    }
+}

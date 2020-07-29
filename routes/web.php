@@ -16,4 +16,23 @@ Route::namespace('Auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/', 'IndexController')->name('index');
+
+    /**
+     * FILTERS
+     */
+    Route::prefix('filters')->name('filters.')->group(function () {
+        Route::post('/csv-export', 'FilterController@export')->name('export');
+    });
+
+    /**
+     * USERS
+     */
+    Route::prefix('users')->name('users.')->group(function () {
+        Route::get('/', 'UserController@index')->name('index');
+        Route::get('/create', 'UserController@create')->name('create');
+        Route::post('/', 'UserController@store')->name('store');
+        Route::get('/{user}/edit', 'UserController@edit')->name('edit');
+        Route::put('/{user}', 'UserController@update')->name('update');
+        Route::delete('/{user}', 'UserController@delete')->name('delete');
+    });
 });

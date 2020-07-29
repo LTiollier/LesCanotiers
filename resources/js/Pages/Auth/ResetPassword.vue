@@ -71,7 +71,7 @@ export default {
     },
     methods: {
         submit() {
-            return this.$inertia.post(route('admin.password.update'), {
+            return this.$inertia.post(route('password.update'), {
                 token: this.token,
                 email: this.email,
                 password: this.password,

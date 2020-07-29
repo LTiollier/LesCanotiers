@@ -11,10 +11,10 @@ class NavigationService
     {
         return [
             [
-                'text' => 'Index',
-                'href' => route('index'),
+                'text' => 'Utilisateurs',
+                'href' => route('users.index'),
                 'icon' => 'mdi-calendar-edit',
-                'match' => ['index'],
+                'match' => ['users.index'],
             ],
         ];
     }
