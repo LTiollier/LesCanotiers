@@ -13,8 +13,14 @@ class NavigationService
             [
                 'text' => 'Utilisateurs',
                 'href' => route('users.index'),
-                'icon' => 'mdi-calendar-edit',
+                'icon' => 'mdi-face',
                 'match' => ['users.index'],
+            ],
+            [
+                'text' => 'Fruits/Légumes',
+                'href' => route('vegetables.index'),
+                'icon' => 'mdi-food-apple',
+                'match' => ['vegetables.index'],
             ],
         ];
     }

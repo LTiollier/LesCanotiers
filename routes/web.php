@@ -15,7 +15,6 @@ Route::namespace('Auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', 'IndexController')->name('index');
 
     /**
      * FILTERS
@@ -34,5 +33,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/{user}/edit', 'UserController@edit')->name('edit');
         Route::put('/{user}', 'UserController@update')->name('update');
         Route::delete('/{user}', 'UserController@delete')->name('delete');
+    });
+
+    /**
+     * VEGETABLES
+     */
+    Route::prefix('vegetables')->name('vegetables.')->group(function () {
+        Route::get('/', 'VegetableController@index')->name('index');
+        Route::get('/create', 'VegetableController@create')->name('create');
+        Route::post('/', 'VegetableController@store')->name('store');
+        Route::get('/{vegetable}/edit', 'VegetableController@edit')->name('edit');
+        Route::put('/{vegetable}', 'VegetableController@update')->name('update');
+        Route::delete('/{vegetable}', 'VegetableController@delete')->name('delete');
     });
 });
