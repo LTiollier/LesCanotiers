@@ -10,7 +10,7 @@
         <v-row no-gutters>
             <v-col cols="12" md="6" class="pa-3">
                 <v-text-field
-                    v-model="vegetable.name"
+                    v-model="parcel.name"
                     :error-messages="nameErrors"
                     label="Nom"
                     required />
@@ -19,7 +19,7 @@
                 <v-btn class="mr-4" color="primary" type="submit">
                     <slot name="button" />
                 </v-btn>
-                <v-btn v-if="withDelete" class="mr-4" color="error" @click="$emit('deleteVegetable')">
+                <v-btn v-if="withDelete" class="mr-4" color="error" @click="$emit('deleteParcel')">
                     Supprimer
                 </v-btn>
             </v-col>
@@ -30,9 +30,9 @@
 <script>
 
 export default {
-    name: "VegetableForm",
+    name: "ParcelForm",
     props: {
-        vegetable: {
+        parcel: {
             required: true,
             type: Object
         },

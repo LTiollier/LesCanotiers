@@ -52,9 +52,6 @@
 
 export default {
     name: "UserForm",
-    validations() {
-        return this.validator;
-    },
     props: {
         user: {
             required: true,

@@ -46,4 +46,16 @@ Route::middleware('auth')->group(function () {
         Route::put('/{vegetable}', 'VegetableController@update')->name('update');
         Route::delete('/{vegetable}', 'VegetableController@delete')->name('delete');
     });
+
+    /**
+     * PARCELS
+     */
+    Route::prefix('parcels')->name('parcels.')->group(function () {
+        Route::get('/', 'ParcelController@index')->name('index');
+        Route::get('/create', 'ParcelController@create')->name('create');
+        Route::post('/', 'ParcelController@store')->name('store');
+        Route::get('/{parcel}/edit', 'ParcelController@edit')->name('edit');
+        Route::put('/{parcel}', 'ParcelController@update')->name('update');
+        Route::delete('/{parcel}', 'ParcelController@delete')->name('delete');
+    });
 });

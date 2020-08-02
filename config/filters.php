@@ -12,6 +12,7 @@ return [
     'classes' => [
         'users'    => \App\Filters\UserFilter::class,
         'vegetables' => \App\Filters\VegetableFilter::class,
+        'parcels' => \App\Filters\ParcelFilter::class,
     ],
 
     /*
@@ -25,6 +26,7 @@ return [
     'names' => [
         'users'    => 'Utilisateurs',
         'vegetables' => 'Fruits/Légumes',
+        'parcels' => 'Parcelles'
     ],
 
     /*

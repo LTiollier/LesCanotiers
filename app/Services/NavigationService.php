@@ -22,6 +22,12 @@ class NavigationService
                 'icon' => 'mdi-food-apple',
                 'match' => ['vegetables.index'],
             ],
+            [
+                'text' => 'Parcelles',
+                'href' => route('parcels.index'),
+                'icon' => 'mdi-gate',
+                'match' => ['parcels.index'],
+            ],
         ];
     }
 
