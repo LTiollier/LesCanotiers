@@ -14,19 +14,25 @@ class NavigationService
                 'text' => 'Utilisateurs',
                 'href' => route('users.index'),
                 'icon' => 'mdi-face',
-                'match' => ['users.index'],
+                'match' => ['users.index', 'users.create', 'users.edit'],
             ],
             [
                 'text' => 'Fruits/Légumes',
                 'href' => route('vegetables.index'),
                 'icon' => 'mdi-food-apple',
-                'match' => ['vegetables.index'],
+                'match' => ['vegetables.index', 'vegetables.create', 'vegetables.edit'],
             ],
             [
                 'text' => 'Parcelles',
                 'href' => route('parcels.index'),
                 'icon' => 'mdi-gate',
-                'match' => ['parcels.index'],
+                'match' => ['parcels.index', 'parcels.create', 'parcels.edit'],
+            ],
+            [
+                'text' => 'Cycles',
+                'href' => route('cycles.index'),
+                'icon' => 'mdi-autorenew',
+                'match' => ['cycles.index', 'cycles.create', 'cycles.edit'],
             ],
         ];
     }

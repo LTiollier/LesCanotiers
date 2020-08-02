@@ -58,4 +58,16 @@ Route::middleware('auth')->group(function () {
         Route::put('/{parcel}', 'ParcelController@update')->name('update');
         Route::delete('/{parcel}', 'ParcelController@delete')->name('delete');
     });
+
+    /**
+     * PARCELS
+     */
+    Route::prefix('cycles')->name('cycles.')->group(function () {
+        Route::get('/', 'CycleController@index')->name('index');
+        Route::get('/create', 'CycleController@create')->name('create');
+        Route::post('/', 'CycleController@store')->name('store');
+        Route::get('/{cycle}/edit', 'CycleController@edit')->name('edit');
+        Route::put('/{cycle}', 'CycleController@update')->name('update');
+        Route::delete('/{cycle}', 'CycleController@delete')->name('delete');
+    });
 });

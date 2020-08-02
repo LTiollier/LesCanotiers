@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Filters\Base\FilterFactory;
 use App\Http\Requests\StoreParcelRequest;
-use App\Http\Resources\VegetableResource;
+use App\Http\Resources\ParcelResource;
 use App\Models\Parcel;
 use App\Repositories\ParcelRepository;
 use Inertia\Inertia;
@@ -57,7 +57,7 @@ class ParcelController extends Controller
     public function edit(Parcel $parcel)
     {
         return Inertia::render('Parcel/ParcelEdit', [
-            'parcel' => VegetableResource::make($parcel),
+            'parcel' => ParcelResource::make($parcel),
         ]);
     }
 
