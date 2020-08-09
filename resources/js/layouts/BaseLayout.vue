@@ -100,6 +100,7 @@
             </div>
         </v-app-bar>
         <v-main>
+            <offline-dialog />
             <slot />
         </v-main>
         <snackbar />
@@ -108,10 +109,12 @@
 
 <script>
 import Snackbar from "../components/Snackbar";
+import OfflineDialog from "../components/dialogs/OfflineDialog";
 
 export default {
     name: "BaseLayout",
     components: {
+        OfflineDialog,
         Snackbar
     },
     data: () => ({

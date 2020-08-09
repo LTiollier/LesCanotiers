@@ -12,6 +12,7 @@
                         sm="8"
                         md="6">
                         <v-card class="elevation-12">
+                            <offline-dialog />
                             <slot />
                         </v-card>
                     </v-col>
@@ -22,7 +23,9 @@
 </template>
 
 <script>
+import OfflineDialog from "../components/dialogs/OfflineDialog";
 export default {
-    name: "AuthLayout"
+    name: "AuthLayout",
+    components: {OfflineDialog}
 }
 </script>

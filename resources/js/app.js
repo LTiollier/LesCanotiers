@@ -8,6 +8,7 @@ import {snackbar} from './stores/snackbar';
 import CustomMethods from './plugins/customMethods';
 
 require('./plugins/vuelidate');
+require('./plugins/vueOffline');
 
 Vue.use(InertiaApp);
 Vue.use(Vuex);

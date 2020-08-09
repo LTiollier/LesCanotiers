@@ -20,6 +20,8 @@ const sections = [
     'js',
 ];
 
+mix.copyDirectory('resources/js/service-worker', 'public/');
+
 if (sections.includes(process.env.npm_config_section)) {
     require(`${__dirname}/webpack/${process.env.npm_config_section}.webpack.mix.js`);
 
