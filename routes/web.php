@@ -15,6 +15,7 @@ Route::namespace('Auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::get('/', 'TimeController@index')->name('home');
 
     /**
      * FILTERS

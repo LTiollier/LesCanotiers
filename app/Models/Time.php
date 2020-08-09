@@ -5,31 +5,28 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Cycle extends Model
+class Time extends Model
 {
     use SoftDeletes;
 
     /** @var array<string>  */
     protected $fillable = [
-        'starts_at',
-        'ends_at',
-        'vegetable_id',
-        'parcel_id'
+        'minutes'
     ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function vegetable()
+    public function cycle()
     {
-        return $this->belongsTo(Vegetable::class);
+        return $this->belongsTo(Cycle::class);
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function parcel()
+    public function user()
     {
-        return $this->belongsTo(Parcel::class);
+        return $this->belongsTo(User::class);
     }
 }
