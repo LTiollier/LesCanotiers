@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Cycle;
 use App\Repositories\Traits\DeleteRepositoryTrait;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 
@@ -57,5 +58,17 @@ class CycleRepository
         $model->fill($parameters);
 
         return $model->save() ? $model : false;
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getFromNow(): Collection
+    {
+        $now = now();
+        return $this->model->whereDate('starts_at', '<=', $now)
+            ->whereDate('ends_at', '>=', $now)
+            ->with('vegetable', 'parcel')
+            ->get();
     }
 }

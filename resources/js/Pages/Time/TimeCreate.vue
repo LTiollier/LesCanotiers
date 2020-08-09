@@ -14,7 +14,13 @@
 import BaseLayout from "../../layouts/BaseLayout";
 export default {
     name: "TimeCreate",
-    components: {BaseLayout}
+    components: {BaseLayout},
+    props: {
+        cycles: {
+            required: true,
+            type: Array
+        }
+    }
 }
 </script>
 

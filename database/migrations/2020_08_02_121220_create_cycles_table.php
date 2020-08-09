@@ -23,6 +23,7 @@ class CreateCyclesTable extends Migration
             $table->unsignedBigInteger('parcel_id')->nullable();
             $table->foreign('parcel_id')->references('id')->on('parcels');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
