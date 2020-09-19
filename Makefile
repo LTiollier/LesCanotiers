@@ -35,7 +35,7 @@ reset:
 testing:
 	- ./vendor/bin/security-checker security:check
 	- ./vendor/bin/phpcs --report=full
-	- ./vendor/bin/phpstan analyse --memory-limit=2G
+	- ./vendor/bin/psalm
 
 # DEPENDANCES
 ## env

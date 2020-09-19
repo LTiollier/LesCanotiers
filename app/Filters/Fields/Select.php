@@ -9,9 +9,9 @@ use Illuminate\Database\Query\Builder;
 class Select extends Field implements FieldContract
 {
     /**
-     * @param array<string, string> $search
+     * @param array $search
      * @param string $columnName
-     * @return \Illuminate\Database\Query\Builder
+     * @return Builder
      */
     public function query(array $search, string $columnName): Builder
     {
@@ -20,7 +20,7 @@ class Select extends Field implements FieldContract
 
     /**
      * @param string $fieldName
-     * @return array<string, string>
+     * @return array
      */
     public static function getRules(string $fieldName): array
     {

@@ -1,32 +1,33 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use App\Models\Cycle;
 use App\Models\Parcel;
 use App\Models\Vegetable;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-/*
-|--------------------------------------------------------------------------
-| Model Factories
-|--------------------------------------------------------------------------
-|
-| This directory should contain each of the model factory definitions for
-| your application. Factories provide a convenient way to generate new
-| model instances for testing / seeding your application's database.
-|
-*/
+class CycleFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Cycle::class;
 
-$factory->define(Cycle::class, function (Faker $faker) {
-    return [
-        'starts_at' => $faker->date(),
-        'ends_at' => $faker->date(),
-        'vegetable_id' => function () {
-            return factory(Vegetable::class)->create()->getKey();
-        },
-        'parcel_id' => function () {
-            return factory(Parcel::class)->create()->getKey();
-        },
-    ];
-});
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+            'starts_at' => $this->faker->date(),
+            'ends_at' => $this->faker->date(),
+            'vegetable_id' => Vegetable::factory(),
+            'parcel_id' => Parcel::factory(),
+        ];
+    }
+}

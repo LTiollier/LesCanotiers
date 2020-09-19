@@ -26,7 +26,7 @@ class FilterRepository
 
     /**
      * @param string $filter_name
-     * @return Collection
+     * @return Collection|array
      */
     public function getByFilterName(string $filter_name)
     {

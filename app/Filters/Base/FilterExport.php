@@ -9,15 +9,15 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class FilterExport implements FromCollection, WithHeadings
 {
-    /** @var LengthAwarePaginator<mixed>|Collection<mixed> */
+    /** @var LengthAwarePaginator|Collection  */
     protected $collection;
 
     /** @var array<string> */
     protected $headers;
 
     /**
-     * @param LengthAwarePaginator<mixed>|Collection<mixed> $collection
-     * @param array<string> $headers
+     * @param $collection
+     * @param array $headers
      */
     public function __construct($collection, array $headers)
     {
@@ -26,7 +26,7 @@ class FilterExport implements FromCollection, WithHeadings
     }
 
     /**
-     * @return LengthAwarePaginator<mixed>|Collection<mixed>
+     * @return LengthAwarePaginator|Collection
      */
     public function collection()
     {
@@ -34,7 +34,7 @@ class FilterExport implements FromCollection, WithHeadings
     }
 
     /**
-     * @return array<string>
+     * @return array
      */
     public function headings(): array
     {

@@ -37,9 +37,9 @@ class Number extends Field implements FieldContract
     ];
 
     /**
-     * @param array<string, string> $search
+     * @param array $search
      * @param string $columnName
-     * @return \Illuminate\Database\Query\Builder
+     * @return Builder
      */
     public function query(array $search, string $columnName): Builder
     {

@@ -7,19 +7,15 @@ use Illuminate\Database\Query\Builder;
 interface FieldContract
 {
     /**
-     * Réalise la requête de type 'where' sur le tableau $search et la colonne $columnName
-     *
-     * @param array<string, mixed> $search
+     * @param array $search
      * @param string $columnName
-     * @return \Illuminate\Database\Query\Builder
+     * @return Builder
      */
     public function query(array $search, string $columnName): Builder;
 
     /**
-     * Retourne les règles de validation de la FormRequest
-     *
      * @param string $fieldName
-     * @return array<string, array<int, string>|string>
+     * @return array
      */
     public static function getRules(string $fieldName): array;
 }

@@ -42,7 +42,7 @@ class Date extends Field implements FieldContract
     }
 
     /**
-     * @param array<string, string>  $search
+     * @param array $search
      * @param string $columnName
      * @return Builder
      */

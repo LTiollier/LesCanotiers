@@ -13,19 +13,19 @@ class CycleSeeder extends Seeder
     public function run()
     {
         //before
-        factory(Cycle::class, 10)->create([
+        Cycle::factory()->count(2)->create([
             'starts_at' => now()->subMonth(),
             'ends_at' => now()->subDay()
         ]);
 
         //now
-        factory(Cycle::class, 10)->create([
+        Cycle::factory()->count(20)->create([
             'starts_at' => now()->subMonth(),
             'ends_at' => now()->addMonth()
         ]);
 
         //futur
-        factory(Cycle::class, 10)->create([
+        Cycle::factory()->count(10)->create([
             'starts_at' => now()->addDays(4),
             'ends_at' => now()->addMonth()
         ]);

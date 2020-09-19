@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 trait SelectRepositoryTrait
 {
     /**
-     * @return Collection
+     * @return Collection|array
      */
     public function all(): Collection
     {

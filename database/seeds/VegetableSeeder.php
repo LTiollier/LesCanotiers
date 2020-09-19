@@ -12,6 +12,6 @@ class VegetableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Vegetable::class, 10)->create();
+        Vegetable::factory()->count(10)->create();
     }
 }

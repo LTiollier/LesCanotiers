@@ -23,7 +23,7 @@ class FilterController extends Controller
 
     /**
      * @param string $filter_name
-     * @return AnonymousResourceCollection<Filter>
+     * @return AnonymousResourceCollection
      */
     public function index(string $filter_name)
     {
