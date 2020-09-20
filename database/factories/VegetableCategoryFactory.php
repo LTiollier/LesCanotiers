@@ -2,18 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Models\Vegetable;
 use App\Models\VegetableCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
-class VegetableFactory extends Factory
+class VegetableCategoryFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Vegetable::class;
+    protected $model = VegetableCategory::class;
 
     /**
      * Define the model's default state.
@@ -24,7 +24,6 @@ class VegetableFactory extends Factory
     {
         return [
             'name' => $this->faker->unique()->name,
-            'vegetable_category_id' => VegetableCategory::factory()
         ];
     }
 }

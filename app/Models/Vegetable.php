@@ -14,4 +14,12 @@ class Vegetable extends Model
     protected $fillable = [
         'name'
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function category()
+    {
+        return $this->belongsTo(VegetableCategory::class);
+    }
 }

@@ -2,90 +2,77 @@
 
 namespace App\Http\Controllers;
 
-use App\Filters\Base\FilterFactory;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Repositories\UserRepository;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Inertia\Inertia;
 
-class UserController extends Controller
+class UserController extends ResourceControllerAbstract
 {
-    /** @var \App\Repositories\UserRepository  */
-    protected $userRepository;
-
-    /**
-     * @param \App\Repositories\UserRepository $userRepository
-     */
-    public function __construct(UserRepository $userRepository)
+    protected function getRepository()
     {
-        $this->userRepository = $userRepository;
+        return app(UserRepository::class);
     }
 
     /**
-     * @return \Inertia\Response
+     * @return string
      */
-    public function index()
+    protected function getInertiaComponentTemplate(): string
     {
-        return Inertia::render('User/UserIndex', [
-            'filterConfigs' => FilterFactory::create('users')->getConfiguration()
-        ]);
+        return 'User/User';
     }
 
     /**
-     * @return \Inertia\Response
+     * @return string
      */
-    public function create()
+    protected function getSingularModelName(): string
     {
-        return Inertia::render('User/UserCreate');
+        return 'user';
     }
 
     /**
-     * @param \App\Http\Requests\StoreUserRequest $request
+     * @return string
+     */
+    protected function getStoreRequestClass(): string
+    {
+        return StoreUserRequest::class;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getModelClass(): string
+    {
+        return User::class;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getModelResourceClass(): string
+    {
+        return UserResource::class;
+    }
+
+    /**
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(StoreUserRequest $request)
+    public function delete(Request $request)
     {
-        $this->userRepository->create($request->validated());
-        return redirect()->route('users.index');
-    }
+        $modelName = $this->getSingularModelName();
+        $model = $request->$modelName;
 
-    /**
-     * @param \App\Models\User $user
-     * @return \Inertia\Response
-     */
-    public function edit(User $user)
-    {
-        return Inertia::render('User/UserEdit', [
-            'user' => UserResource::make($user),
-        ]);
-    }
+        $this->getRepository()->delete($model);
 
-    /**
-     * @param \App\Models\User $user
-     * @param \App\Http\Requests\StoreUserRequest $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function update(User $user, StoreUserRequest $request)
-    {
-        $this->userRepository->update($user, $request->validated());
-        return redirect()->route('users.index');
-    }
-
-    /**
-     * @param \App\Models\User $user
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
-     */
-    public function delete(User $user)
-    {
-        $this->userRepository->delete($user);
-        /** @var user $user */
+        /** @var User $user */
         $user = auth()->user();
         if ($user->getKey() === $user->getKey()) {
             Auth::logout();
         }
-        return redirect()->route('users.index');
+
+        return redirect()->route($this->getPluralModelName() . '.index');
     }
 }

@@ -2,84 +2,56 @@
 
 namespace App\Http\Controllers;
 
-use App\Filters\Base\FilterFactory;
 use App\Http\Requests\StoreVegetableRequest;
 use App\Http\Resources\VegetableResource;
 use App\Models\Vegetable;
 use App\Repositories\VegetableRepository;
-use Inertia\Inertia;
 
-class VegetableController extends Controller
+class VegetableController extends ResourceControllerAbstract
 {
-    /** @var \App\Repositories\VegetableRepository  */
-    protected $vegetableRepository;
 
-    /**
-     * @param \App\Repositories\VegetableRepository $vegetableRepository
-     */
-    public function __construct(VegetableRepository $vegetableRepository)
+    protected function getRepository()
     {
-        $this->vegetableRepository = $vegetableRepository;
+        return app(VegetableRepository::class);
     }
 
     /**
-     * @return \Inertia\Response
+     * @return string
      */
-    public function index()
+    protected function getInertiaComponentTemplate(): string
     {
-        return Inertia::render('Vegetable/VegetableIndex', [
-            'filterConfigs' => FilterFactory::create('vegetables')->getConfiguration()
-        ]);
+        return 'Vegetable/Vegetable';
     }
 
     /**
-     * @return \Inertia\Response
+     * @return string
      */
-    public function create()
+    protected function getSingularModelName(): string
     {
-        return Inertia::render('Vegetable/VegetableCreate');
+        return 'vegetable';
     }
 
     /**
-     * @param \App\Http\Requests\StoreVegetableRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return string
      */
-    public function store(StoreVegetableRequest $request)
+    protected function getStoreRequestClass(): string
     {
-        $this->vegetableRepository->create($request->validated());
-        return redirect()->route('vegetables.index');
+        return StoreVegetableRequest::class;
     }
 
     /**
-     * @param \App\Models\Vegetable $vegetable
-     * @return \Inertia\Response
+     * @return string
      */
-    public function edit(Vegetable $vegetable)
+    protected function getModelClass(): string
     {
-        return Inertia::render('Vegetable/VegetableEdit', [
-            'vegetable' => VegetableResource::make($vegetable),
-        ]);
+        return Vegetable::class;
     }
 
     /**
-     * @param \App\Models\Vegetable $vegetable
-     * @param \App\Http\Requests\StoreVegetableRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return string
      */
-    public function update(Vegetable $vegetable, StoreVegetableRequest $request)
+    protected function getModelResourceClass(): string
     {
-        $this->vegetableRepository->update($vegetable, $request->validated());
-        return redirect()->route('vegetables.index');
-    }
-
-    /**
-     * @param \App\Models\Vegetable $vegetable
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
-     */
-    public function delete(Vegetable $vegetable)
-    {
-        $this->vegetableRepository->delete($vegetable);
-        return redirect()->route('vegetables.index');
+       return VegetableResource::class;
     }
 }

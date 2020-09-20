@@ -2,85 +2,60 @@
 
 namespace App\Http\Controllers;
 
-use App\Filters\Base\FilterFactory;
 use App\Http\Requests\StoreCycleRequest;
 use App\Http\Resources\CycleResource;
 use App\Models\Cycle;
 use App\Repositories\CycleRepository;
-use Inertia\Inertia;
 
-class CycleController extends Controller
+class CycleController extends ResourceControllerAbstract
 {
-    /** @var \App\Repositories\CycleRepository  */
-    protected $cycleRepository;
-
     /**
-     * @param \App\Repositories\CycleRepository $cycleRepository
+     * @var array
      */
-    public function __construct(CycleRepository $cycleRepository)
+    protected $editRelations = ['vegetable', 'parcel'];
+
+    protected function getRepository()
     {
-        $this->cycleRepository = $cycleRepository;
+        return app(CycleRepository::class);
     }
 
     /**
-     * @return \Inertia\Response
+     * @return string
      */
-    public function index()
+    protected function getInertiaComponentTemplate(): string
     {
-        return Inertia::render('Cycle/CycleIndex', [
-            'filterConfigs' => FilterFactory::create('cycles')->getConfiguration()
-        ]);
+        return 'Cycle/Cycle';
     }
 
     /**
-     * @return \Inertia\Response
+     * @return string
      */
-    public function create()
+    protected function getSingularModelName(): string
     {
-        return Inertia::render('Cycle/CycleCreate');
+        return 'cycle';
     }
 
     /**
-     * @param \App\Http\Requests\StoreCycleRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return string
      */
-    public function store(StoreCycleRequest $request)
+    protected function getStoreRequestClass(): string
     {
-        $this->cycleRepository->create($request->validated());
-        return redirect()->route('cycles.index');
+        return StoreCycleRequest::class;
     }
 
     /**
-     * @param \App\Models\Cycle $cycle
-     * @return \Inertia\Response
+     * @return string
      */
-    public function edit(Cycle $cycle)
+    protected function getModelClass(): string
     {
-        $cycle->load(['vegetable', 'parcel']);
-        return Inertia::render('Cycle/CycleEdit', [
-            'cycle' => CycleResource::make($cycle),
-        ]);
+        return Cycle::class;
     }
 
     /**
-     * @param \App\Models\Cycle $cycle
-     * @param \App\Http\Requests\StoreCycleRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return string
      */
-    public function update(Cycle $cycle, StoreCycleRequest $request)
+    protected function getModelResourceClass(): string
     {
-        $this->cycleRepository->update($cycle, $request->validated());
-        return redirect()->route('cycles.index');
-    }
-
-    /**
-     * @param \App\Models\Cycle $cycle
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
-     */
-    public function delete(Cycle $cycle)
-    {
-        $this->cycleRepository->delete($cycle);
-        return redirect()->route('cycles.index');
+        return CycleResource::class;
     }
 }

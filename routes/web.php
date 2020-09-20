@@ -39,6 +39,18 @@ Route::middleware('auth')->group(function () {
     /**
      * VEGETABLES
      */
+    Route::prefix('vegetable-categories')->name('vegetableCategories.')->group(function () {
+        Route::get('/', [\App\Http\Controllers\VegetableCategoryController::class, 'index'])->name('index');
+        Route::get('/create', [\App\Http\Controllers\VegetableCategoryController::class, 'create'])->name('create');
+        Route::post('/', [\App\Http\Controllers\VegetableCategoryController::class, 'store'])->name('store');
+        Route::get('/{vegetable}/edit', [\App\Http\Controllers\VegetableCategoryController::class, 'edit'])->name('edit');
+        Route::put('/{vegetable}', [\App\Http\Controllers\VegetableCategoryController::class, 'update'])->name('update');
+        Route::delete('/{vegetable}', [\App\Http\Controllers\VegetableCategoryController::class, 'delete'])->name('delete');
+    });
+
+    /**
+     * VEGETABLES
+     */
     Route::prefix('vegetables')->name('vegetables.')->group(function () {
         Route::get('/', [\App\Http\Controllers\VegetableController::class, 'index'])->name('index');
         Route::get('/create', [\App\Http\Controllers\VegetableController::class, 'create'])->name('create');

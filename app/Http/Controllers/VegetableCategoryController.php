@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreParcelRequest;
-use App\Http\Resources\ParcelResource;
-use App\Models\Parcel;
-use App\Repositories\ParcelRepository;
+use App\Http\Requests\StoreVegetableCategoryRequest;
+use App\Http\Resources\VegetableCategoryResource;
+use App\Models\VegetableCategory;
+use App\Repositories\VegetableCategoryRepository;
 
-class ParcelController extends ResourceControllerAbstract
+class VegetableCategoryController extends ResourceControllerAbstract
 {
+
     protected function getRepository()
     {
-        return app(ParcelRepository::class);
+        return app(VegetableCategoryRepository::class);
     }
 
     /**
@@ -19,7 +20,7 @@ class ParcelController extends ResourceControllerAbstract
      */
     protected function getInertiaComponentTemplate(): string
     {
-        return 'Parcel/Parcel';
+        return 'VegetableCategory/VegetableCategory';
     }
 
     /**
@@ -27,7 +28,7 @@ class ParcelController extends ResourceControllerAbstract
      */
     protected function getSingularModelName(): string
     {
-        return 'parcel';
+        return 'vegetableCategory';
     }
 
     /**
@@ -35,7 +36,7 @@ class ParcelController extends ResourceControllerAbstract
      */
     protected function getStoreRequestClass(): string
     {
-        return StoreParcelRequest::class;
+        return StoreVegetableCategoryRequest::class;
     }
 
     /**
@@ -43,7 +44,7 @@ class ParcelController extends ResourceControllerAbstract
      */
     protected function getModelClass(): string
     {
-        return Parcel::class;
+        return VegetableCategory::class;
     }
 
     /**
@@ -51,6 +52,6 @@ class ParcelController extends ResourceControllerAbstract
      */
     protected function getModelResourceClass(): string
     {
-        return ParcelResource::class;
+        return VegetableCategoryResource::class;
     }
 }
