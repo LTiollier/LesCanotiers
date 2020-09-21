@@ -13,6 +13,15 @@ class VegetableFilter extends Filter
     public function __construct(Vegetable $model)
     {
         parent::__construct($model);
+
+        $this->setDefinition('vegetableCategory', [
+            'mutation' => [
+                'type' => 'concat'
+            ],
+            'table' => 'vegetable_categories',
+            'column_name' => 'name',
+            'join' => 'joinVegetableCategories',
+        ]);
     }
 
     /**
@@ -21,5 +30,15 @@ class VegetableFilter extends Filter
     public function getConfiguration(): array
     {
         return config('filters.vegetables');
+    }
+
+    protected function joinVegetableCategories(): void
+    {
+        $this->query->leftJoin(
+            'vegetable_categories',
+            $this->model->getTable() . '.vegetable_category_id',
+            '=',
+            'vegetable_categories.id'
+        );
     }
 }

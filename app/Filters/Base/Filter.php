@@ -45,7 +45,7 @@ abstract class Filter
 
         $this->query = DB::table($this->model->getTable());
 
-        $this->query->select($this->model->getTable() .'.'. $this->model->getKeyName());
+        $this->query->select($this->model->getTable() .'.'. $this->model->getKeyName() . ' as model_id');
 
         $this->definition = $this->getConfiguration()['filters'];
     }

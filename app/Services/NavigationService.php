@@ -17,6 +17,12 @@ class NavigationService
                 'match' => ['users.index', 'users.create', 'users.edit'],
             ],
             [
+                'text' => 'Catégories Fruits/Légumes',
+                'href' => route('vegetableCategories.index'),
+                'icon' => 'mdi-food-apple',
+                'match' => ['vegetableCategories.index', 'vegetableCategories.create', 'vegetableCategories.edit'],
+            ],
+            [
                 'text' => 'Fruits/Légumes',
                 'href' => route('vegetables.index'),
                 'icon' => 'mdi-food-apple',
