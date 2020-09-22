@@ -45,8 +45,6 @@ abstract class Filter
 
         $this->query = DB::table($this->model->getTable());
 
-        $this->query->select($this->model->getTable() .'.'. $this->model->getKeyName() . ' as model_id');
-
         $this->definition = $this->getConfiguration()['filters'];
     }
 
@@ -71,9 +69,30 @@ abstract class Filter
             ->orderBy($inputs['sortBy'] ?? null)
             ->sort($inputs['descending'] ?? false);
 
+        if (!$this->haveColumn($this->getModelKeyName())) {
+            $this->query->select($this->model->getTable() .'.'. $this->getModelKeyName());
+        }
+
         return isset($inputs['rowsPerPage']) ?
             $build->paginate($inputs['rowsPerPage']) :
             $build->get();
+    }
+
+    /**
+     * @param string $column
+     * @return bool
+     */
+    public function haveColumn(string $column): bool
+    {
+        return in_array($column, $this->columns);
+    }
+
+    /**
+     * @return string
+     */
+    public function getModelKeyName(): string
+    {
+        return $this->model->getKeyName();
     }
 
     /**

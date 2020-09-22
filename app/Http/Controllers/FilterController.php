@@ -20,11 +20,16 @@ class FilterController extends Controller
         $filter = $request->getFilter();
 
         /** @var Collection $customers */
-        $customers = $filter->apply($request->validated());
+        $models = $filter->apply($request->validated());
         $headers = $filter->getColumnsNames();
+
+        if (!$filter->haveColumn($filter->getModelKeyName())) {
+            array_unshift($headers, $filter->getModelKeyName());
+        }
+
         $fileName = $this->getFilterName($request) . '_' . Carbon::now()->format('Y-m-d');
 
-        return Excel::download(new FilterExport($customers, $headers), $fileName .'.xlsx');
+        return Excel::download(new FilterExport($models, $headers), $fileName .'.xlsx');
     }
 
     /**
