@@ -25,7 +25,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public const HOME = '/';
 
-    /**
+    /**y
      * Define your route model bindings, pattern filters, etc.
      *
      * @return void
@@ -40,6 +40,10 @@ class RouteServiceProvider extends ServiceProvider
             }
 
             return User::findOrFail($value);
+        });
+
+        Route::macro('crud', function (string $prefix, string $name, string $routeParam, string $controller) {
+            Route::resource('photos', $controller)->except(['show']);
         });
     }
 
