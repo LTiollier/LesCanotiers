@@ -12,6 +12,26 @@ class VegetableSeeder extends Seeder
      */
     public function run()
     {
-        Vegetable::factory()->count(10)->create();
+        $vegetables = [
+            'Aubergine',
+            'Betterave',
+            'Brocoli',
+            'Chou-fleur',
+            'Courgette',
+            'Carotte',
+            'Céleri',
+            'Pomme de terre',
+            'Batavia',
+            'Topinambour',
+            'Endive',
+            'Oignon',
+            'Poireau',
+            'Epinard',
+            'Fenouil'
+        ];
+
+        foreach ($vegetables as $vegetable) {
+            Vegetable::factory(['name' => $vegetable])->create();
+        }
     }
 }

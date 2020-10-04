@@ -18,6 +18,7 @@ Route::namespace('Auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [\App\Http\Controllers\TimeController::class, 'index'])->name('home');
+    Route::post('/times', [\App\Http\Controllers\TimeController::class, 'store'])->name('times.store');
 
     /**
      * FILTERS

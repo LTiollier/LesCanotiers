@@ -11,7 +11,10 @@ class Time extends Model
 
     /** @var array<string>  */
     protected $fillable = [
-        'minutes'
+        'minutes',
+        'cycle_id',
+        'activity_id',
+        'user_id',
     ];
 
     /**

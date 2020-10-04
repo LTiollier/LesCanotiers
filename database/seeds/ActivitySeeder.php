@@ -12,6 +12,15 @@ class ActivitySeeder extends Seeder
      */
     public function run()
     {
-        Activity::factory()->count(20)->create();
+        $activities = [
+            'Retourner la terre',
+            'Plantage des graînes',
+            'Arrosage',
+            'Récolte',
+        ];
+
+        foreach ($activities as $activity) {
+            Activity::factory(['name' => $activity])->create();
+        }
     }
 }

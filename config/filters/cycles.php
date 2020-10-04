@@ -4,6 +4,14 @@ return [
     'name' => 'cycles',
     'filters' => [
         [
+            'text' => 'ID',
+            'name' => 'id',
+            'active' => false,
+            'field' => [
+                'type' => 'number'
+            ],
+        ],
+        [
             'text' => 'Fruit/Légume',
             'name' => 'vegetable',
             'active' => true,

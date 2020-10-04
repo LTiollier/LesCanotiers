@@ -12,6 +12,15 @@ class ParcelSeeder extends Seeder
      */
     public function run()
     {
-        Parcel::factory()->count(10)->create();
+        $parcels = [
+            'A1',
+            'A1 Bis',
+            'B2',
+            'C4',
+        ];
+
+        foreach ($parcels as $parcel) {
+            Parcel::factory(['name' => $parcel])->create();
+        }
     }
 }
