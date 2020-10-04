@@ -22,4 +22,12 @@ class Vegetable extends Model
     {
         return $this->belongsTo(VegetableCategory::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function cycles()
+    {
+        return $this->hasMany(Cycle::class);
+    }
 }

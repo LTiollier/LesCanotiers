@@ -3,20 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\CycleResource;
+use App\Http\Resources\VegetableCategoryResource;
 use App\Repositories\CycleRepository;
+use App\Repositories\VegetableCategoryRepository;
 use Inertia\Inertia;
 
 class TimeController extends Controller
 {
-    /** @var \App\Repositories\CycleRepository  */
-    protected $cycleRepository;
+    /** @var VegetableCategoryRepository  */
+    protected $vegetableCategoryRepository;
 
     /**
-     * @param \App\Repositories\CycleRepository $cycleRepository
+     * TimeController constructor.
+     * @param VegetableCategoryRepository $vegetableCategoryRepository
      */
-    public function __construct(CycleRepository $cycleRepository)
+    public function __construct(VegetableCategoryRepository $vegetableCategoryRepository)
     {
-        $this->cycleRepository = $cycleRepository;
+        $this->vegetableCategoryRepository = $vegetableCategoryRepository;
     }
 
     /**
@@ -24,9 +27,9 @@ class TimeController extends Controller
      */
     public function index()
     {
-        $cycles = $this->cycleRepository->getFromNow();
+        $vegetableCategories = $this->vegetableCategoryRepository->getFromNow();
         return Inertia::render('Time/TimeCreate', [
-            'cycles' => CycleResource::collection($cycles)
+            'vegetableCategories' => VegetableCategoryResource::collection($vegetableCategories)
         ]);
     }
 }

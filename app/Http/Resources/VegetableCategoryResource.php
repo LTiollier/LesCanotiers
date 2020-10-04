@@ -17,6 +17,7 @@ class VegetableCategoryResource extends JsonResource
         return [
             'id' => $this->resource->getKey(),
             'name' => $this->resource->name,
+            'vegetables' => VegetableResource::collection($this->whenLoaded('vegetables'))
         ];
     }
 }

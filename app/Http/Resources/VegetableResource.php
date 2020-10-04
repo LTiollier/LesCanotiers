@@ -17,6 +17,7 @@ class VegetableResource extends JsonResource
         return [
             'id' => $this->resource->getKey(),
             'name' => $this->resource->name,
+            'cycles' => CycleResource::collection($this->whenLoaded('cycles'))
         ];
     }
 }

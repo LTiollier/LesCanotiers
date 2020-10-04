@@ -11,6 +11,12 @@ class NavigationService
     {
         return [
             [
+                'text' => 'Temps',
+                'href' => route('home'),
+                'icon' => 'mdi-clock',
+                'match' => ['home'],
+            ],
+            [
                 'text' => 'Utilisateurs',
                 'href' => route('users.index'),
                 'icon' => 'mdi-face',

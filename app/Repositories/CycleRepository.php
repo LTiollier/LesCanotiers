@@ -59,16 +59,4 @@ class CycleRepository
 
         return $model->save() ? $model : false;
     }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function getFromNow(): Collection
-    {
-        $now = now();
-        return $this->model->whereDate('starts_at', '<=', $now)
-            ->whereDate('ends_at', '>=', $now)
-            ->with('vegetable', 'parcel')
-            ->get();
-    }
 }
