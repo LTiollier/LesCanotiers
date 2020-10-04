@@ -59,6 +59,7 @@ class UserController extends ResourceControllerAbstract
     /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function delete(Request $request)
     {

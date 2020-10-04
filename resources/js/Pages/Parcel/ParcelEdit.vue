@@ -31,7 +31,7 @@ export default {
             return this.$inertia.put(this.route('parcels.update', {parcel: this.parcel.id }), this.parcel)
         },
         deleteParcel() {
-            return this.$inertia.delete(this.route('parcels.delete', {parcel: this.parcel.id}));
+            return this.$inertia.delete(this.route('parcels.destroy', {parcel: this.parcel.id}));
         }
     }
 }

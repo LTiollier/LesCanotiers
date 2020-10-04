@@ -31,7 +31,7 @@ export default {
             return this.$inertia.put(this.route('cycles.update', {cycle: this.cycle.id }), this.cycle)
         },
         deleteCycle() {
-            return this.$inertia.delete(this.route('cycles.delete', {cycle: this.cycle.id}));
+            return this.$inertia.delete(this.route('cycles.destroy', {cycle: this.cycle.id}));
         }
     }
 }

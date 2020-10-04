@@ -39,7 +39,7 @@ export default {
             return this.$inertia.put(this.route('users.update', {user: this.isAuth ? 'me' : this.user.id }), this.user)
         },
         deleteUser() {
-            return this.$inertia.delete(this.route('users.delete', {user: this.isAuth ? 'me' : this.user.id}));
+            return this.$inertia.delete(this.route('users.destroy', {user: this.isAuth ? 'me' : this.user.id}));
         }
     }
 }

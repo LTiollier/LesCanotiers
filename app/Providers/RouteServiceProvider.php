@@ -36,12 +36,24 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        Route::bind('user', function ($value) {
-            if ($value === "me") {
-                return Auth::guard()->user();
+        Route::macro('crud', function (
+            string $controller,
+            string $modelClass,
+            string $singularModel,
+            array $excepts = ['show'],
+            callable $bind = null
+        ) {
+            Route::resource(Str::plural($singularModel), $controller)->except($excepts);
+            if ($bind !== null) {
+                $bind();
+                return;
             }
 
-            return User::findOrFail($value);
+            Route::bind($singularModel, function ($value) use ($modelClass) {
+                /** @var Model $model */
+                $model = app($modelClass);
+                return $model::findOrFail($value);
+            });
         });
     }
 
@@ -53,9 +65,7 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         $this->mapApiRoutes();
-
         $this->mapWebRoutes();
-
         $this->mapJsonRoutes();
     }
 

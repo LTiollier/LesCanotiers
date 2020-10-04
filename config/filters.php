@@ -15,6 +15,7 @@ return [
         'parcels' => \App\Filters\ParcelFilter::class,
         'cycles' => \App\Filters\CycleFilter::class,
         'vegetableCategories' => \App\Filters\VegetableCategoryFilter::class,
+        'activities' => \App\Filters\ActivityFilter::class,
     ],
 
     /*
@@ -30,6 +31,7 @@ return [
         'vegetables' => 'Fruits/Légumes',
         'parcels' => 'Parcelles',
         'cycles' => 'Cycles',
+        'activities' => 'Activités',
     ],
 
     /*

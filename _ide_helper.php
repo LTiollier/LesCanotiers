@@ -11429,14 +11429,16 @@
                     /**
          * 
          *
-         * @param string $name
-         * @param string $model
          * @param string $controller
+         * @param string $modelClass
+         * @param string $singularModel
+         * @param array $excepts
+         * @param callable|null $bind
          * @static 
          */ 
-        public static function crud($name, $model, $controller)
+        public static function crud($controller, $modelClass, $singularModel, $excepts = [], $bind = null)
         {
-                        return \Illuminate\Routing\Router::crud($name, $model, $controller);
+                        return \Illuminate\Routing\Router::crud($controller, $modelClass, $singularModel, $excepts, $bind);
         }
          
     }
@@ -15143,14 +15145,16 @@
                     /**
          * 
          *
-         * @param string $name
-         * @param string $model
          * @param string $controller
+         * @param string $modelClass
+         * @param string $singularModel
+         * @param array $excepts
+         * @param callable|null $bind
          * @static 
          */ 
-        public static function crud($name, $model, $controller)
+        public static function crud($controller, $modelClass, $singularModel, $excepts = [], $bind = null)
         {
-                        return \Illuminate\Routing\Router::crud($name, $model, $controller);
+                        return \Illuminate\Routing\Router::crud($controller, $modelClass, $singularModel, $excepts, $bind);
         }
          
     }

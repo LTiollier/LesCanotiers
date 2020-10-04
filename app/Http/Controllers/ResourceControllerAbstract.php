@@ -98,11 +98,8 @@ abstract class ResourceControllerAbstract extends Controller
      */
     public function edit(Request $request)
     {
-        $modelClass = $this->getModelClass();
         $modelName = $this->getSingularModelName();
-        $model = is_integer($request->$modelName)
-            ? $modelClass::findOrFail($request->$modelName)
-            : $request->$modelName;
+        $model = $request->$modelName;
         $resourceModel = $this->getModelResourceClass();
 
         if (!empty($this->editRelations)) {
@@ -132,11 +129,10 @@ abstract class ResourceControllerAbstract extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function delete(Request $request)
+    public function destroy(Request $request)
     {
-        $modelClass = $this->getModelClass();
         $modelName = $this->getSingularModelName();
-        $model = $modelClass::findOrFail($request->$modelName);
+        $model = $request->$modelName;
 
         $this->getRepository()->delete($model);
         return redirect()->route($this->getPluralModelName() . '.index');

@@ -31,7 +31,7 @@ export default {
             return this.$inertia.put(this.route('vegetableCategories.update', {vegetableCategory: this.vegetableCategory.id }), this.vegetableCategory)
         },
         deleteVegetableCategory() {
-            return this.$inertia.delete(this.route('vegetableCategories.delete', {vegetableCategory: this.vegetableCategory.id}));
+            return this.$inertia.delete(this.route('vegetableCategories.destroy', {vegetableCategory: this.vegetableCategory.id}));
         }
     }
 }

@@ -17,6 +17,12 @@ class NavigationService
                 'match' => ['users.index', 'users.create', 'users.edit'],
             ],
             [
+                'text' => 'Activités',
+                'href' => route('activities.index'),
+                'icon' => 'mdi-face',
+                'match' => ['activities.index', 'activities.create', 'activities.edit'],
+            ],
+            [
                 'text' => 'Catégories Fruits/Légumes',
                 'href' => route('vegetableCategories.index'),
                 'icon' => 'mdi-food-apple',
