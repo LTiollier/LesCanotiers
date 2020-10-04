@@ -22,6 +22,10 @@ class CreateTimesTable extends Migration
 
             $table->unsignedBigInteger('cycle_id')->nullable();
             $table->foreign('cycle_id')->references('id')->on('cycles')->onDelete('cascade');
+
+            $table->unsignedBigInteger('activity_id')->nullable();
+            $table->foreign('activity_id')->references('id')->on('activities')->onDelete('cascade');
+
             $table->timestamps();
             $table->softDeletes();
         });

@@ -4,11 +4,19 @@ return [
     'name' => 'cycles',
     'filters' => [
         [
-            'text' => 'ID',
-            'name' => 'id',
+            'text' => 'Fruit/Légume',
+            'name' => 'vegetable',
             'active' => true,
             'field' => [
-                'type' => 'number'
+                'type' => 'text'
+            ],
+        ],
+        [
+            'text' => 'Parcelle',
+            'name' => 'parcel',
+            'active' => true,
+            'field' => [
+                'type' => 'text'
             ],
         ],
         [
@@ -25,22 +33,6 @@ return [
             'active' => true,
             'field' => [
                 'type' => 'date'
-            ],
-        ],
-        [
-            'text' => 'Fruit/Légume',
-            'name' => 'vegetable',
-            'active' => true,
-            'field' => [
-                'type' => 'text'
-            ],
-        ],
-        [
-            'text' => 'Parcelle',
-            'name' => 'parcel',
-            'active' => true,
-            'field' => [
-                'type' => 'text'
             ],
         ],
     ]
