@@ -11426,6 +11426,18 @@
         {
                         return \Illuminate\Routing\Router::whitelist($group);
         }
+                    /**
+         * 
+         *
+         * @param string $name
+         * @param string $model
+         * @param string $controller
+         * @static 
+         */ 
+        public static function crud($name, $model, $controller)
+        {
+                        return \Illuminate\Routing\Router::crud($name, $model, $controller);
+        }
          
     }
             /**
@@ -15127,6 +15139,18 @@
         public static function whitelist($group = null)
         {
                         return \Illuminate\Routing\Router::whitelist($group);
+        }
+                    /**
+         * 
+         *
+         * @param string $name
+         * @param string $model
+         * @param string $controller
+         * @static 
+         */ 
+        public static function crud($name, $model, $controller)
+        {
+                        return \Illuminate\Routing\Router::crud($name, $model, $controller);
         }
          
     }

@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -40,10 +42,6 @@ class RouteServiceProvider extends ServiceProvider
             }
 
             return User::findOrFail($value);
-        });
-
-        Route::macro('crud', function (string $prefix, string $name, string $routeParam, string $controller) {
-            Route::resource('photos', $controller)->except(['show']);
         });
     }
 

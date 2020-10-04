@@ -69,7 +69,7 @@ class UserController extends ResourceControllerAbstract
 
         /** @var User $user */
         $user = auth()->user();
-        if ($user->getKey() === $user->getKey()) {
+        if ($user->getKey() === $model->getKey()) {
             Auth::logout();
         }
 

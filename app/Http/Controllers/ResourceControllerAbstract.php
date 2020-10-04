@@ -100,7 +100,9 @@ abstract class ResourceControllerAbstract extends Controller
     {
         $modelClass = $this->getModelClass();
         $modelName = $this->getSingularModelName();
-        $model = $modelClass::findOrFail($request->$modelName);
+        $model = is_integer($request->$modelName)
+            ? $modelClass::findOrFail($request->$modelName)
+            : $request->$modelName;
         $resourceModel = $this->getModelResourceClass();
 
         if (!empty($this->editRelations)) {
