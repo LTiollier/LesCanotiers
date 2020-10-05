@@ -163,7 +163,7 @@ export default {
                 cycle: this.cycle,
                 activity: this.activity,
                 date: this.date
-            })
+            }, { preserveState: false })
         }
     }
 }
