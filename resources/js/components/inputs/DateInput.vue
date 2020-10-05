@@ -1,86 +1,80 @@
 <template>
     <v-menu
+        ref="menu"
         v-model="menu"
         :close-on-content-click="false"
         :nudge-right="40"
         transition="scale-transition"
         offset-y
+        max-width="290px"
         min-width="290px">
         <template v-slot:activator="{ on }">
             <v-text-field
-                :value="originalDate"
+                v-model="dateFormatted"
                 :label="label"
-                :clearable="clearable"
-                readonly
-                :class="{'d-inline-block': inlineBlock}"
-                :error-messages="errorMessages"
-                @click:clear="clearDate"
+                persistent-hint
+                prepend-icon="mdi-calendar"
+                @blur="date = parseDate(dateFormatted)"
                 v-on="on" />
         </template>
-        <v-date-picker v-model="date" locale="fr-fr" :min="min" @input="selectDate" />
+        <v-date-picker
+            v-model="localValue"
+            no-title
+            locale="fr-fr"
+            :min="min"
+            @input="changeValue" />
     </v-menu>
 </template>
 
 <script>
-import {formatDate} from "../../helpers/date";
-
 export default {
     name: "DateInput",
     props: {
-        originalDate: {
-            required: false,
-            type: String,
-            default: ''
-        },
         label: {
-            required: false,
             type: String,
-            default: 'Selection de la date'
+            default: 'Sélection de la date'
         },
-        errorMessages: {
-            required: false,
-            type: Array,
-            default: () => {return []}
+        value: {
+            type: String,
+            default: '',
         },
         min: {
+            type: String,
             required: false,
-            type: String,
-            default: null
-        },
-        inlineBlock: {
-            type: Boolean,
-            default: false,
-        },
-        inputFormat: {
-            type: String,
-            default: 'DD/MM/YYYY'
-        },
-        format: {
-            type: String,
-            default: 'DD/MM/YYYY'
-        },
-        clearable: {
-            type: Boolean,
-            default: true,
+            default: '',
         }
     },
     data() {
         return {
-            date: null,
-            menu: false,
+            localValue: null,
+            dateFormatted: null,
+            menu: null
         }
     },
+    watch: {
+        value() {
+            this.localValue = this.value;
+            this.dateFormatted = this.formatDate(this.value);
+        },
+    },
     mounted() {
-        this.date = formatDate(this.originalDate, 'YYYY-MM-DD', this.format);
+        this.localValue = this.value;
+        this.dateFormatted = this.formatDate(this.value);
     },
     methods: {
-        selectDate() {
-            this.menu = false;
-            this.$emit('update:originalDate', formatDate(this.date, this.format));
+        parseDate(date) {
+            if (!date) return null;
+            const [month, day, year] = date.split('/');
+            return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
         },
-        clearDate() {
-            this.date = null;
-            this.$emit('update:originalDate', null);
+        formatDate(date) {
+            if (!date) return null;
+            const [year, month, day] = date.split('-');
+            return `${day}/${month}/${year}`;
+        },
+        changeValue() {
+            this.menu = false;
+            this.$emit('input', this.localValue);
         },
     }
 }

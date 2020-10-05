@@ -17,14 +17,18 @@ Route::namespace('Auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', [\App\Http\Controllers\TimeController::class, 'index'])->name('home');
-    Route::post('/times', [\App\Http\Controllers\TimeController::class, 'store'])->name('times.store');
+    /**
+     * Times
+     */
+    Route::get('/', [\App\Http\Controllers\TimeController::class, 'create'])->name('home');
+    Route::post('times', [\App\Http\Controllers\TimeController::class, 'store'])->name('times.store');
+    Route::get('times', [\App\Http\Controllers\TimeController::class, 'index'])->name('times.index');
 
     /**
      * FILTERS
      */
     Route::prefix('filters')->name('filters.')->group(function () {
-        Route::post('/csv-export', [\App\Http\Controllers\FilterController::class, 'export'])->name('export');
+        Route::post('csv-export', [\App\Http\Controllers\FilterController::class, 'export'])->name('export');
     });
 
 

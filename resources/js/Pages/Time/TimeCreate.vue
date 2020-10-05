@@ -69,8 +69,20 @@
                             <v-select
                                 v-model="time"
                                 :items="times"
-                                label="Temps" />
-                            <v-btn v-if="time" elevation="2" color="primary" @click="submit">
+                                label="Temps"
+                                @change="step++" />
+                        </v-stepper-content>
+
+                        <v-stepper-step
+                            :editable="step > 6"
+                            :complete="step > 6"
+                            step="6">
+                            Choisir une date
+                        </v-stepper-step>
+
+                        <v-stepper-content step="6">
+                            <date-input v-model="date" input-format="YYYY-MM-DD" />
+                            <v-btn v-if="date" elevation="2" color="primary" @click="submit">
                                 Ajouter
                             </v-btn>
                         </v-stepper-content>
@@ -85,10 +97,11 @@
 import BaseLayout from "../../layouts/BaseLayout";
 import ListSelector from "../../components/ListSelector";
 import {moment} from "../../helpers/date";
+import DateInput from "../../components/inputs/DateInput";
 
 export default {
     name: "TimeCreate",
-    components: {ListSelector, BaseLayout},
+    components: {DateInput, ListSelector, BaseLayout},
     props: {
         vegetableCategories: {
             required: true,
@@ -107,6 +120,7 @@ export default {
             cycle: null,
             activity: null,
             time: null,
+            date: null,
             times: [
                 {text: '30 minutes', value: 30},
                 {text: '1 heure', value: 60},
@@ -148,6 +162,7 @@ export default {
                 minutes: this.time,
                 cycle: this.cycle,
                 activity: this.activity,
+                date: this.date
             })
         }
     }

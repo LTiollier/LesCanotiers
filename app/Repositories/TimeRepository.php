@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Time;
+use App\Models\User;
 use Illuminate\Support\Arr;
 
 class TimeRepository
@@ -18,6 +19,10 @@ class TimeRepository
         $this->model = $time;
     }
 
+    /**
+     * @param array $parameters
+     * @return mixed
+     */
     public function create(array $parameters)
     {
         if (Arr::get($parameters, 'cycle.id', null)) {

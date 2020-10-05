@@ -16,6 +16,7 @@ return [
         'cycles' => \App\Filters\CycleFilter::class,
         'vegetableCategories' => \App\Filters\VegetableCategoryFilter::class,
         'activities' => \App\Filters\ActivityFilter::class,
+        'times' => \App\Filters\TimeFilter::class,
     ],
 
     /*
@@ -32,6 +33,7 @@ return [
         'parcels' => 'Parcelles',
         'cycles' => 'Cycles',
         'activities' => 'Activités',
+        'times' => 'Temps',
     ],
 
     /*

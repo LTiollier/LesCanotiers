@@ -15,6 +15,7 @@ class StoreTimeRequest extends FormRequest
     {
         return [
             'minutes' => 'required|integer',
+            'date' => 'required|date',
             'cycle' => 'array',
             'cycle.id' => 'required|exists:cycles,id',
             'activity' => 'array',

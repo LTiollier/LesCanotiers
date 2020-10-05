@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\Base\FilterFactory;
 use App\Http\Requests\StoreTimeRequest;
 use App\Http\Resources\ActivityResource;
 use App\Http\Resources\VegetableCategoryResource;
+use App\Models\User;
 use App\Repositories\ActivityRepository;
 use App\Repositories\TimeRepository;
 use App\Repositories\VegetableCategoryRepository;
@@ -37,10 +39,17 @@ class TimeController extends Controller
         $this->timeRepository = $timeRepository;
     }
 
+    public function index()
+    {
+        return Inertia::render('Time/TimeIndex', [
+            'filterConfigs' => FilterFactory::create('times')->getConfiguration(),
+        ]);
+    }
+
     /**
      * @return \Inertia\Response
      */
-    public function index()
+    public function create()
     {
         $vegetableCategories = $this->vegetableCategoryRepository->getFromNow();
         $activities = $this->activityRepository->all();
