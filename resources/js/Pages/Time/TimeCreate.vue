@@ -120,7 +120,7 @@ export default {
             cycle: null,
             activity: null,
             time: null,
-            date: null,
+            date: moment().format("YYYY-MM-DD"),
             times: [
                 {text: '30 minutes', value: 30},
                 {text: '1 heure', value: 60},
@@ -168,7 +168,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>
