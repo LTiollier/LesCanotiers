@@ -162,7 +162,8 @@ export default {
                 minutes: this.time,
                 cycle: this.cycle,
                 activity: this.activity,
-                date: this.date
+                date: this.date,
+                user: this.$page.auth,
             }, { preserveState: false })
         }
     }

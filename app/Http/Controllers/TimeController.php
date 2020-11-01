@@ -20,6 +20,16 @@ class TimeController extends Controller
 {
     use HasIndex, HasCreate, HasStore, HasEdit, HasUpdate, HasDestroy;
 
+    /**
+     * @var array
+     */
+    protected $editRelations = [
+        'activity',
+        'user',
+        'cycle.vegetable',
+        'cycle.parcel',
+    ];
+
     /** @var VegetableCategoryRepository  */
     protected $vegetableCategoryRepository;
 

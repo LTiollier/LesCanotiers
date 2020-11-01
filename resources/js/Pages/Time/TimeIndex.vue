@@ -10,10 +10,8 @@
                 :filters="filterConfigs.filters"
                 :options="options"
                 with-filters
-                with-delete
                 create-route="home"
-                create-text="Ajouter un temps"
-                @delete="deleteTime" />
+                create-text="Ajouter un temps" />
         </v-container>
     </base-layout>
 </template>
@@ -37,13 +35,9 @@ export default {
                 filterName: this.filterConfigs.name,
                 pageName: this.filterConfigs.name,
                 itemType: 'time',
+                itemRouteName: 'times.edit',
             }
         }
     },
-    methods: {
-        deleteTime(time) {
-            return this.$inertia.delete(this.route('times.destroy', {time: time.id}));
-        }
-    }
 }
 </script>

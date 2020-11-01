@@ -20,6 +20,8 @@ class StoreTimeRequest extends FormRequest
             'cycle.id' => 'required|exists:cycles,id',
             'activity' => 'array',
             'activity.id' => 'required|exists:activities,id',
+            'user' => 'array',
+            'user.id' => 'required|exists:users,id',
         ];
     }
 }

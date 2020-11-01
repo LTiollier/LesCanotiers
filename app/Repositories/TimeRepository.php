@@ -4,11 +4,13 @@ namespace App\Repositories;
 
 use App\Models\Time;
 use App\Repositories\Traits\DeleteRepositoryTrait;
+use App\Repositories\Traits\InsertRepositoryTrait;
 use Illuminate\Support\Arr;
 
 class TimeRepository
 {
-    use DeleteRepositoryTrait;
+    use DeleteRepositoryTrait,
+        InsertRepositoryTrait;
 
     /** @var Time  */
     protected $model;
@@ -34,6 +36,7 @@ class TimeRepository
         if (Arr::get($parameters, 'activity.id', null)) {
             $parameters['activity_id'] = Arr::get($parameters, 'activity.id', null);
         }
+
 
         if (Arr::get($parameters, 'user.id', null)) {
             $parameters['user_id'] = Arr::get($parameters, 'user.id', null);

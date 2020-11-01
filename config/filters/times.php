@@ -20,6 +20,14 @@ return [
             ],
         ],
         [
+            'text' => 'Date',
+            'name' => 'date',
+            'active' => true,
+            'field' => [
+                'type' => 'date'
+            ],
+        ],
+        [
             'text' => 'Activité',
             'name' => 'activity',
             'active' => true,
