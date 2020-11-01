@@ -67,6 +67,7 @@
             </v-col>
             <v-col cols="12" :sm="tableSm" :md="tableMd">
                 <table-filterable
+                    :with-delete="withDelete"
                     :item-route-name="options.itemRouteName"
                     :item-type="options.itemType"
                     :item-key="options.itemKey"
@@ -75,7 +76,8 @@
                     :filters="usableFilters"
                     :loading="loading"
                     :paginate-options="paginateOptions"
-                    @paginate="query" />
+                    @paginate="query"
+                    @delete="$emit('delete', $event)" />
             </v-col>
         </v-row>
     </div>
@@ -124,6 +126,10 @@ export default {
         options: {
             type: Object,
             required: true,
+        },
+        withDelete: {
+            type: Boolean,
+            default: false
         }
     },
     data() {

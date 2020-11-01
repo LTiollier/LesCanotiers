@@ -10,8 +10,10 @@
                 :filters="filterConfigs.filters"
                 :options="options"
                 with-filters
+                with-delete
                 create-route="home"
-                create-text="Ajouter un temps" />
+                create-text="Ajouter un temps"
+                @delete="deleteTime" />
         </v-container>
     </base-layout>
 </template>
@@ -19,6 +21,7 @@
 <script>
 import BaseLayout from "../../layouts/BaseLayout";
 import ItemList from "../../components/filters/ItemList";
+
 export default {
     name: "TimeIndex",
     components: {ItemList, BaseLayout},
@@ -35,6 +38,11 @@ export default {
                 pageName: this.filterConfigs.name,
                 itemType: 'time',
             }
+        }
+    },
+    methods: {
+        deleteTime(time) {
+            return this.$inertia.delete(this.route('times.destroy', {time: time.id}));
         }
     }
 }

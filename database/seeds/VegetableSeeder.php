@@ -30,8 +30,13 @@ class VegetableSeeder extends Seeder
             'Fenouil'
         ];
 
+        $vegetableCategories = \App\Models\VegetableCategory::all();
+
         foreach ($vegetables as $vegetable) {
-            Vegetable::factory(['name' => $vegetable])->create();
+            Vegetable::factory([
+                'name' => $vegetable,
+                'vegetable_category_id' => $vegetableCategories->random()->getKey()
+            ])->create();
         }
     }
 }

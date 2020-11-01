@@ -17,6 +17,12 @@ class NavigationService
                 'match' => ['home'],
             ],
             [
+                'text' => 'Mes temps',
+                'href' => route('times.index'),
+                'icon' => 'mdi-clock',
+                'match' => ['times.index'],
+            ],
+            [
                 'text' => 'Utilisateurs',
                 'href' => route('users.index'),
                 'icon' => 'mdi-face',

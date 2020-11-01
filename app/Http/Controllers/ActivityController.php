@@ -2,13 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Traits\CRUD\HasCreate;
+use App\Http\Controllers\Traits\CRUD\HasDestroy;
+use App\Http\Controllers\Traits\CRUD\HasEdit;
+use App\Http\Controllers\Traits\CRUD\HasIndex;
+use App\Http\Controllers\Traits\CRUD\HasStore;
+use App\Http\Controllers\Traits\CRUD\HasUpdate;
 use App\Http\Requests\StoreActivityRequest;
 use App\Http\Resources\ActivityResource;
 use App\Models\Activity;
 use App\Repositories\ActivityRepository;
 
-class ActivityController extends ResourceControllerAbstract
+class ActivityController extends Controller
 {
+    use HasIndex, HasCreate, HasStore, HasEdit, HasUpdate, HasDestroy;
+
     protected function getRepository()
     {
         return app(ActivityRepository::class);

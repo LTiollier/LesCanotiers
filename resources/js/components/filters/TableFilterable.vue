@@ -19,7 +19,16 @@
                 <td
                     v-for="(key, i) in itemsKeys"
                     :key="i">
-                    {{ item[key] }}
+                    <template v-if="!(withDelete && i === itemsKeys.length - 1)">
+                        {{ item[key] }}
+                    </template>
+                    <template v-else>
+                        <v-icon
+                            small
+                            @click="$emit('delete', item)">
+                            mdi-delete
+                        </v-icon>
+                    </template>
                 </td>
             </tr>
         </template>
@@ -66,6 +75,10 @@ export default {
         itemKey: {
             type: String,
             default: '',
+        },
+        withDelete: {
+            type: Boolean,
+            default: false
         }
     },
     data () {
@@ -81,10 +94,14 @@ export default {
     },
     computed: {
         headers() {
-            return map(filter(cloneDeep(this.filters), {active: true}), (item) => {
+            let headers= map(filter(cloneDeep(this.filters), {active: true}), (item) => {
                 item.value = item.name;
                 return item;
             });
+            if (this.withDelete) {
+                headers.push({ text: 'Actions', value: 'actions', sortable: false })
+            }
+            return headers;
         },
         itemsKeys() {
             return map(this.headers, (header) => {

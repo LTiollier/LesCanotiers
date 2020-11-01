@@ -2,13 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Traits\CRUD\HasCreate;
+use App\Http\Controllers\Traits\CRUD\HasDestroy;
+use App\Http\Controllers\Traits\CRUD\HasEdit;
+use App\Http\Controllers\Traits\CRUD\HasIndex;
+use App\Http\Controllers\Traits\CRUD\HasStore;
+use App\Http\Controllers\Traits\CRUD\HasUpdate;
 use App\Http\Requests\StoreCycleRequest;
 use App\Http\Resources\CycleResource;
 use App\Models\Cycle;
 use App\Repositories\CycleRepository;
 
-class CycleController extends ResourceControllerAbstract
+class CycleController extends Controller
 {
+    use HasIndex, HasCreate, HasStore, HasEdit, HasUpdate, HasDestroy;
+
     /**
      * @var array
      */

@@ -2,13 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Traits\CRUD\HasCreate;
+use App\Http\Controllers\Traits\CRUD\HasDestroy;
+use App\Http\Controllers\Traits\CRUD\HasEdit;
+use App\Http\Controllers\Traits\CRUD\HasIndex;
+use App\Http\Controllers\Traits\CRUD\HasStore;
+use App\Http\Controllers\Traits\CRUD\HasUpdate;
 use App\Http\Requests\StoreVegetableRequest;
 use App\Http\Resources\VegetableResource;
 use App\Models\Vegetable;
 use App\Repositories\VegetableRepository;
 
-class VegetableController extends ResourceControllerAbstract
+class VegetableController extends Controller
 {
+    use HasIndex, HasCreate, HasStore, HasEdit, HasUpdate, HasDestroy;
 
     protected function getRepository()
     {
@@ -52,6 +59,6 @@ class VegetableController extends ResourceControllerAbstract
      */
     protected function getModelResourceClass(): string
     {
-       return VegetableResource::class;
+        return VegetableResource::class;
     }
 }

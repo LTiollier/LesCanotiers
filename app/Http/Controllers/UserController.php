@@ -2,15 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Traits\CRUD\HasCreate;
+use App\Http\Controllers\Traits\CRUD\HasEdit;
+use App\Http\Controllers\Traits\CRUD\HasIndex;
+use App\Http\Controllers\Traits\CRUD\HasStore;
+use App\Http\Controllers\Traits\CRUD\HasUpdate;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
-class UserController extends ResourceControllerAbstract
+class UserController extends Controller
 {
+    use HasIndex, HasCreate, HasStore, HasEdit, HasUpdate;
+
     protected function getRepository()
     {
         return app(UserRepository::class);
@@ -74,6 +82,6 @@ class UserController extends ResourceControllerAbstract
             Auth::logout();
         }
 
-        return redirect()->route($this->getPluralModelName() . '.index');
+        return redirect()->route(Str::plural($this->getSingularModelName()) . '.index');
     }
 }

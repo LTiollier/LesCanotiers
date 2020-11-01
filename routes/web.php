@@ -17,12 +17,6 @@ Route::namespace('Auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    /**
-     * Times
-     */
-    Route::get('/', [\App\Http\Controllers\TimeController::class, 'create'])->name('home');
-    Route::post('times', [\App\Http\Controllers\TimeController::class, 'store'])->name('times.store');
-    Route::get('times', [\App\Http\Controllers\TimeController::class, 'index'])->name('times.index');
 
     /**
      * FILTERS
@@ -49,4 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::crud('ParcelController', \App\Models\Parcel::class, 'parcel');
     Route::crud('CycleController', \App\Models\Cycle::class, 'cycle');
     Route::crud('ActivityController', \App\Models\Activity::class, 'activity');
+    Route::crud('TimeController', \App\Models\Time::class, 'time');
+
+    Route::redirect('/', route('times.create'))->name('home');
 });

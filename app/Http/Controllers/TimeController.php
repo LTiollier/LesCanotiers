@@ -2,73 +2,86 @@
 
 namespace App\Http\Controllers;
 
-use App\Filters\Base\FilterFactory;
+use App\Http\Controllers\Traits\CRUD\HasCreate;
+use App\Http\Controllers\Traits\CRUD\HasDestroy;
+use App\Http\Controllers\Traits\CRUD\HasEdit;
+use App\Http\Controllers\Traits\CRUD\HasIndex;
+use App\Http\Controllers\Traits\CRUD\HasStore;
+use App\Http\Controllers\Traits\CRUD\HasUpdate;
 use App\Http\Requests\StoreTimeRequest;
 use App\Http\Resources\ActivityResource;
+use App\Http\Resources\TimeResource;
 use App\Http\Resources\VegetableCategoryResource;
-use App\Models\User;
 use App\Repositories\ActivityRepository;
 use App\Repositories\TimeRepository;
 use App\Repositories\VegetableCategoryRepository;
-use Inertia\Inertia;
 
 class TimeController extends Controller
 {
+    use HasIndex, HasCreate, HasStore, HasEdit, HasUpdate, HasDestroy;
+
     /** @var VegetableCategoryRepository  */
     protected $vegetableCategoryRepository;
 
     /** @var ActivityRepository  */
     protected $activityRepository;
 
-    /** @var TimeRepository  */
-    protected $timeRepository;
-
-    /**
-     * TimeController constructor.
-     * @param VegetableCategoryRepository $vegetableCategoryRepository
-     * @param ActivityRepository $activityRepository
-     * @param TimeRepository $timeRepository
-     */
     public function __construct(
         VegetableCategoryRepository $vegetableCategoryRepository,
-        ActivityRepository $activityRepository,
-        TimeRepository $timeRepository
+        ActivityRepository $activityRepository
     ) {
         $this->vegetableCategoryRepository = $vegetableCategoryRepository;
         $this->activityRepository = $activityRepository;
-        $this->timeRepository = $timeRepository;
-    }
-
-    public function index()
-    {
-        return Inertia::render('Time/TimeIndex', [
-            'filterConfigs' => FilterFactory::create('times')->getConfiguration(),
-        ]);
     }
 
     /**
-     * @return \Inertia\Response
+     * @return array
      */
-    public function create()
+    protected function additionalProps(): array
     {
         $vegetableCategories = $this->vegetableCategoryRepository->getFromNow();
         $activities = $this->activityRepository->all();
 
-        return Inertia::render('Time/TimeCreate', [
+        return [
             'vegetableCategories' => VegetableCategoryResource::collection($vegetableCategories),
             'activities' => ActivityResource::collection($activities)
-        ]);
+        ];
     }
 
     /**
-     * @param StoreTimeRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return string
      */
-    public function store(StoreTimeRequest $request)
+    protected function getModelResourceClass(): string
     {
-        $data = $request->validated();
-        $data['user'] = auth()->user();
-        $this->timeRepository->create($data);
-        return redirect()->route('home');
+        return TimeResource::class;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getSingularModelName(): string
+    {
+        return 'time';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getInertiaComponentTemplate(): string
+    {
+        return 'Time/Time';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getStoreRequestClass(): string
+    {
+        return StoreTimeRequest::class;
+    }
+
+    protected function getRepository()
+    {
+        return app(TimeRepository::class);
     }
 }
