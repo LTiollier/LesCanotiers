@@ -31,6 +31,6 @@ trait HasStore
         $request = app($this->getStoreRequestClass());
 
         $this->getRepository()->create($request->validated());
-        return redirect()->route('admin.' . Str::plural($this->getSingularModelName()) . '.index');
+        return redirect()->route(Str::plural($this->getSingularModelName()) . '.index');
     }
 }

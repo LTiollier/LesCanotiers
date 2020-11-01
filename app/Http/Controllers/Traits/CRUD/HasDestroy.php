@@ -27,6 +27,6 @@ trait HasDestroy
         $model = $request->$modelName;
 
         $this->getRepository()->delete($model);
-        return redirect()->route('admin.' . Str::plural($this->getSingularModelName()) . '.index');
+        return redirect()->route(Str::plural($this->getSingularModelName()) . '.index');
     }
 }

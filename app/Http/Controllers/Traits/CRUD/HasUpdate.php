@@ -33,6 +33,6 @@ trait HasUpdate
         $model = $request->$modelName;
 
         $this->getRepository()->update($model, $request->validated());
-        return redirect()->route('admin.' . Str::plural($this->getSingularModelName()) . '.index');
+        return redirect()->route(Str::plural($this->getSingularModelName()) . '.index');
     }
 }

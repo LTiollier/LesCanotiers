@@ -3,11 +3,13 @@
 namespace App\Repositories;
 
 use App\Models\Time;
-use App\Models\User;
+use App\Repositories\Traits\DeleteRepositoryTrait;
 use Illuminate\Support\Arr;
 
 class TimeRepository
 {
+    use DeleteRepositoryTrait;
+
     /** @var Time  */
     protected $model;
 
