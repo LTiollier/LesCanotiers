@@ -61,7 +61,7 @@
             <v-toolbar-title
                 style="width: 300px"
                 class="ml-0 pl-4">
-                <span class="hidden-sm-and-down">Les Cannotiers</span>
+                <span class="hidden-sm-and-down">Les Canotiers</span>
             </v-toolbar-title>
             <v-spacer />
             <div class="text-center">
