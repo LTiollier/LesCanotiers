@@ -15,6 +15,9 @@
                     label="Nom"
                     required />
             </v-col>
+            <v-col cols="12" md="6" class="pa-3">
+                <select-vegetable-category :original-value.sync="vegetable.vegetable_category" :error-messages="vegetableCategoryErrors" />
+            </v-col>
             <v-col cols="12">
                 <v-btn class="mr-4" color="primary" type="submit">
                     <slot name="button" />
@@ -29,8 +32,10 @@
 
 <script>
 
+import SelectVegetableCategory from "../inputs/selects/SelectVegetableCategory";
 export default {
     name: "VegetableForm",
+    components: {SelectVegetableCategory},
     props: {
         vegetable: {
             required: true,
@@ -46,6 +51,9 @@ export default {
         nameErrors () {
             return this.$serverErrors('name');
         },
+        vegetableCategoryErrors() {
+            return this.$serverErrors('vegetable_category');
+        }
     },
     methods: {
         submit () {

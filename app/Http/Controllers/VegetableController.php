@@ -17,6 +17,11 @@ class VegetableController extends Controller
 {
     use HasIndex, HasCreate, HasStore, HasEdit, HasUpdate, HasDestroy;
 
+    /**
+     * @var string[]
+     */
+    protected $editRelations = ['vegetableCategory'];
+
     protected function getRepository()
     {
         return app(VegetableRepository::class);

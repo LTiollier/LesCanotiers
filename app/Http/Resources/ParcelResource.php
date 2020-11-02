@@ -2,10 +2,14 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Parcel;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ParcelResource extends JsonResource
 {
+    /** @var Parcel */
+    public $resource;
+
     /**
      * Transform the resource into an array.
      *

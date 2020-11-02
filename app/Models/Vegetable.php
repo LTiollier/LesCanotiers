@@ -12,13 +12,13 @@ class Vegetable extends Model
 
     /** @var array<string> */
     protected $fillable = [
-        'name'
+        'name', 'vegetable_category_id'
     ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function category()
+    public function vegetableCategory()
     {
         return $this->belongsTo(VegetableCategory::class);
     }

@@ -2,10 +2,14 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Cycle;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CycleResource extends JsonResource
 {
+    /** @var Cycle */
+    public $resource;
+
     /**
      * Transform the resource into an array.
      *

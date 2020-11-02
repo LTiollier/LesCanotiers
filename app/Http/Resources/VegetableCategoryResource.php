@@ -2,10 +2,14 @@
 
 namespace App\Http\Resources;
 
+use App\Models\VegetableCategory;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class VegetableCategoryResource extends JsonResource
 {
+    /** @var VegetableCategory */
+    public $resource;
+
     /**
      * Transform the resource into an array.
      *
