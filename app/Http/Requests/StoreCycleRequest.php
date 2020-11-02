@@ -15,7 +15,7 @@ class StoreCycleRequest extends FormRequest
     {
         return [
             'starts_at' => 'required|date',
-            'ends_at' => 'required|date',
+            'ends_at' => 'nullable|date',
             'vegetable' => 'array',
             'vegetable.id' => 'required|exists:vegetables,id',
             'parcel' => 'array',

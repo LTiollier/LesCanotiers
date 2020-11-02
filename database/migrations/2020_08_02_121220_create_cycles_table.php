@@ -16,7 +16,7 @@ class CreateCyclesTable extends Migration
         Schema::create('cycles', function (Blueprint $table) {
             $table->id();
             $table->date('starts_at');
-            $table->date('ends_at');
+            $table->date('ends_at')->nullable();
 
             $table->unsignedBigInteger('vegetable_id')->nullable();
             $table->foreign('vegetable_id')->references('id')->on('vegetables');

@@ -14,6 +14,9 @@
                 :label="label"
                 persistent-hint
                 prepend-icon="mdi-calendar"
+                :error-messages="errorMessages"
+                clearable
+                @click:clear="clear"
                 @blur="date = parseDate(dateFormatted)"
                 v-on="on" />
         </template>
@@ -42,6 +45,11 @@ export default {
             type: String,
             required: false,
             default: '',
+        },
+        errorMessages: {
+            type: Array,
+            required: false,
+            default: () => { return []; }
         }
     },
     data() {
@@ -76,6 +84,10 @@ export default {
             this.menu = false;
             this.$emit('input', this.localValue);
         },
+        clear() {
+            this.localValue = null;
+            this.$emit('input', this.localValue);
+        }
     }
 }
 </script>
