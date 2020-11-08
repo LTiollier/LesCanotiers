@@ -17,6 +17,7 @@ class CreateTimesTable extends Migration
             $table->id();
             $table->integer('minutes');
             $table->date('date');
+            $table->integer('quantity')->nullable();
 
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');

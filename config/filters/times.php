@@ -28,6 +28,14 @@ return [
             ],
         ],
         [
+            'text' => 'Quantité',
+            'name' => 'quantity',
+            'active' => true,
+            'field' => [
+                'type' => 'number'
+            ],
+        ],
+        [
             'text' => 'Activité',
             'name' => 'activity',
             'active' => true,

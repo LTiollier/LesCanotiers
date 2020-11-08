@@ -27,6 +27,12 @@
                     disabled />
             </v-col>
             <v-col cols="12" md="6" class="pa-3">
+                <v-text-field
+                    v-model="time.quantity"
+                    type="number"
+                    label="Quantité" />
+            </v-col>
+            <v-col cols="12" md="6" class="pa-3">
                 <date-input
                     v-model="time.date"
                     :error-messages="dateErrors"

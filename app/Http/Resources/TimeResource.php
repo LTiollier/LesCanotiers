@@ -22,6 +22,7 @@ class TimeResource extends JsonResource
             'id' => $this->resource->getKey(),
             'date'  => $this->resource->date,
             'minutes'  => $this->resource->minutes,
+            'quantity' => $this->resource->quantity,
             'cycle'  => CycleResource::make($this->whenLoaded('cycle')),
             'activity'  => ActivityResource::make($this->whenLoaded('activity')),
             'user'  => UserResource::make($this->whenLoaded('user')),

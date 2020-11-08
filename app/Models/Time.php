@@ -13,6 +13,7 @@ class Time extends Model
     protected $fillable = [
         'date',
         'minutes',
+        'quantity',
         'cycle_id',
         'activity_id',
         'user_id',

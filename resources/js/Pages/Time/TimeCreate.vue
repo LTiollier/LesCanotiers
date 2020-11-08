@@ -77,10 +77,24 @@
                             :editable="step > 6"
                             :complete="step > 6"
                             step="6">
-                            Choisir une date
+                            Rentrer la quantité récolté
                         </v-stepper-step>
 
                         <v-stepper-content step="6">
+                            <v-text-field
+                                v-model="quantity"
+                                label="Quantité (Kg)"
+                                @change="step++" />
+                        </v-stepper-content>
+
+                        <v-stepper-step
+                            :editable="step > 7"
+                            :complete="step > 7"
+                            step="7">
+                            Choisir une date
+                        </v-stepper-step>
+
+                        <v-stepper-content step="7">
                             <date-input v-model="date" input-format="YYYY-MM-DD" />
                             <v-btn v-if="date" elevation="2" color="primary" @click="submit">
                                 Ajouter
@@ -120,6 +134,7 @@ export default {
             cycle: null,
             activity: null,
             time: null,
+            quantity: null,
             date: moment().format("YYYY-MM-DD"),
             times: [
                 {text: '30 minutes', value: 30},
@@ -163,6 +178,7 @@ export default {
                 cycle: this.cycle,
                 activity: this.activity,
                 date: this.date,
+                quantity: this.quantity,
                 user: this.$page.auth,
             }, { preserveState: false })
         }
