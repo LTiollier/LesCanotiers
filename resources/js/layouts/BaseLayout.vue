@@ -68,18 +68,9 @@
                 <v-menu offset-y>
                     <template v-slot:activator="{ on }">
                         <v-btn
-                            fab
-                            small
-                            color="white"
-                            elevation="0"
+                            icon
                             v-on="on">
-                            <v-avatar
-                                size="32px"
-                                item>
-                                <v-img
-                                    src="/images/logo_icon.svg"
-                                    alt="Pollen BO" />
-                            </v-avatar>
+                            <v-icon>mdi-dots-vertical</v-icon>
                         </v-btn>
                     </template>
                     <v-list>

@@ -7,9 +7,7 @@
                 </v-col>
             </v-row>
             <v-row>
-                <v-data-table
-                    :items-per-page="5"
-                    class="elevation-1" />
+                <cycles-report :cycles="cycles" />
             </v-row>
         </v-container>
     </base-layout>
@@ -17,10 +15,11 @@
 
 <script>
 import BaseLayout from "../../layouts/BaseLayout";
+import CyclesReport from "../../components/CyclesReport";
 
 export default {
     name: "ReportIndex",
-    components: {BaseLayout},
+    components: {CyclesReport, BaseLayout},
     props: {
         cycles: {
             type: Array,
