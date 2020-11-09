@@ -58,6 +58,12 @@ class NavigationService
                 'icon' => 'mdi-autorenew',
                 'match' => ['cycles.index', 'cycles.create', 'cycles.edit'],
             ],
+            [
+                'text' => 'Compte rendu',
+                'href' => route('report'),
+                'icon' => 'mdi-autorenew',
+                'match' => ['report'],
+            ]
         ];
     }
 

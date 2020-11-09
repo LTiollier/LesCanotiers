@@ -9,6 +9,8 @@
                     Enregistrer
                 </template>
             </cycle-form>
+
+            <cycle-report :cycle="cycle" class="mt-6" />
         </v-container>
     </base-layout>
 </template>
@@ -16,10 +18,11 @@
 <script>
 import BaseLayout from "../../layouts/BaseLayout";
 import CycleForm from "../../components/forms/CycleForm";
+import CycleReport from "../../components/CycleReport";
 
 export default {
     name: "CycleEdit",
-    components: {CycleForm, BaseLayout},
+    components: {CycleReport, CycleForm, BaseLayout},
     props: {
         cycle: {
             required: true,

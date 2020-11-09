@@ -46,4 +46,6 @@ Route::middleware('auth')->group(function () {
     Route::crud('TimeController', \App\Models\Time::class, 'time');
 
     Route::redirect('/', route('times.create'))->name('home');
+
+    Route::get('/report', [\App\Http\Controllers\ReportController::class, 'index'])->name('report');
 });

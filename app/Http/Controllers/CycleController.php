@@ -20,7 +20,7 @@ class CycleController extends Controller
     /**
      * @var array
      */
-    protected $editRelations = ['vegetable', 'parcel'];
+    protected $editRelations = ['vegetable', 'parcel', 'times.activity'];
 
     protected function getRepository()
     {

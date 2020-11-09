@@ -33,4 +33,12 @@ class Cycle extends Model
     {
         return $this->belongsTo(Parcel::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function times()
+    {
+        return $this->hasMany(Time::class);
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Cycle;
 use App\Repositories\Traits\DeleteRepositoryTrait;
+use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
@@ -58,5 +59,19 @@ class CycleRepository
         $model->fill($parameters);
 
         return $model->save() ? $model : false;
+    }
+
+    /**
+     * @param CarbonImmutable $start
+     * @param CarbonImmutable $end
+     * @return Collection
+     */
+    public function getCycleFromInterval(CarbonImmutable $start, CarbonImmutable $end): Collection
+    {
+        return $this->model
+            ->with(['vegetable', 'times.activity'])
+            ->whereDate('starts_at', '<=', $start)
+            ->whereDate('ends_at', '>=', $end)
+            ->get();
     }
 }

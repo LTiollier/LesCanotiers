@@ -24,6 +24,7 @@ class CycleResource extends JsonResource
             'ends_at' => $this->resource->ends_at,
             'vegetable' => VegetableResource::make($this->whenLoaded('vegetable')),
             'parcel' => ParcelResource::make($this->whenLoaded('parcel')),
+            'times' => TimeResource::collection($this->whenLoaded('times')),
         ];
     }
 }
