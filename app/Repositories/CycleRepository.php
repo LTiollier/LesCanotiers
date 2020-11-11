@@ -70,8 +70,8 @@ class CycleRepository
     {
         return $this->model
             ->with(['vegetable', 'times.activity'])
-            ->whereDate('starts_at', '<=', $start)
-            ->whereDate('ends_at', '>=', $end)
+            ->whereDate('starts_at', '>=', $start)
+            ->whereDate('ends_at', '<=', $end)
             ->get();
     }
 }

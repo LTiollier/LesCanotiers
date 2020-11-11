@@ -18,16 +18,16 @@
                     </thead>
                     <tbody>
                         <tr
-                            v-for="cycle in activitiesByCycle"
-                            :key="cycle.id"
+                            v-for="vegetable in activitiesByVegetable"
+                            :key="vegetable.id"
                             class="text-left">
                             <td>
-                                {{ cycle.vegetable.name }}
+                                {{ vegetable.name }}
                             </td>
                             <td
-                                v-for="activity in activities"
+                                v-for="activity in vegetable.activities"
                                 :key="activity.id">
-                                {{ timeConvert(cycle.activities[activity.id].times) }}
+                                {{ timeConvert(activity.times) }}
                             </td>
                         </tr>
                     </tbody>
@@ -68,33 +68,24 @@ export default {
 
             return activities;
         },
-        activitiesByCycle() {
-            let cycles = [];
+        activitiesByVegetable() {
+            let vegetables = {};
             forEach(this.cycles, (cycle) => {
-                let cycleWithTotalTimes = cloneDeep(cycle);
-                cycleWithTotalTimes.activities = cloneDeep(this.activities);
-
-                if (!cycle.times.length) {
-                    return cycleWithTotalTimes;
-                }
-
                 forEach(cycle.times, (time) => {
                     if (
-                        !cycleWithTotalTimes.activities[time.activity.id].times
-                        && cycleWithTotalTimes.activities[time.activity.id].times !== 0
+                        Object.keys(vegetables).length === 0
+                        || !vegetables[cycle.vegetable.id]
                     ) {
-                        cycleWithTotalTimes.activities[time.activity.id].times = time.minutes;
-                        return;
+                        vegetables[cycle.vegetable.id] = cloneDeep(cycle.vegetable);
+                        vegetables[cycle.vegetable.id].activities = cloneDeep(this.activities);
                     }
 
-                    cycleWithTotalTimes.activities[time.activity.id].times += time.minutes;
+                    vegetables[cycle.vegetable.id].activities[time.activity.id].times += time.minutes;
                 });
-
-                cycles.push(cycleWithTotalTimes);
             });
 
-            return cycles;
-        }
+            return vegetables;
+        },
     },
     methods: {
         timeConvert(totalMinutes) {

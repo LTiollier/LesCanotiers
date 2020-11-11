@@ -1,6 +1,14 @@
 <template>
     <v-card>
-        <v-card-title>Compte rendu du cycle</v-card-title>
+        <v-card-title>
+            Compte rendu du cycle
+            <v-spacer />
+            <a :href="route('cycles.report', {cycle: cycle.id})" target="_blank">
+                <v-btn color="green">
+                    Exporter
+                </v-btn>
+            </a>
+        </v-card-title>
         <v-card-text>
             <v-simple-table>
                 <template v-slot:default>
@@ -71,9 +79,9 @@ export default {
             let flooredHours = Math.floor(hours);
             let minutes = (hours - flooredHours) * 60;
             let roundedMinutes = Math.round(minutes);
-            
+
             return roundedMinutes ? flooredHours + "H" + roundedMinutes : flooredHours + "H";
-        }
+        },
     }
 }
 </script>

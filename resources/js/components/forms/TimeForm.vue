@@ -83,7 +83,7 @@ export default {
                 {text: '1 heure 30 minutes', value: 90},
                 {text: '2 heures', value: 120},
                 {text: '2 heures 30 minutes', value: 150},
-                {text: '2 heures', value: 180},
+                {text: '3 heures', value: 180},
                 {text: '3 heures 30 minutes', value: 210},
                 {text: '4 heures', value: 240},
                 {text: '4 heures 30 minutes', value: 270},

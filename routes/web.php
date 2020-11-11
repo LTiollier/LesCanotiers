@@ -38,6 +38,10 @@ Route::middleware('auth')->group(function () {
         });
     });
 
+    Route::get('/report/export/{startsAt?}/{endsAt?}', [\App\Http\Controllers\ReportController::class, 'exportCycles'])->name('cycles.report.export');
+    Route::get('/cycles/{cycle}/export', [\App\Http\Controllers\ReportController::class, 'exportCycle'])->name('cycles.report');
+    Route::get('/report/{startsAt?}/{endsAt?}', [\App\Http\Controllers\ReportController::class, 'index'])->name('report');
+
     Route::crud('VegetableCategoryController', \App\Models\VegetableCategory::class, 'vegetableCategory');
     Route::crud('VegetableController', \App\Models\Vegetable::class, 'vegetable');
     Route::crud('ParcelController', \App\Models\Parcel::class, 'parcel');
@@ -46,6 +50,4 @@ Route::middleware('auth')->group(function () {
     Route::crud('TimeController', \App\Models\Time::class, 'time');
 
     Route::redirect('/', route('times.create'))->name('home');
-
-    Route::get('/report', [\App\Http\Controllers\ReportController::class, 'index'])->name('report');
 });
