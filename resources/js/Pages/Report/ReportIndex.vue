@@ -8,10 +8,10 @@
             </v-row>
             <v-row>
                 <v-col cols="6" md="4">
-                    <date-input v-model="date.endsAt" label="Fin le" @change="submit" />
+                    <date-input v-model="date.startsAt" label="Fin le" @change="submit" />
                 </v-col>
                 <v-col cols="6" md="4">
-                    <date-input v-model="date.startsAt" label="À partir de" @change="submit" />
+                    <date-input v-model="date.endsAt" label="À partir de" @change="submit" />
                 </v-col>
                 <v-col cols="6" md="2">
                     <v-btn color="primary" @click="submit">
@@ -27,7 +27,7 @@
                 </v-col>
             </v-row>
             <v-row class="text-center">
-                <cycles-report :cycles="cycles" />
+                <cycles-report :cycles-report="cyclesReport" />
             </v-row>
         </v-container>
     </base-layout>
@@ -42,8 +42,8 @@ export default {
     name: "ReportIndex",
     components: {DateInput, CyclesReport, BaseLayout},
     props: {
-        cycles: {
-            type: Array,
+        cyclesReport: {
+            type: Object,
             required: true
         },
         startsAt: {

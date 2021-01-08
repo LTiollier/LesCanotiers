@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Exports\CycleExport;
 use App\Exports\CyclesExport;
-use App\Http\Resources\CycleResource;
 use App\Models\Cycle;
 use App\Repositories\CycleRepository;
+use App\Services\ReportService;
 use Carbon\CarbonImmutable;
 use Inertia\Inertia;
 use Maatwebsite\Excel\Facades\Excel;
@@ -17,13 +17,20 @@ class ReportController extends Controller
     /** @var CycleRepository  */
     protected $cycleRepository;
 
+    /** @var ReportService  */
+    protected $reportService;
+
     /**
      * ReportController constructor.
      * @param CycleRepository $cycleRepository
+     * @param ReportService $reportService
      */
-    public function __construct(CycleRepository $cycleRepository)
-    {
+    public function __construct(
+        CycleRepository $cycleRepository,
+        ReportService $reportService
+    ) {
         $this->cycleRepository = $cycleRepository;
+        $this->reportService = $reportService;
     }
 
     /**
@@ -37,11 +44,11 @@ class ReportController extends Controller
         $endsAt = $endsAt ? CarbonImmutable::parse($endsAt) : CarbonImmutable::now()->endOfYear();
 
         return Inertia::render('Report/ReportIndex', [
-            'cycles' => CycleResource::collection(
+            'startsAt' => $startsAt->format('Y-m-d'),
+            'endsAt' => $endsAt->format('Y-m-d'),
+            'cyclesReport' => $this->reportService->cyclesReport(
                 $this->cycleRepository->getCycleFromInterval($startsAt, $endsAt)
             ),
-            'startsAt' => $startsAt->format('Y-m-d'),
-            'endsAt' => $endsAt->format('Y-m-d')
         ]);
     }
 

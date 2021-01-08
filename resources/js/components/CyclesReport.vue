@@ -18,7 +18,7 @@
                     </thead>
                     <tbody>
                         <tr
-                            v-for="vegetable in activitiesByVegetable"
+                            v-for="vegetable in cyclesReport"
                             :key="vegetable.id"
                             class="text-left">
                             <td>
@@ -38,54 +38,21 @@
 </template>
 
 <script>
-import {forEach, cloneDeep} from "lodash";
 
 export default {
     name: "CyclesReport",
     props: {
-        cycles: {
-            type: Array,
+        cyclesReport: {
+            type: Object,
             required: true
-        }
+        },
     },
     computed: {
         activities() {
-            let activities = {};
+            if (this.cyclesReport.length === 0) return [];
 
-            forEach(this.cycles, (cycle) => {
-                if (!cycle.times) return [];
-
-                forEach(cycle.times, (time) => {
-                    if (!activities[time.activity.id]) {
-                        activities[time.activity.id] = {
-                            name: time.activity.name,
-                            id: time.activity.id,
-                            times: 0,
-                        };
-                    }
-                });
-            });
-
-            return activities;
-        },
-        activitiesByVegetable() {
-            let vegetables = {};
-            forEach(this.cycles, (cycle) => {
-                forEach(cycle.times, (time) => {
-                    if (
-                        Object.keys(vegetables).length === 0
-                        || !vegetables[cycle.vegetable.id]
-                    ) {
-                        vegetables[cycle.vegetable.id] = cloneDeep(cycle.vegetable);
-                        vegetables[cycle.vegetable.id].activities = cloneDeep(this.activities);
-                    }
-
-                    vegetables[cycle.vegetable.id].activities[time.activity.id].times += time.minutes;
-                });
-            });
-
-            return vegetables;
-        },
+            return Object.values(this.cyclesReport)[0].activities;
+        }
     },
     methods: {
         timeConvert(totalMinutes) {
@@ -99,7 +66,7 @@ export default {
             let roundedMinutes = Math.round(minutes);
 
             return roundedMinutes ? flooredHours + "H" + roundedMinutes : flooredHours + "H";
-        }
+        },
     }
 }
 </script>
