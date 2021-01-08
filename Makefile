@@ -37,6 +37,9 @@ testing:
 	- ./vendor/bin/phpcs --report=full
 	- ./vendor/bin/psalm
 
+test:
+	- php artisan test
+
 # DEPENDANCES
 ## env
 .env:

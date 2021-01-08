@@ -1,0 +1,57 @@
+name:  Les Canotiers CI
+on: [push]
+jobs:
+  web-id-ci:
+    runs-on: ubuntu-20.04
+    steps:
+
+      # Setup
+      - name: Setup PHP 7.4
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          tools: composer:v2
+
+      - uses: actions/checkout@v2
+
+      # Preparing environment
+      - name: Copying .env environment file
+        run: cp .env.example .env
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-les-canotiers
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Installing PHP dependencies
+        run: composer install
+
+      - name: Generating laravel key
+        run: php artisan key:generate
+
+      - name: Running testing
+        run: make testing
+
+      - name: Starting MySQL
+        run: sudo systemctl start mysql.service
+
+      - name: Testing migrations
+        run: make fresh && make refresh
+
+      - name: Installing web-id npm depencies
+        run: npm install
+
+      - name: Compilling JavaScript files
+        run: npm run production
+
+      - name: Run phpunit testing
+        run: make test
+
+      - name: Running web server
+        run: php artisan serve &
