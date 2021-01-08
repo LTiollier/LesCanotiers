@@ -41,6 +41,9 @@ jobs:
       - name: Starting MySQL
         run: sudo systemctl start mysql.service
 
+      - name: Create Databases
+        run: php artisan mysql:create-database
+
       - name: Testing migrations
         run: make fresh && make refresh
 
