@@ -58,3 +58,7 @@ jobs:
 
       - name: Running web server
         run: php artisan serve &
+
+      - name: Fail
+        if: ${{ failure() }}
+        run: relax
