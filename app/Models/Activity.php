@@ -14,4 +14,12 @@ class Activity extends Model
     protected $fillable = [
         'name',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function times()
+    {
+        return $this->hasMany(Time::class);
+    }
 }

@@ -6,6 +6,7 @@ use App\Models\Activity;
 use App\Repositories\Traits\DeleteRepositoryTrait;
 use App\Repositories\Traits\InsertRepositoryTrait;
 use App\Repositories\Traits\SelectRepositoryTrait;
+use Illuminate\Database\Eloquent\Collection;
 
 class ActivityRepository
 {
@@ -22,5 +23,18 @@ class ActivityRepository
     public function __construct(Activity $activity)
     {
         $this->model = $activity;
+    }
+
+    /**
+     * @param array $ids
+     * @return Collection
+     */
+    public function getAllByCycleIds(array $ids): Collection
+    {
+        return $this->model->whereHas('times', function ($query) use ($ids) {
+            $query->whereHas('cycle', function ($query) use ($ids) {
+                $query->whereIn('id', $ids);
+            });
+        })->get();
     }
 }

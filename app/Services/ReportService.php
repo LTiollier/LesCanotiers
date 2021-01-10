@@ -2,11 +2,28 @@
 
 namespace App\Services;
 
+use App\Repositories\ActivityRepository;
 use Illuminate\Support\Collection;
 
 class ReportService
 {
-    public function cyclesReport(Collection $cycles)
+    /** @var ActivityRepository  */
+    protected $activityRepository;
+
+    /**
+     * ReportService constructor.
+     * @param ActivityRepository $activityRepository
+     */
+    public function __construct(ActivityRepository $activityRepository)
+    {
+        $this->activityRepository = $activityRepository;
+    }
+
+    /**
+     * @param Collection $cycles
+     * @return array
+     */
+    public function cyclesReport(Collection $cycles): array
     {
         $activities = $this->getActivities($cycles);
         $vegetables = [];
@@ -19,7 +36,6 @@ class ReportService
                 if (!isset($vegetables[$vegetableId]['activities'][$activityId]['times'])) {
                     $vegetables[$vegetableId] = $cycle->vegetable->toArray();
                     $vegetables[$vegetableId]['activities'] = $activities;
-                    return;
                 }
 
                 $vegetables[$vegetableId]['activities'][$activityId]['times'] =+ $time->minutes;
@@ -35,23 +51,21 @@ class ReportService
      */
     protected function getActivities(Collection $cycles): array
     {
-        $activities = [];
+        $ids = $cycles->pluck('id')->toArray();
+        if (empty($ids)) {
+            return [];
+        }
 
-        $cycles->each(function ($cycle) use (&$activities) {
-            if (!$cycle->times) {
-                return;
-            }
-
-            $cycle->times->each(function ($time) use (&$activities) {
-                if (!isset($activities[$time->activity->getKey()])) {
-                    $activities[$time->activity->getKey()] = [
-                        'id' => $time->activity->getKey(),
-                        'name' => $time->activity->name,
-                        'times' => 0,
-                    ];
-                }
-            });
-        });
+        $activities = $this->activityRepository->getAllByCycleIds($ids);
+        $activities = $activities->mapWithKeys(function ($activity) {
+            return [
+                $activity->getKey() => [
+                    'id' => $activity->getKey(),
+                    'name' => $activity->name,
+                    'times' => 0,
+                ]
+            ];
+        })->toArray();
 
         return $activities;
     }
