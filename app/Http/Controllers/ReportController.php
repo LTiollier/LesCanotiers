@@ -46,7 +46,7 @@ class ReportController extends Controller
         return Inertia::render('Report/ReportIndex', [
             'startsAt' => $startsAt->format('Y-m-d'),
             'endsAt' => $endsAt->format('Y-m-d'),
-            'cyclesReport' => $this->reportService->cyclesReport(
+            'cyclesReport' => $this->reportService->vegetablesReportByCycles(
                 $this->cycleRepository->getCycleFromInterval($startsAt, $endsAt)
             ),
         ]);

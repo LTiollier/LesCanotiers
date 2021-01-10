@@ -23,7 +23,7 @@ class ReportService
      * @param Collection $cycles
      * @return array
      */
-    public function cyclesReport(Collection $cycles): array
+    public function vegetablesReportByCycles(Collection $cycles): array
     {
         $activities = $this->getActivities($cycles);
         $vegetables = [];
@@ -49,7 +49,16 @@ class ReportService
      * @param Collection $cycles
      * @return array
      */
-    protected function getActivities(Collection $cycles): array
+    public function activitiesReportByCycles(Collection $cycles): array
+    {
+        $activities = $this->getActivities($cycles);
+    }
+
+    /**
+     * @param Collection $cycles
+     * @return array
+     */
+    public function getActivities(Collection $cycles): array
     {
         $ids = $cycles->pluck('id')->toArray();
         if (empty($ids)) {

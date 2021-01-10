@@ -59,6 +59,7 @@ jobs:
       - name: Running web server
         run: php artisan serve &
 
-      - name: Fail
-        if: ${{ failure() }}
-        run: relax
+      - uses: sarisia/actions-status-discord@v1
+        if: always()
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
