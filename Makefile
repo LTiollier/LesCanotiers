@@ -38,7 +38,7 @@ testing:
 	- ./vendor/bin/psalm
 
 test:
-	- php artisan test
+	- ./vendor/bin/phpunit
 
 # DEPENDANCES
 ## env
