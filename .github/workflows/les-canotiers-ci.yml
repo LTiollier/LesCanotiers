@@ -54,7 +54,7 @@ jobs:
         run: npm run production
 
       - name: Run phpunit testing
-        run: make test
+        run: php artisan test
 
       - name: Running web server
         run: php artisan serve &
