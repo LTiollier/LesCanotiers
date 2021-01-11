@@ -35,8 +35,7 @@ jobs:
       - name: Generating laravel key
         run: php artisan key:generate
 
-      - name: Running testing
-        run: make testing
+      - uses: php-actions/phpunit@v2
 
       - name: Starting MySQL
         run: sudo systemctl start mysql.service
