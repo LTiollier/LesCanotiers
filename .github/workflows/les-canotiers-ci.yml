@@ -35,8 +35,14 @@ jobs:
       - name: Generating laravel key
         run: php artisan key:generate
 
-      - name: Running testing
-        run: make testing
+      - name: Checking security
+        run: ./vendor/bin/security-checker security:check
+
+      - name: PHPCS
+        run: ./vendor/bin/phpcs --report=full
+
+      - name: PSALM
+        run: ./vendor/bin/psalm
 
       - name: Starting MySQL
         run: sudo systemctl start mysql.service
