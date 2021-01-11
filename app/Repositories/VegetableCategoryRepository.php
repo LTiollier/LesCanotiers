@@ -5,7 +5,6 @@ namespace App\Repositories;
 use App\Models\VegetableCategory;
 use App\Repositories\Traits\DeleteRepositoryTrait;
 use App\Repositories\Traits\InsertRepositoryTrait;
-use Illuminate\Database\Eloquent\Collection;
 
 class VegetableCategoryRepository
 {
@@ -23,10 +22,7 @@ class VegetableCategoryRepository
         $this->model = $vegetableCategory;
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function getFromNow(): Collection
+    public function getFromNow()
     {
         return $this->model
             ->with('vegetables.cycles.vegetable', 'vegetables.cycles.parcel')

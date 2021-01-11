@@ -3,7 +3,7 @@
 namespace App\Exports;
 
 use App\Services\ReportService;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
@@ -26,7 +26,7 @@ class CyclesExport implements FromArray, WithHeadings
      */
     public function array(): array
     {
-        dd($this->reportService->cyclesReport());
+        return []; //todo
     }
 
     /**

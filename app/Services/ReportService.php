@@ -52,6 +52,7 @@ class ReportService
     public function activitiesReportByCycles(Collection $cycles): array
     {
         $activities = $this->getActivities($cycles);
+        return [];
     }
 
     /**

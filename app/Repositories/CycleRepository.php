@@ -61,12 +61,7 @@ class CycleRepository
         return $model->save() ? $model : false;
     }
 
-    /**
-     * @param CarbonImmutable $start
-     * @param CarbonImmutable $end
-     * @return Collection
-     */
-    public function getCycleFromInterval(CarbonImmutable $start, CarbonImmutable $end): Collection
+    public function getCycleFromInterval(CarbonImmutable $start, CarbonImmutable $end)
     {
         return $this->model
             ->with(['vegetable', 'times.activity'])

@@ -54,7 +54,7 @@ class ReportController extends Controller
 
     /**
      * @param Cycle $cycle
-     * @return \Maatwebsite\Excel\BinaryFileResponse
+     * @return mixed
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
     public function exportCycle(Cycle $cycle)
@@ -71,7 +71,7 @@ class ReportController extends Controller
     /**
      * @param string|null $startsAt
      * @param string|null $endsAt
-     * @return \Maatwebsite\Excel\BinaryFileResponse
+     * @return mixed
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
     public function exportCycles(string $startsAt = null, string $endsAt = null)
