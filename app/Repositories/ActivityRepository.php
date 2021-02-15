@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Activity;
+use App\Models\Cycle;
 use App\Repositories\Traits\DeleteRepositoryTrait;
 use App\Repositories\Traits\InsertRepositoryTrait;
 use App\Repositories\Traits\SelectRepositoryTrait;

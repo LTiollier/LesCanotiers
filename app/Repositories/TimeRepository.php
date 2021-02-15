@@ -2,10 +2,14 @@
 
 namespace App\Repositories;
 
+use App\Models\Activity;
+use App\Models\Cycle;
 use App\Models\Time;
+use App\Models\Vegetable;
 use App\Repositories\Traits\DeleteRepositoryTrait;
 use App\Repositories\Traits\InsertRepositoryTrait;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 
 class TimeRepository
 {
@@ -43,5 +47,38 @@ class TimeRepository
         }
 
         return $this->model->create($parameters);
+    }
+
+    /**
+     * @param Cycle $cycle
+     * @param Activity $activity
+     * @return int
+     */
+    public function getSumTimeForCycleActivity(Cycle $cycle, Activity $activity): int
+    {
+        return $this->model->where('cycle_id', $cycle->getKey())
+            ->where('activity_id', $activity->getKey())
+            ->sum('minutes');
+    }
+
+    /**
+     * @param Collection $cycles
+     * @param Activity $activity
+     * @param Vegetable $vegetable
+     * @return int
+     */
+    public function getSumTimeForCyclesActivityAndVegetable(
+        Collection $cycles,
+        Activity $activity,
+        Vegetable $vegetable
+    ): int {
+        $ids = $cycles->pluck('id')->toArray();
+
+        return $this->model->whereIn('cycle_id', $ids)
+            ->where('activity_id', $activity->getKey())
+            ->whereHas('cycle', function ($query) use ($vegetable) {
+                $query->where('vegetable_id', $vegetable->getKey());
+            })
+            ->sum('minutes');
     }
 }

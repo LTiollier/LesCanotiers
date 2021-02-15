@@ -9,24 +9,28 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class CyclesExport implements FromArray, WithHeadings
 {
-    /** @var array  */
+    /** @var ReportService */
+    protected $reportService;
+
+    /** @var Collection */
+    protected $cycles;
+
+    /** @var \Illuminate\Database\Eloquent\Collection */
     protected $activities;
+
+    protected $vegetables;
 
     /**
      * @param Collection $cycles
      */
     public function __construct(Collection $cycles)
     {
-        $reportService = app(ReportService::class);
-        $this->activities = $reportService->getActivities($cycles);
-    }
+        $this->reportService = app(ReportService::class);
+        $this->cycles = $cycles;
+        $ids = $this->cycles->pluck('id')->toArray();
 
-    /**
-     * @return array
-     */
-    public function array(): array
-    {
-        return []; //todo
+        $this->activities = $this->reportService->getActivities($ids);
+        $this->vegetables = $this->reportService->getVegetables($ids);
     }
 
     /**
@@ -34,12 +38,47 @@ class CyclesExport implements FromArray, WithHeadings
      */
     public function headings(): array
     {
-        if (count($this->activities) === 0) {
+        if ($this->activities->count() === 0) {
             return [];
         }
 
-        return array_map(function ($activity) {
-            return $activity['name'];
-        }, $this->activities);
+        $headers = $this->activities->pluck('name')
+            ->toArray();
+
+        array_unshift($headers, ' ');
+        return $headers;
+    }
+
+    /**
+     * @return array
+     */
+    public function array(): array
+    {
+        $values = [];
+
+        if ($this->vegetables->count() === 0) {
+            return [];
+        }
+
+        $this->vegetables->each(function ($vegetable) use (&$values) {
+            $vegetableValue = [$vegetable->name];
+
+            if ($this->activities->count() === 0) {
+                $values[] = $vegetableValue;
+                return;
+            }
+
+            $this->activities->each(function ($activity) use (&$vegetableValue, $vegetable) {
+                $vegetableValue[] = $this->reportService->getSumTimeForCyclesActivityAndVegetable(
+                    $this->cycles,
+                    $activity,
+                    $vegetable
+                );
+            });
+
+            $values[] = $vegetableValue;
+        });
+
+        return $values;
     }
 }

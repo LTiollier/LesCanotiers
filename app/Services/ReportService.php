@@ -2,7 +2,13 @@
 
 namespace App\Services;
 
+use App\Models\Activity;
+use App\Models\Cycle;
+use App\Models\Vegetable;
 use App\Repositories\ActivityRepository;
+use App\Repositories\TimeRepository;
+use App\Repositories\VegetableRepository;
+use Illuminate\Database\Eloquent\Collection as DatabaseCollection;
 use Illuminate\Support\Collection;
 
 class ReportService
@@ -10,13 +16,25 @@ class ReportService
     /** @var ActivityRepository  */
     protected $activityRepository;
 
+    /** @var TimeRepository  */
+    protected $timeRepository;
+
+    /** @var VegetableRepository  */
+    protected $vegetableRepository;
+
     /**
-     * ReportService constructor.
      * @param ActivityRepository $activityRepository
+     * @param TimeRepository $timeRepository
+     * @param VegetableRepository $vegetableRepository
      */
-    public function __construct(ActivityRepository $activityRepository)
-    {
+    public function __construct(
+        ActivityRepository $activityRepository,
+        TimeRepository $timeRepository,
+        VegetableRepository $vegetableRepository
+    ) {
         $this->activityRepository = $activityRepository;
+        $this->timeRepository = $timeRepository;
+        $this->vegetableRepository = $vegetableRepository;
     }
 
     /**
@@ -25,58 +43,64 @@ class ReportService
      */
     public function vegetablesReportByCycles(Collection $cycles): array
     {
-        $activities = $this->getActivities($cycles);
-        $vegetables = [];
+        $cycleIds = $cycles->pluck('id')->toArray();
+        $activities = $this->getActivities($cycleIds);
+        $vegetables = $this->getVegetables($cycleIds);
+        $report = [];
 
-        $cycles->each(function ($cycle) use (&$vegetables, $activities) {
-            $cycle->times->each(function ($time) use (&$vegetables, $activities, $cycle) {
-                $vegetableId = $cycle->vegetable->getKey();
-                $activityId = $time->activity->getKey();
+        $vegetables->each(function ($vegetable) use (&$report, $cycles, $activities) {
+            $report[$vegetable->getKey()] = $vegetable->toArray();
+            $report[$vegetable->getKey()]['activities'] = [];
 
-                if (!isset($vegetables[$vegetableId]['activities'][$activityId]['times'])) {
-                    $vegetables[$vegetableId] = $cycle->vegetable->toArray();
-                    $vegetables[$vegetableId]['activities'] = $activities;
-                }
-
-                $vegetables[$vegetableId]['activities'][$activityId]['times'] =+ $time->minutes;
+            $activities->each(function ($activity) use (&$report, $cycles, $vegetable) {
+                $report[$vegetable->getKey()]['activities'][$activity->getKey()] = $activity->toArray();
+                $report[$vegetable->getKey()]['activities'][$activity->getKey()]['times'] =
+                    $this->getSumTimeForCyclesActivityAndVegetable($cycles, $activity, $vegetable);
             });
         });
 
-        return $vegetables;
+        return $report;
+    }
+
+    /**
+     * @param array $cycleIds
+     * @return DatabaseCollection
+     */
+    public function getActivities(array $cycleIds): DatabaseCollection
+    {
+        return $this->activityRepository->getAllByCycleIds($cycleIds);
+    }
+
+    /**
+     * @param array $cycleIds
+     * @return DatabaseCollection
+     */
+    public function getVegetables(array $cycleIds): DatabaseCollection
+    {
+        return $this->vegetableRepository->getAllByCycleIds($cycleIds);
+    }
+
+    /**
+     * @param Cycle $cycle
+     * @param Activity $activity
+     * @return int
+     */
+    public function getSumTimeForCycleActivity(Cycle $cycle, Activity $activity): int
+    {
+        return $this->timeRepository->getSumTimeForCycleActivity($cycle, $activity);
     }
 
     /**
      * @param Collection $cycles
-     * @return array
+     * @param Activity $activity
+     * @param Vegetable $vegetable
+     * @return int
      */
-    public function activitiesReportByCycles(Collection $cycles): array
-    {
-        $activities = $this->getActivities($cycles);
-        return [];
-    }
-
-    /**
-     * @param Collection $cycles
-     * @return array
-     */
-    public function getActivities(Collection $cycles): array
-    {
-        $ids = $cycles->pluck('id')->toArray();
-        if (empty($ids)) {
-            return [];
-        }
-
-        $activities = $this->activityRepository->getAllByCycleIds($ids);
-        $activities = $activities->mapWithKeys(function ($activity) {
-            return [
-                $activity->getKey() => [
-                    'id' => $activity->getKey(),
-                    'name' => $activity->name,
-                    'times' => 0,
-                ]
-            ];
-        })->toArray();
-
-        return $activities;
+    public function getSumTimeForCyclesActivityAndVegetable(
+        Collection $cycles,
+        Activity $activity,
+        Vegetable $vegetable
+    ): int {
+        return $this->timeRepository->getSumTimeForCyclesActivityAndVegetable($cycles, $activity, $vegetable);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Vegetable;
 use App\Repositories\Traits\DeleteRepositoryTrait;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 
@@ -49,5 +50,17 @@ class VegetableRepository
         $model->fill($parameters);
 
         return $model->save() ? $model : false;
+    }
+
+    /**
+     * @param array $cycleIds
+     * @return Collection
+     */
+    public function getAllByCycleIds(array $cycleIds): Collection
+    {
+        return $this->model->whereHas('cycles', function ($query) use ($cycleIds) {
+            $query->whereIn('id', $cycleIds);
+        })
+            ->get();
     }
 }

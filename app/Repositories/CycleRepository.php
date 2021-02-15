@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Activity;
 use App\Models\Cycle;
 use App\Repositories\Traits\DeleteRepositoryTrait;
 use Carbon\CarbonImmutable;
@@ -61,6 +62,11 @@ class CycleRepository
         return $model->save() ? $model : false;
     }
 
+    /**
+     * @param CarbonImmutable $start
+     * @param CarbonImmutable $end
+     * @return \Illuminate\Database\Eloquent\Builder[]|Collection
+     */
     public function getCycleFromInterval(CarbonImmutable $start, CarbonImmutable $end)
     {
         return $this->model

@@ -3,37 +3,30 @@
 namespace App\Exports;
 
 use App\Models\Cycle;
+use App\Models\Vegetable;
+use App\Services\ReportService;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class CycleExport implements FromArray, WithHeadings
 {
-    /** @var array */
-    protected $activities = [];
+    /** @var ReportService */
+    protected $reportService;
+
+    /** @var Cycle */
+    protected $cycle;
+
+    /** @var \Illuminate\Database\Eloquent\Collection */
+    protected $activities;
 
     /**
      * @param Cycle $cycle
      */
     public function __construct(Cycle $cycle)
     {
-        $cycle->load(['times.activity']);
-
-        if ($cycle->times->count() === 0) {
-            return;
-        }
-
-        $cycle->times->each(function ($time) {
-            if (!isset($this->activities[$time->activity->getKey()])) {
-                $this->activities[$time->activity->getKey()] = [
-                    'id' => $time->activity->getKey(),
-                    'name' => $time->activity->name,
-                    'times' => $time->minutes
-                ];
-                return;
-            }
-
-            $this->activities[$time->activity->getKey()]['times'] += $time->minutes;
-        });
+        $this->reportService = app(ReportService::class);
+        $this->cycle = $cycle;
+        $this->activities = $this->reportService->getActivities([$cycle->getKey()]);
     }
 
     /**
@@ -41,13 +34,15 @@ class CycleExport implements FromArray, WithHeadings
      */
     public function headings(): array
     {
-        if (count($this->activities) === 0) {
+        if ($this->activities->count() === 0) {
             return [];
         }
 
-        return array_map(function ($activity) {
-            return $activity['name'];
-        }, $this->activities);
+        $headers = $this->activities->pluck('name')
+            ->toArray();
+
+        array_unshift($headers, ' ');
+        return $headers;
     }
 
     /**
@@ -55,14 +50,14 @@ class CycleExport implements FromArray, WithHeadings
      */
     public function array(): array
     {
-        if (count($this->activities) === 0) {
-            return [];
-        }
+        /** @var Vegetable $vegetable */
+        $vegetable = $this->cycle->vegetable;
+        $values = [$vegetable->name];
 
-        $row = array_map(function ($activity) {
-            return $activity['times'];
-        }, $this->activities);
+        $this->activities->each(function ($activity) use (&$values) {
+            $values[] = $this->reportService->getSumTimeForCycleActivity($this->cycle, $activity);
+        });
 
-        return [$row];
+        return [$values];
     }
 }
