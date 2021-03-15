@@ -35,9 +35,6 @@ jobs:
       - name: Generating laravel key
         run: php artisan key:generate
 
-      - name: Checking security
-        run: ./vendor/bin/security-checker security:check
-
       - name: PHPCS
         run: ./vendor/bin/phpcs --report=full
 
@@ -69,3 +66,7 @@ jobs:
         if: always()
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
+
+      - name: Deploy prod
+        if: github.ref != 'refs/heads/master'
+        run: curl https://forge.laravel.com/servers/447114/sites/1286657/deploy/http?token=zBXNVM9xcXEadfhd3CTGMGr3dpsliCGyqETnrykV

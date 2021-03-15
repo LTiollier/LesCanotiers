@@ -33,7 +33,6 @@ reset:
 
 ## code analysis
 testing:
-	- ./vendor/bin/security-checker security:check
 	- ./vendor/bin/phpcs --report=full
 	- ./vendor/bin/psalm
 
