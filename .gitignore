@@ -13,8 +13,10 @@ yarn-error.log
 
 .idea/
 
-public/
-
 storage/framework/laravel-excel/
 
 .DS_Store
+
+public/js/
+public/css/
+public/*.js
