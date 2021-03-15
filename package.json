@@ -10,8 +10,8 @@
         "watch-js": "npm run original-watch --section=js",
         "watch": "run-p watch-scss watch-js",
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "prod-admin-scss": "npm run production --section=scss",
-        "prod-admin-js": "npm run production --section=js",
+        "prod-scss": "npm run production --section=scss",
+        "prod-js": "npm run production --section=js",
         "prod": "run-p prod-scss prod-js"
     },
     "devDependencies": {
