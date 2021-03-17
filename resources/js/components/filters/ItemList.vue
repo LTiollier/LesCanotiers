@@ -147,6 +147,7 @@ export default {
                 page: 1,
             },
             exportValues: {},
+            csrfToken: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
             storedFilters: [],
             storedFiltersDeletionDialog: false,
         }

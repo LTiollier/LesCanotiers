@@ -2,7 +2,6 @@
 
 namespace App\Http;
 
-use App\Http\Middleware\CsrfTokenInCookies;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -75,6 +74,5 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'verify_ajax' => \App\Http\Middleware\VerifyAjax::class,
-        'csrf_token_in_cookies' => CsrfTokenInCookies::class,
     ];
 }
