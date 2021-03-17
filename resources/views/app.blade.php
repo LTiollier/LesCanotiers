@@ -4,7 +4,6 @@
     <title>Les canotiers</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel= "manifest" href= "manifest.json">
     <link rel="icon" type="image/png" href="logo.png" />
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">

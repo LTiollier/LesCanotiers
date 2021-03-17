@@ -78,7 +78,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
-        Route::middleware('web')
+        Route::middleware(['web', 'csrf_token_in_cookies'])
             ->namespace($this->namespace)
             ->group(base_path('routes/web.php'));
     }
@@ -103,7 +103,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapJsonRoutes()
     {
-        Route::middleware('json')
+        Route::middleware(['json', 'csrf_token_in_cookies'])
             ->namespace($this->namespace . '\Json')
             ->name('json.')
             ->prefix('json/')

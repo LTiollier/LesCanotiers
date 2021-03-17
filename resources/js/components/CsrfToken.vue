@@ -7,8 +7,7 @@ export default {
     name: "CsrfToken",
     computed: {
         csrf() {
-            let token = document.head.querySelector('meta[name="csrf-token"]');
-            return token ? token.content : '';
+            return getCookie('CSRF-TOKEN');
         }
     }
 }
