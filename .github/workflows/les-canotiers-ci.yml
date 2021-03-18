@@ -4,7 +4,6 @@ jobs:
   les-canotiers-ci:
     runs-on: ubuntu-20.04
     steps:
-
       # Setup
       - name: Setup PHP 7.4
         uses: shivammathur/setup-php@v2
@@ -49,6 +48,14 @@ jobs:
 
       - name: Testing migrations
         run: make fresh && make refresh
+
+      - name: Cache node dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Installing web-id npm depencies
         run: npm install
