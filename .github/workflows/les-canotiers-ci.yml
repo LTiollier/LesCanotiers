@@ -63,9 +63,6 @@ jobs:
       - name: Compilling JavaScript files
         run: npm run production
 
-      - name: Run phpunit testing
-        run: vendor/bin/phpunit
-
       - name: Running web server
         run: php artisan serve &
 
