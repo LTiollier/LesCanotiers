@@ -1,6 +1,6 @@
 <template>
     <v-app id="app">
-        <v-content class="primary">
+        <v-main class="primary">
             <v-container
                 class="fill-height"
                 fluid>
@@ -18,7 +18,7 @@
                     </v-col>
                 </v-row>
             </v-container>
-        </v-content>
+        </v-main>
     </v-app>
 </template>
 
