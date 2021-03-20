@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fa80a1d94e37e539ec58c042f8adcdda",
+    "content-hash": "a60e3e0abfac912dfb73e52b1367b394",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -6823,6 +6823,81 @@
             "time": "2020-11-12T00:07:28+00:00"
         },
         {
+            "name": "web-id/flan",
+            "version": "0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/web-id-fr/flan.git",
+                "reference": "c2edb8411a5b981d7328d6a1306443438cef5642"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/web-id-fr/flan/zipball/c2edb8411a5b981d7328d6a1306443438cef5642",
+                "reference": "c2edb8411a5b981d7328d6a1306443438cef5642",
+                "shasum": ""
+            },
+            "require": {
+                "maatwebsite/excel": "^3.1",
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "nunomaduro/larastan": "^0.6.13",
+                "orchestra/testbench": "^6.0",
+                "phpstan/phpstan": "^0.12.70",
+                "phpunit/phpunit": "^9.3",
+                "vlucas/phpdotenv": "^5.3"
+            },
+            "type": "project",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "WebId\\Flan\\FlanServiceProvider",
+                        "WebId\\Flan\\RouteServiceProvider",
+                        "WebId\\Flan\\ValidatorServiceProvider"
+                    ],
+                    "aliases": {
+                        "Flan": "WebId\\Flan\\Facades\\Flan"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "WebId\\Flan\\": "src/",
+                    "WebId\\Flan\\Database\\Factories\\": "src/Database/factories",
+                    "WebId\\Flan\\Database\\Seeders\\": "src/Database/seeders"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "TIOLLIER Léo",
+                    "email": "leo@web-id.fr"
+                }
+            ],
+            "description": "FLAN - Filter Like A Ninja",
+            "homepage": "https://github.com/web-id/flan",
+            "keywords": [
+                "Flan",
+                "filter",
+                "laravel",
+                "package"
+            ],
+            "support": {
+                "issues": "https://github.com/web-id-fr/flan/issues",
+                "source": "https://github.com/web-id-fr/flan/tree/0.0.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/web-id-fr",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-03-10T12:53:27+00:00"
+        },
+        {
             "name": "webmozart/assert",
             "version": "1.9.1",
             "source": {
@@ -9623,5 +9698,5 @@
         "php": "^7.4.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }

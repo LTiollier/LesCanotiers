@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filters;
+namespace App\FilterClasses;
 
-use App\Filters\Base\Filter;
+use WebId\Flan\Filters\Base\Filter;
 use App\Models\Parcel;
 
 class ParcelFilter extends Filter
@@ -20,6 +20,6 @@ class ParcelFilter extends Filter
      */
     public function getConfiguration(): array
     {
-        return config('filters.parcels');
+        return config('FilterConfigs.parcels');
     }
 }

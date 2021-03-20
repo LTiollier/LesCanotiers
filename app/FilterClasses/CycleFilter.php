@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filters;
+namespace App\FilterClasses;
 
-use App\Filters\Base\Filter;
+use WebId\Flan\Filters\Base\Filter;
 use App\Models\Cycle;
 
 class CycleFilter extends Filter
@@ -32,7 +32,7 @@ class CycleFilter extends Filter
      */
     public function getConfiguration(): array
     {
-        return config('filters.cycles');
+        return config('FilterConfigs.cycles');
     }
 
     protected function joinVegetable(): void

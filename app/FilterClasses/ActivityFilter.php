@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filters;
+namespace App\FilterClasses;
 
-use App\Filters\Base\Filter;
+use WebId\Flan\Filters\Base\Filter;
 use App\Models\Activity;
 
 class ActivityFilter extends Filter
@@ -20,6 +20,6 @@ class ActivityFilter extends Filter
      */
     public function getConfiguration(): array
     {
-        return config('filters.activities');
+        return config('FilterConfigs.activities');
     }
 }

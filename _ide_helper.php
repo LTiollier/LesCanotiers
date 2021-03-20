@@ -15221,6 +15221,17 @@
      
 }
 
+    namespace WebId\Flan\Facades { 
+            /**
+     * 
+     *
+     */ 
+        class Flan {
+         
+    }
+     
+}
+
     namespace Illuminate\Http { 
             /**
      * 
@@ -18633,6 +18644,7 @@ namespace  {
             class View extends \Illuminate\Support\Facades\View {}
             class Flare extends \Facade\Ignition\Facades\Flare {}
             class Excel extends \Maatwebsite\Excel\Facades\Excel {}
+            class Flan extends \WebId\Flan\Facades\Flan {}
      
 }
 

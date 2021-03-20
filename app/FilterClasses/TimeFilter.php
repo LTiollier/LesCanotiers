@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filters;
+namespace App\FilterClasses;
 
-use App\Filters\Base\Filter;
+use WebId\Flan\Filters\Base\Filter;
 use App\Models\Time;
 
 class TimeFilter extends Filter
@@ -42,7 +42,7 @@ class TimeFilter extends Filter
      */
     public function getConfiguration(): array
     {
-        return config('filters.times');
+        return config('FilterConfigs.times');
     }
 
     protected function joinUser(): void

@@ -12,10 +12,22 @@ use App\Http\Requests\StoreVegetableCategoryRequest;
 use App\Http\Resources\VegetableCategoryResource;
 use App\Models\VegetableCategory;
 use App\Repositories\VegetableCategoryRepository;
+use Inertia\Inertia;
+use WebId\Flan\Filters\Base\FilterFactory;
 
 class VegetableCategoryController extends Controller
 {
     use HasIndex, HasCreate, HasStore, HasEdit, HasUpdate, HasDestroy;
+
+    /**
+     * @return \Inertia\Response
+     */
+    public function index()
+    {
+        return Inertia::render($this->getInertiaComponentTemplate() . 'Index', [
+            'filterConfigs' => FilterFactory::create('vegetablecategories')->getConfiguration()
+        ]);
+    }
 
     protected function getRepository()
     {

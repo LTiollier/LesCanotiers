@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFiltersTable extends Migration
+class CreateFiltersTables extends Migration
 {
     /**
      * Run the migrations.
@@ -19,6 +19,15 @@ class CreateFiltersTable extends Migration
             $table->string('filter_name');
             $table->timestamps();
         });
+
+        Schema::create('filter_fields', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('filter_id');
+            $table->string('name');
+            $table->text('content')->nullable();
+            $table->timestamps();
+            $table->foreign('filter_id')->references('id')->on('filters')->onDelete('cascade');
+        });
     }
 
     /**
@@ -28,6 +37,12 @@ class CreateFiltersTable extends Migration
      */
     public function down()
     {
+        Schema::table('filter_fields', function (Blueprint $table) {
+            $table->dropForeign(['filter_id']);
+        });
+
+        Schema::dropIfExists('filter_fields');
+
         Schema::dropIfExists('filters');
     }
 }

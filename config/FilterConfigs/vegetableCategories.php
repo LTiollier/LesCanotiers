@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'name' => 'vegetableCategories',
+    'name' => 'vegetablecategories',
     'filters' => [
         [
             'text' => 'ID',

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Traits\CRUD;
 
-use App\Filters\Base\FilterFactory;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
+use WebId\Flan\Filters\Base\FilterFactory;
 
 trait HasIndex
 {

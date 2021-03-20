@@ -17,15 +17,6 @@ Route::namespace('Auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-
-    /**
-     * FILTERS
-     */
-    Route::prefix('filters')->name('filters.')->group(function () {
-        Route::post('csv-export', [\App\Http\Controllers\FilterController::class, 'export'])->name('export');
-    });
-
-
     /**
      * CRUD
      */

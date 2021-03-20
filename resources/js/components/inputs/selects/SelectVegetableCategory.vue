@@ -28,7 +28,7 @@ export default {
                     strategy: "contains",
                     term: search,
                 },
-                filter_name: "vegetableCategories",
+                filter_name: "vegetablecategories",
                 fields: ["id", "name"],
                 page: 1,
                 sortBy: 'name',

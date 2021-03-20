@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filters;
+namespace App\FilterClasses;
 
-use App\Filters\Base\Filter;
+use WebId\Flan\Filters\Base\Filter;
 use App\Models\VegetableCategory;
 
 class VegetableCategoryFilter extends Filter
@@ -20,6 +20,6 @@ class VegetableCategoryFilter extends Filter
      */
     public function getConfiguration(): array
     {
-        return config('filters.vegetableCategories');
+        return config('FilterConfigs.vegetableCategories');
     }
 }
