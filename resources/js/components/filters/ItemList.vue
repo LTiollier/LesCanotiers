@@ -16,7 +16,6 @@
                     :action="route('filters.export')"
                     method="post"
                     @submit="prepareExportValues">
-                    <csrf-token />
                     <input
                         v-for="(value, key) in exportValues"
                         :key="key"
@@ -88,12 +87,10 @@ import TableFilterable from './TableFilterable';
 import FilterBar from './FilterBar';
 import { cloneDeep, findIndex, forEach, isEmpty, find, map } from 'lodash';
 import { getFilters, deleteFilter, storeFilter, getModelFiltered } from "../../api/filterService";
-import CsrfToken from "../CsrfToken";
 
 export default {
     name: "ItemList",
     components: {
-        CsrfToken,
         TableFilterable,
         FilterBar,
     },
@@ -147,7 +144,6 @@ export default {
                 page: 1,
             },
             exportValues: {},
-            csrfToken: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
             storedFilters: [],
             storedFiltersDeletionDialog: false,
         }

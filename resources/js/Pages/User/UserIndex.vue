@@ -1,6 +1,6 @@
 <template>
     <base-layout>
-        <v-container>
+        <v-container class="mt-6">
             <v-row no-gutters class="mb-10">
                 <v-col cols="12" class="text-center">
                     <h1>Liste des utilisateurs</h1>

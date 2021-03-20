@@ -1,6 +1,6 @@
 <template>
     <base-layout>
-        <v-container>
+        <v-container class="mt-6">
             <activity-form :activity="activity" with-delete @submit="submit" @deleteActivity="deleteActivity">
                 <template #title>
                     Edition d'une activité

@@ -1,6 +1,6 @@
 <template>
     <base-layout>
-        <v-container>
+        <v-container class="mt-6">
             <cycle-form :cycle="cycle" @submit="submit">
                 <template #title>
                     Création d'un cycle

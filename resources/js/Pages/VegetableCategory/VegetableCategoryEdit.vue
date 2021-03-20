@@ -1,6 +1,6 @@
 <template>
     <base-layout>
-        <v-container>
+        <v-container class="mt-6">
             <vegetable-category-form :vegetable-category="vegetableCategory" with-delete @submit="submit" @deleteVegetableCategory="deleteVegetableCategory">
                 <template #title>
                     Edition d'une catégorie d'un fruit/légume

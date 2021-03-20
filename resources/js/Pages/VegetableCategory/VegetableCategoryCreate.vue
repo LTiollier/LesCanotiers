@@ -1,6 +1,6 @@
 <template>
     <base-layout>
-        <v-container>
+        <v-container class="mt-6">
             <vegetable-category-form :vegetable-category="vegetableCategory" @submit="submit">
                 <template #title>
                     Création d'une categorie de fruit/légume

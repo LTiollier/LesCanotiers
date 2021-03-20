@@ -1,6 +1,6 @@
 <template>
     <base-layout>
-        <v-container>
+        <v-container class="mt-6">
             <parcel-form :parcel="parcel" @submit="submit">
                 <template #title>
                     Création d'une parcelle

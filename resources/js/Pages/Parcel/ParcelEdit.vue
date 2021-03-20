@@ -1,6 +1,6 @@
 <template>
     <base-layout>
-        <v-container>
+        <v-container class="mt-6">
             <parcel-form :parcel="parcel" with-delete @submit="submit" @deleteParcel="deleteParcel">
                 <template #title>
                     Edition d'une parcelle

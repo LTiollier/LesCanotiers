@@ -1,6 +1,6 @@
 <template>
     <base-layout>
-        <v-container>
+        <v-container class="mt-6">
             <cycle-form :cycle="cycle" with-delete @submit="submit" @deleteCycle="deleteCycle">
                 <template #title>
                     Edition d'un cycle

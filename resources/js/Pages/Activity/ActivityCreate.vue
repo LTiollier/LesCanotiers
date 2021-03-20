@@ -1,6 +1,6 @@
 <template>
     <base-layout>
-        <v-container>
+        <v-container class="mt-6">
             <activity-form :activity="activity" @submit="submit">
                 <template #title>
                     Création d'une activité

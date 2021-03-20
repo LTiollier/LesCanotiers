@@ -27,7 +27,6 @@
                     label="Se souvenir de moi"
                     value="1"
                     :checked="login.remember" />
-                <csrf-token />
             </v-card-text>
             <v-card-actions>
                 <v-spacer />
@@ -44,11 +43,10 @@
 
 <script>
 import AuthLayout from "../../layouts/AuthLayout";
-import CsrfToken from "../../components/CsrfToken";
 
 export default {
     name: "Login",
-    components: {CsrfToken, AuthLayout},
+    components: {AuthLayout},
     data() {
         return {
             login: {
@@ -67,8 +65,8 @@ export default {
         },
     },
     methods: {
-        submit(event) {
-            event.currentTarget.submit();
+        submit() {
+            this.$inertia.post(route('login.create'), this.login);
         },
     }
 }

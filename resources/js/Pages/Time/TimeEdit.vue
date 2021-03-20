@@ -1,6 +1,6 @@
 <template>
     <base-layout>
-        <v-container>
+        <v-container class="mt-6">
             <time-form :time="time" with-delete @submit="submit" @deleteTime="deleteTime">
                 <template #title>
                     Edition d'un temps

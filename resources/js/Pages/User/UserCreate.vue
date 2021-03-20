@@ -1,6 +1,6 @@
 <template>
     <base-layout>
-        <v-container>
+        <v-container class="mt-6">
             <user-form :user="user" with-password @submit="submit">
                 <template #title>
                     Création d'un utilisateur

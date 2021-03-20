@@ -1,6 +1,6 @@
 <template>
     <base-layout>
-        <v-container>
+        <v-container class="mt-6">
             <vegetable-form :vegetable="vegetable" @submit="submit">
                 <template #title>
                     Création d'un fruit/légume
