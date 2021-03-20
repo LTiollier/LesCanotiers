@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class UserProdSeeder extends Seeder
 {
@@ -14,16 +14,19 @@ class UserProdSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()->create([
-            'name' => 'Léo TIOLLIER',
-            'email' => 'ltiollier30@gmail.com',
-            'password' => 'password',
-        ]);
-
-        User::factory()->create([
-            'name' => 'Marine TIOLLIER',
-            'email' => 'marine.tiollier@gmail.com',
-            'password' => 'password',
+        DB::table('users')->insert([
+            [
+                'name' => 'Léo TIOLLIER',
+                'email' => 'ltiollier30@gmail.com',
+                'password' => bcrypt('password'),
+                'email_verified_at' => now(),
+            ],
+            [
+                'name' => 'Marine TIOLLIER',
+                'email' => 'marine.tiollier@gmail.com',
+                'password' => bcrypt('password'),
+                'email_verified_at' => now(),
+            ]
         ]);
     }
 }
