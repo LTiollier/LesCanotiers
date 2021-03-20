@@ -63,22 +63,22 @@ secucheck:
 ## migration migrate
 migrate:
 	php artisan migrate
-	php artisan migrate --database mysql_test
+	#php artisan migrate --database mysql_test
 
 ## migration roll back
 rollback:
 	php artisan migrate:rollback
-	php artisan migrate:rollback --database mysql_test
+	#php artisan migrate:rollback --database mysql_test
 
 ## refresh database
 refresh:
 	php artisan migrate:refresh --seed
-	php artisan migrate:refresh --database mysql_test
+	#php artisan migrate:refresh --database mysql_test
 
 ##  fresh
 fresh:
 	php artisan migrate:fresh --seed
-	php artisan migrate:fresh --database mysql_test
+	#php artisan migrate:fresh --database mysql_test
 
 #####
 # Javascript
