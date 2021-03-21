@@ -1,15 +1,15 @@
 export function getFilters(filterName) {
-    return window.axios.get(route('filters.index', {filter_name: filterName}).url());
+    return window.axios.get('/filters/' + filterName);
 }
 
 export function storeFilter(params) {
-    return window.axios.post(route('filters.store').url(), params);
+    return window.axios.post('/filters', params);
 }
 
 export function deleteFilter(filterId) {
-    return window.axios.delete(route('filters.destroy', {filter: filterId}).url());
+    return window.axios.delete('/filters/' + filterId);
 }
 
 export function getModelFiltered(params) {
-    return window.axios.post(route('filters.filter').url(), params);
+    return window.axios.post('/filters/filter', params);
 }
