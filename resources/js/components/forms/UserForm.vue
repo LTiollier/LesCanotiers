@@ -36,6 +36,13 @@
                     label="Confirmation"
                     type="password" />
             </v-col>
+            <v-col cols="12" md="6" class="pa-3">
+                <v-select
+                    v-model="user.role"
+                    :error-messages="roleErrors"
+                    :items="roles"
+                    label="Role" />
+            </v-col>
             <v-col cols="12">
                 <v-btn class="mr-4" color="primary" type="submit">
                     <slot name="button" />
@@ -56,6 +63,10 @@ export default {
         user: {
             required: true,
             type: Object
+        },
+        roles: {
+            required: true,
+            type: Array
         },
         withPassword: {
             required: false,
@@ -81,6 +92,9 @@ export default {
         passwordConfirmationErrors () {
             return this.$serverErrors('password_confirmation');
         },
+        roleErrors() {
+            return this.$serverErrors('role');
+        }
     },
     methods: {
         submit () {

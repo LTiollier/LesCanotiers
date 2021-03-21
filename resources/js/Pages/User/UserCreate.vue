@@ -1,7 +1,7 @@
 <template>
     <base-layout>
         <v-container class="mt-6">
-            <user-form :user="user" with-password @submit="submit">
+            <user-form :user="user" :roles="roles" with-password @submit="submit">
                 <template #title>
                     Création d'un utilisateur
                 </template>
@@ -20,6 +20,12 @@ import UserForm from "../../components/forms/UserForm";
 export default {
     name: "UserCreate",
     components: {UserForm, BaseLayout},
+    props: {
+        roles: {
+            required: true,
+            type: Array
+        }
+    },
     data() {
         return {
             user: {},

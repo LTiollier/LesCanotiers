@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -17,6 +18,11 @@ class StoreUserRequest extends FormRequest
     {
         $rules = [
             'name' => 'required|string|max:100',
+            'role' => [
+                'required',
+                'string',
+                Rule::in(array_keys(User::ROLES))
+            ]
         ];
 
         if ($this->getMethod() == 'PUT') {

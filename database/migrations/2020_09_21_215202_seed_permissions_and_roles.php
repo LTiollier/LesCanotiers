@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -13,8 +14,8 @@ class SeedPermissionsAndRoles extends Migration
      */
     public function up()
     {
-        $admin = Role::create(['name' => 'admin']);
-        $employee = Role::create(['name' => 'employee']);
+        $admin = Role::create(['name' => User::_ROLE_ADMIN]);
+        $employee = Role::create(['name' => User::_ROLE_EMPLOYEE]);
     }
 
     /**

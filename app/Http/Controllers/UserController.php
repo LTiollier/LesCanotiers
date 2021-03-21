@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Traits\CRUD\HasCreate;
+use App\Http\Controllers\Traits\CRUD\HasDestroy;
 use App\Http\Controllers\Traits\CRUD\HasEdit;
 use App\Http\Controllers\Traits\CRUD\HasIndex;
 use App\Http\Controllers\Traits\CRUD\HasStore;
@@ -17,7 +18,28 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
-    use HasIndex, HasCreate, HasStore, HasEdit, HasUpdate;
+    use HasIndex, HasCreate, HasStore, HasEdit, HasUpdate, HasDestroy;
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
+    public function delete(Request $request)
+    {
+        $modelName = $this->getSingularModelName();
+        $model = $request->$modelName;
+
+        $this->getRepository()->delete($model);
+
+        /** @var User $user */
+        $user = auth()->user();
+        if ($user->getKey() === $model->getKey()) {
+            Auth::logout();
+        }
+
+        return redirect()->route(Str::plural($this->getSingularModelName()) . '.index');
+    }
 
     protected function getRepository()
     {
@@ -65,23 +87,12 @@ class UserController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
+     * @return array
      */
-    public function delete(Request $request)
+    protected function additionalProps(): array
     {
-        $modelName = $this->getSingularModelName();
-        $model = $request->$modelName;
-
-        $this->getRepository()->delete($model);
-
-        /** @var User $user */
-        $user = auth()->user();
-        if ($user->getKey() === $model->getKey()) {
-            Auth::logout();
-        }
-
-        return redirect()->route(Str::plural($this->getSingularModelName()) . '.index');
+        return [
+            'roles' => formatForSelect(User::ROLES)
+        ];
     }
 }

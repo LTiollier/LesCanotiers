@@ -14,6 +14,14 @@ class User extends Authenticatable
 {
     use Notifiable, SoftDeletes, HasFactory, HasRoles;
 
+    const _ROLE_ADMIN = 'admin';
+    const _ROLE_EMPLOYEE = 'employee';
+
+    const ROLES = [
+        self::_ROLE_ADMIN => 'Admin',
+        self::_ROLE_EMPLOYEE => 'Employé'
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
