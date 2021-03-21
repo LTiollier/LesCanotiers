@@ -85,6 +85,9 @@
                                 v-model="quantity"
                                 label="Quantité (Kg)"
                                 @change="step++" />
+                            <v-btn @click="step++">
+                                Passer
+                            </v-btn>
                         </v-stepper-content>
 
                         <v-stepper-step
