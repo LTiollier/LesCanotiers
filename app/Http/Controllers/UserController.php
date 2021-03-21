@@ -18,7 +18,27 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
-    use HasIndex, HasCreate, HasStore, HasEdit, HasUpdate, HasDestroy;
+    use HasCreate, HasStore, HasEdit, HasUpdate, HasDestroy, HasIndex {
+        HasIndex::index as indexTrait;
+        HasStore::store as storeTrait;
+    }
+
+    /**
+     * @return \Inertia\Response
+     */
+    public function index()
+    {
+        $this->middleware('role:' . User::_ROLE_ADMIN);
+
+        return $this->indexTrait();
+    }
+
+    public function store()
+    {
+        $this->middleware('role:' . User::_ROLE_ADMIN);
+
+        return $this->storeTrait();
+    }
 
     /**
      * @param Request $request
@@ -27,6 +47,8 @@ class UserController extends Controller
      */
     public function delete(Request $request)
     {
+        $this->middleware('role:' . User::_ROLE_ADMIN);
+
         $modelName = $this->getSingularModelName();
         $model = $request->$modelName;
 
