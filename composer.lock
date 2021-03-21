@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ef734a060fbb288fb0bd1193a4252981",
+    "content-hash": "a4ea86082b15cb9b942c3a65335deacf",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -7096,16 +7096,16 @@
         },
         {
             "name": "web-id/flan",
-            "version": "0.0.1",
+            "version": "dev-leo/fix_only_in_group_by",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-id-fr/flan.git",
-                "reference": "c2edb8411a5b981d7328d6a1306443438cef5642"
+                "reference": "607eae6855be60d319389dd8892096f0eba0a447"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/web-id-fr/flan/zipball/c2edb8411a5b981d7328d6a1306443438cef5642",
-                "reference": "c2edb8411a5b981d7328d6a1306443438cef5642",
+                "url": "https://api.github.com/repos/web-id-fr/flan/zipball/607eae6855be60d319389dd8892096f0eba0a447",
+                "reference": "607eae6855be60d319389dd8892096f0eba0a447",
                 "shasum": ""
             },
             "require": {
@@ -7159,7 +7159,7 @@
             ],
             "support": {
                 "issues": "https://github.com/web-id-fr/flan/issues",
-                "source": "https://github.com/web-id-fr/flan/tree/0.0.1"
+                "source": "https://github.com/web-id-fr/flan/tree/leo/fix_only_in_group_by"
             },
             "funding": [
                 {
@@ -7167,7 +7167,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-03-10T12:53:27+00:00"
+            "time": "2021-03-21T11:25:59+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -10124,7 +10124,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "web-id/flan": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

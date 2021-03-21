@@ -19,7 +19,7 @@
         "spatie/laravel-permission": "^3.17",
         "squizlabs/php_codesniffer": "^3.5",
         "tightenco/ziggy": "^0.9.4",
-        "web-id/flan": "^0.0.1"
+        "web-id/flan": "dev-leo/fix_only_in_group_by"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",

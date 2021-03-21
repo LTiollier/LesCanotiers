@@ -15312,83 +15312,6 @@
      
 }
 
-    namespace Illuminate\Testing { 
-            /**
-     * 
-     *
-     * @mixin \Illuminate\Http\Response
-     */ 
-        class TestResponse {
-                    /**
-         * 
-         *
-         * @see \App\Providers\InertiaServiceProvider::register()
-         * @param mixed $key
-         * @static 
-         */ 
-        public static function assertInertiaViewHas($key)
-        {
-                        return \Illuminate\Testing\TestResponse::assertInertiaViewHas($key);
-        }
-                    /**
-         * 
-         *
-         * @see \App\Providers\InertiaServiceProvider::register()
-         * @param mixed $key
-         * @static 
-         */ 
-        public static function assertInertiaHasErrors(...$key)
-        {
-                        return \Illuminate\Testing\TestResponse::assertInertiaHasErrors(...$key);
-        }
-                    /**
-         * 
-         *
-         * @see \App\Providers\InertiaServiceProvider::register()
-         * @param string $key
-         * @static 
-         */ 
-        public static function assertInertiaViewIs($key)
-        {
-                        return \Illuminate\Testing\TestResponse::assertInertiaViewIs($key);
-        }
-                    /**
-         * 
-         *
-         * @see \App\Providers\InertiaServiceProvider::register()
-         * @param string $key
-         * @static 
-         */ 
-        public static function getInertiaProp($key)
-        {
-                        return \Illuminate\Testing\TestResponse::getInertiaProp($key);
-        }
-                    /**
-         * 
-         *
-         * @see \Inertia\Testing\TestResponseMacros::assertInertia()
-         * @param \Closure|null $callback
-         * @static 
-         */ 
-        public static function assertInertia($callback = null)
-        {
-                        return \Illuminate\Testing\TestResponse::assertInertia($callback);
-        }
-                    /**
-         * 
-         *
-         * @see \Inertia\Testing\TestResponseMacros::inertiaPage()
-         * @static 
-         */ 
-        public static function inertiaPage()
-        {
-                        return \Illuminate\Testing\TestResponse::inertiaPage();
-        }
-         
-    }
-     
-}
-
     namespace Illuminate\Routing { 
             /**
      * 
@@ -15515,6 +15438,39 @@
         public static function permission($permissions = [])
         {
                         return \Illuminate\Routing\Route::permission($permissions);
+        }
+         
+    }
+     
+}
+
+    namespace Illuminate\Testing { 
+            /**
+     * 
+     *
+     * @mixin \Illuminate\Http\Response
+     */ 
+        class TestResponse {
+                    /**
+         * 
+         *
+         * @see \Inertia\Testing\TestResponseMacros::assertInertia()
+         * @param \Closure|null $callback
+         * @static 
+         */ 
+        public static function assertInertia($callback = null)
+        {
+                        return \Illuminate\Testing\TestResponse::assertInertia($callback);
+        }
+                    /**
+         * 
+         *
+         * @see \Inertia\Testing\TestResponseMacros::inertiaPage()
+         * @static 
+         */ 
+        public static function inertiaPage()
+        {
+                        return \Illuminate\Testing\TestResponse::inertiaPage();
         }
          
     }
