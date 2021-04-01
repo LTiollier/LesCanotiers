@@ -55,6 +55,7 @@ class HandleInertiaRequests extends Middleware
                 $route = Route::current();
                 return $menuService->getActiveKey($route->getName());
             },
+            'csrf_token' => csrf_token(),
         ]);
     }
 }
