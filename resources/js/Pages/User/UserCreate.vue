@@ -33,6 +33,7 @@ export default {
     },
     methods: {
         submit() {
+            this.user._token = this.$page.csrf_token;
             return this.$inertia.post(this.route('users.store'), this.user)
         }
     }

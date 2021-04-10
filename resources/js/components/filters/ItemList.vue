@@ -22,6 +22,7 @@
                         type="hidden"
                         :name="value.key"
                         :value="value.value">
+                    <input type="hidden" name="_token" :value="$page.csrf_token">
                     <v-btn dusk="export-button" class="secondary" type="submit">
                         <v-icon>mdi-file-download</v-icon>&nbsp;
                         Exporter
@@ -295,9 +296,12 @@ export default {
         },
         query(paginateParams) {
             let preparedQuery = this.prepareQuery(paginateParams);
-            let promise = this.options.routeParams
-                ? getModelFiltered(this.options.routeParams, preparedQuery)
-                : getModelFiltered(preparedQuery);
+            let params = this.options.routeParams
+                ? this.options.routeParams
+                : preparedQuery;
+
+            params._token = this.$page.csrf_token;
+            let promise = getModelFiltered(params);
             promise.then(response => this.handleQuerySuccess(response.data))
                 .catch(error => this.handleQueryError(error));
         },
@@ -339,7 +343,6 @@ export default {
             this.loading = false;
         },
         handleQueryError(error) {
-            console.log(error);
             this.$store.commit('setSnackbar', {message: 'Erreur serveur', type: 'error'});
         },
         loadFromLocalStorage() {
@@ -413,7 +416,8 @@ export default {
             const params = {
                 filter_name: this.options.filterName,
                 label: newFilterName,
-                fields: this.prepareFieldsForNewFilterStoring()
+                fields: this.prepareFieldsForNewFilterStoring(),
+                _token: this.$page.csrf_token
             };
             this.saveFilterLoading = true;
 

@@ -27,6 +27,7 @@ export default {
     },
     methods: {
         submit() {
+            this.activity._token = this.$page.csrf_token;
             return this.$inertia.post(this.route('activities.store'), this.activity)
         }
     }

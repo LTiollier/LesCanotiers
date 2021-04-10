@@ -34,6 +34,7 @@ export default {
                 sortBy: 'name',
                 descending: 0,
                 rowsPerPage: -1,
+                _token: this.$page.csrf_token
             };
             return getModelFiltered(data);
         },

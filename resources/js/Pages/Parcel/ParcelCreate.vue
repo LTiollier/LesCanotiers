@@ -27,6 +27,7 @@ export default {
     },
     methods: {
         submit() {
+            this.parcel._token = this.$page.csrf_token;
             return this.$inertia.post(this.route('parcels.store'), this.parcel)
         }
     }

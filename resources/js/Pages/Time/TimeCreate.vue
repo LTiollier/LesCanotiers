@@ -183,6 +183,7 @@ export default {
                 date: this.date,
                 quantity: this.quantity,
                 user: this.$page.auth,
+                _token: this.$page.csrf_token
             }, { preserveState: false })
         }
     }

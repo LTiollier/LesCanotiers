@@ -66,6 +66,7 @@ export default {
     },
     methods: {
         submit() {
+            this.login._token = this.$page.csrf_token;
             this.$inertia.post(route('login.create'), this.login);
         },
     }

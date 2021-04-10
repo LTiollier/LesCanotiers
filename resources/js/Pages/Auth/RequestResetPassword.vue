@@ -57,7 +57,10 @@ export default {
     },
     methods: {
         submit() {
-            this.$inertia.post(route('password.email'), {email: this.email})
+            this.$inertia.post(route('password.email'), {
+                email: this.email,
+                _token: this.$page.csrf_token
+            })
         }
     }
 }

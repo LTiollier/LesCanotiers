@@ -27,6 +27,7 @@ export default {
     },
     methods: {
         submit() {
+            this.cycle._token = this.$page.csrf_token;
             return this.$inertia.post(this.route('cycles.store'), this.cycle)
         }
     }

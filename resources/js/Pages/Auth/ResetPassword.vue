@@ -75,7 +75,8 @@ export default {
                 token: this.token,
                 email: this.email,
                 password: this.password,
-                password_confirmation: this.password_confirmation
+                password_confirmation: this.password_confirmation,
+                _token: this.$page.csrf_token
             })
         }
     }
