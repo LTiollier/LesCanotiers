@@ -1,14 +1,33 @@
-importScripts('https://unpkg.com/workbox-sw@0.0.2/build/importScripts/workbox-sw.dev.v0.0.2.js');
-importScripts('https://unpkg.com/workbox-runtime-caching@1.3.0/build/importScripts/workbox-runtime-caching.prod.v1.3.0.js');
-importScripts('https://unpkg.com/workbox-routing@1.3.0/build/importScripts/workbox-routing.prod.v1.3.0.js');
-
-const assetRoute = new workbox.routing.RegExpRoute({
-    regExp: new RegExp('/*'),
-    handler: new workbox.runtimeCaching.CacheFirst()
+// On écoute l'évènement install pour effectuer les actions de démarrage
+self.addEventListener("install", function(event) {
+    // Ici on utilise waitUntil qui attends une promesse pour valider l'installation
+    event.waitUntil(
+        caches.open("les-canotiers-v1").then(function(cache) {
+            // On met en cache une liste d'URLs qui sont la fondation de notre app.
+            return cache.addAll([
+                "/",
+                "/js/admin/app.js",
+                "/js/admin/manifest.js",
+                "/js/admin/vendor.js",
+                "/css/app.css",
+            ]);
+        })
+    );
 });
 
-const router = new workbox.routing.Router();
-router.registerRoutes({routes: [assetRoute]});
-router.setDefaultHandler({
-    handler: new workbox.runtimeCaching.CacheFirst()
+// On indique que pour chaque requêtes, si cela match nos URLs de cache défini plus haut, alors on servira le cache plutôt que d'effectuer la vrai requête par le réseau.
+self.addEventListener('fetch', function(event) {
+    event.respondWith(
+        caches.match(event.request)
+            .then(function(response) {
+                    // Cache HIT, on retourne la réponse en cache.
+                    if (response) {
+                        return response;
+                    }
+
+                    // Sinon on effectue la requête réellement et on retourne son contenu.
+                    return fetch(event.request);
+                }
+            )
+    );
 });

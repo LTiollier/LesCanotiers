@@ -1,8 +1,8 @@
 {
     "lang" : "fr",
     "dir" : "ltr",
-    "name" : "Les Cannotiers",
-    "short_name" : "LesCannotiers",
+    "name" : "Les Canotiers",
+    "short_name" : "LesCanotiers",
     "icons" :   [
         {
             "src" : "\/logo.png",
