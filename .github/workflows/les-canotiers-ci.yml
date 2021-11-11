@@ -72,5 +72,5 @@ jobs:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
 
       - name: Deploy prod
-        if: github.ref != 'refs/heads/master'
+        if: github.ref == 'refs/heads/master'
         run: curl ${{ secrets.DEPLOY_URL }}
