@@ -21,4 +21,9 @@ class ParcelRepository
     {
         $this->model = $parcel;
     }
+
+    public function all()
+    {
+        return $this->model->all();
+    }
 }

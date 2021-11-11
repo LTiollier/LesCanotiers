@@ -1,7 +1,7 @@
 <template>
     <base-layout>
         <v-container class="mt-6">
-            <cycle-form :cycle="cycle" @submit="submit">
+            <cycle-form :cycle="cycle" :vegetables="vegetables" :parcels="parcels" @submit="submit">
                 <template #title>
                     Création d'un cycle
                 </template>
@@ -20,6 +20,16 @@ import CycleForm from "../../components/forms/CycleForm";
 export default {
     name: "CycleCreate",
     components: {CycleForm, BaseLayout},
+    props: {
+        vegetables: {
+            required: true,
+            type: Array
+        },
+        parcels: {
+            required: true,
+            type: Array
+        }
+    },
     data() {
         return {
             cycle: {},

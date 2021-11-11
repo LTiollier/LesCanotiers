@@ -1,7 +1,7 @@
 <template>
     <base-layout>
         <v-container class="mt-6">
-            <cycle-form :cycle="cycle" with-delete @submit="submit" @deleteCycle="deleteCycle">
+            <cycle-form :cycle="cycle" with-delete :vegetables="vegetables" :parcels="parcels" @submit="submit" @deleteCycle="deleteCycle">
                 <template #title>
                     Edition d'un cycle
                 </template>
@@ -27,6 +27,14 @@ export default {
         cycle: {
             required: true,
             type: Object
+        },
+        vegetables: {
+            required: true,
+            type: Array
+        },
+        parcels: {
+            required: true,
+            type: Array
         }
     },
     methods: {

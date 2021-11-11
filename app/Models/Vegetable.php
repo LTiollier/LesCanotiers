@@ -12,7 +12,8 @@ class Vegetable extends Model
 
     /** @var array<string> */
     protected $fillable = [
-        'name', 'vegetable_category_id'
+        'name',
+        'vegetable_category_id'
     ];
 
     /**

@@ -1,7 +1,7 @@
 <template>
     <base-layout>
         <v-container class="mt-6">
-            <vegetable-form :vegetable="vegetable" with-delete @submit="submit" @deleteVegetable="deleteVegetable">
+            <vegetable-form :vegetable="vegetable" :vegetable-categories="vegetableCategories" with-delete @submit="submit" @deleteVegetable="deleteVegetable">
                 <template #title>
                     Edition d'un fruit/légume
                 </template>
@@ -24,6 +24,10 @@ export default {
         vegetable: {
             required: true,
             type: Object
+        },
+        vegetableCategories: {
+            required: true,
+            type: Array,
         }
     },
     methods: {

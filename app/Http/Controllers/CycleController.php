@@ -10,8 +10,12 @@ use App\Http\Controllers\Traits\CRUD\HasStore;
 use App\Http\Controllers\Traits\CRUD\HasUpdate;
 use App\Http\Requests\StoreCycleRequest;
 use App\Http\Resources\CycleResource;
+use App\Http\Resources\ParcelResource;
+use App\Http\Resources\VegetableResource;
 use App\Models\Cycle;
 use App\Repositories\CycleRepository;
+use App\Repositories\ParcelRepository;
+use App\Repositories\VegetableRepository;
 
 class CycleController extends Controller
 {
@@ -65,5 +69,16 @@ class CycleController extends Controller
     protected function getModelResourceClass(): string
     {
         return CycleResource::class;
+    }
+
+    protected function additionalProps(): array
+    {
+        $vegetableRepository = app(VegetableRepository::class);
+        $parcelRepository = app(ParcelRepository::class);
+
+        return [
+            'vegetables' => VegetableResource::collection($vegetableRepository->all()),
+            'parcels' => ParcelResource::collection($parcelRepository->all())
+        ];
     }
 }

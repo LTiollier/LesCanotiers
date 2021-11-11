@@ -1,7 +1,7 @@
 <template>
     <base-layout>
         <v-container class="mt-6">
-            <vegetable-form :vegetable="vegetable" @submit="submit">
+            <vegetable-form :vegetable="vegetable" :vegetable-categories="vegetableCategories" @submit="submit">
                 <template #title>
                     Création d'un fruit/légume
                 </template>
@@ -20,6 +20,12 @@ import VegetableForm from "../../components/forms/VegetableForm";
 export default {
     name: "VegetableCreate",
     components: {VegetableForm, BaseLayout},
+    props: {
+        vegetableCategories: {
+            required: true,
+            type: Array,
+        }
+    },
     data() {
         return {
             vegetable: {},

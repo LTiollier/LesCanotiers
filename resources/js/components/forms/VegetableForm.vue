@@ -16,7 +16,15 @@
                     required />
             </v-col>
             <v-col cols="12" md="6" class="pa-3">
-                <select-vegetable-category :original-value.sync="vegetable.vegetable_category" :error-messages="vegetableCategoryErrors" />
+                <v-select
+                    v-model="vegetable.vegetable_category"
+                    :items="vegetableCategories"
+                    :error-messages="vegetableCategoryErrors"
+                    label="Catégorie Fruit/Légume"
+                    item-text="name"
+                    item-value="id"
+                    return-object
+                    required />
             </v-col>
             <v-col cols="12">
                 <v-btn class="mr-4" color="primary" type="submit">
@@ -32,10 +40,8 @@
 
 <script>
 
-import SelectVegetableCategory from "../inputs/selects/SelectVegetableCategory";
 export default {
     name: "VegetableForm",
-    components: {SelectVegetableCategory},
     props: {
         vegetable: {
             required: true,
@@ -45,6 +51,10 @@ export default {
             required: false,
             type: Boolean,
             default: false
+        },
+        vegetableCategories: {
+            required: true,
+            type: Array,
         }
     },
     computed: {

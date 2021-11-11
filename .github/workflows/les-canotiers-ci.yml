@@ -5,10 +5,10 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       # Setup
-      - name: Setup PHP 7.4
+      - name: Setup PHP 8.0
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
+          php-version: '8.0'
           tools: composer:v2
 
       - uses: actions/checkout@v2

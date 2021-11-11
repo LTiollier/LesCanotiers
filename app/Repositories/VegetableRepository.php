@@ -23,6 +23,11 @@ class VegetableRepository
         $this->model = $vegetable;
     }
 
+    public function all()
+    {
+        return $this->model->all();
+    }
+
     /**
      * @param array $parameters
      * @return mixed
