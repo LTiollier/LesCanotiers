@@ -25,6 +25,11 @@ class CycleRepository
         $this->model = $cycle;
     }
 
+    public function all()
+    {
+        return $this->model->all();
+    }
+
     /**
      * @param array $parameters
      * @return Model

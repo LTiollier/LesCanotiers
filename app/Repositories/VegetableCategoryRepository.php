@@ -22,6 +22,11 @@ class VegetableCategoryRepository
         $this->model = $vegetableCategory;
     }
 
+    public function all()
+    {
+        return $this->model->all();
+    }
+
     public function getFromNow()
     {
         return $this->model

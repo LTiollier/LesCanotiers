@@ -9,10 +9,24 @@
         </v-row>
         <v-row no-gutters>
             <v-col cols="12" md="6" class="pa-3">
-                <select-vegetable :original-value.sync="cycle.vegetable" />
+                <v-select
+                    v-model="cycle.vegetable"
+                    :items="vegetables"
+                    label="Fruit/Légume"
+                    item-text="name"
+                    item-value="id"
+                    return-object
+                    required />
             </v-col>
             <v-col cols="12" md="6" class="pa-3">
-                <select-parcel :original-value.sync="cycle.parcel" />
+                <v-select
+                    v-model="cycle.parcel"
+                    :items="parcels"
+                    label="Parcelle"
+                    item-text="name"
+                    item-value="id"
+                    return-object
+                    required />
             </v-col>
             <v-col cols="12" md="6" class="pa-3">
                 <date-input v-model="cycle.starts_at" label="Commence le" :error-messages="startsAtErrors" />
@@ -34,16 +48,22 @@
 
 <script>
 
-import SelectVegetable from "../inputs/selects/SelectVegetable";
-import SelectParcel from "../inputs/selects/SelectParcel";
 import DateInput from "../filters/DateInputFilter";
 export default {
     name: "CycleForm",
-    components: {DateInput, SelectParcel, SelectVegetable},
+    components: {DateInput},
     props: {
         cycle: {
             required: true,
             type: Object
+        },
+        vegetables: {
+            required: true,
+            type: Array
+        },
+        parcels: {
+            required: true,
+            type: Array
         },
         withDelete: {
             required: false,

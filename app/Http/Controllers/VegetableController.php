@@ -9,8 +9,10 @@ use App\Http\Controllers\Traits\CRUD\HasIndex;
 use App\Http\Controllers\Traits\CRUD\HasStore;
 use App\Http\Controllers\Traits\CRUD\HasUpdate;
 use App\Http\Requests\StoreVegetableRequest;
+use App\Http\Resources\VegetableCategoryResource;
 use App\Http\Resources\VegetableResource;
 use App\Models\Vegetable;
+use App\Repositories\VegetableCategoryRepository;
 use App\Repositories\VegetableRepository;
 
 class VegetableController extends Controller
@@ -65,5 +67,14 @@ class VegetableController extends Controller
     protected function getModelResourceClass(): string
     {
         return VegetableResource::class;
+    }
+
+    protected function additionalProps(): array
+    {
+        $vegetableCategoryRepository = app(VegetableCategoryRepository::class);
+
+        return [
+            'vegetableCategories' => VegetableCategoryResource::collection($vegetableCategoryRepository->all())
+        ];
     }
 }
