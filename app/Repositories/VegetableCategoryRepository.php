@@ -34,8 +34,13 @@ class VegetableCategoryRepository
             ->whereHas('vegetables', function ($query) {
                 $query->whereHas('cycles', function ($query) {
                     $now = now();
-                    $query->whereDate('starts_at', '<=', $now)
-                        ->whereDate('ends_at', '>=', $now);
+                    $query->where(function ($query) use ($now) {
+                        $query->whereDate('starts_at', '<=', $now)
+                            ->whereDate('ends_at', '>=', $now);
+                    })->orWhere(function ($query) use ($now) {
+                        $query->whereDate('starts_at', '<=', $now)
+                            ->whereNull('ends_at');
+                    })
                 });
             })->get();
     }

@@ -15,7 +15,7 @@ jobs:
 
       # Preparing environment
       - name: Copying .env environment file
-        run: cp .env.example .env
+        run: cp .env.ci .env
 
       - name: Get composer cache directory
         id: composer-cache
