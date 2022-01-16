@@ -5,10 +5,10 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       # Setup
-      - name: Setup PHP 8.0
+      - name: Setup PHP 8.1
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.0'
+          php-version: '8.1'
           tools: composer:v2
 
       - uses: actions/checkout@v2
@@ -33,12 +33,6 @@ jobs:
 
       - name: Generating laravel key
         run: php artisan key:generate
-
-      - name: PHPCS
-        run: ./vendor/bin/phpcs --report=full
-
-      - name: PSALM
-        run: ./vendor/bin/psalm
 
       - name: Starting MySQL
         run: sudo systemctl start mysql.service

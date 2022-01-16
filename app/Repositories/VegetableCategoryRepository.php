@@ -40,7 +40,7 @@ class VegetableCategoryRepository
                     })->orWhere(function ($query) use ($now) {
                         $query->whereDate('starts_at', '<=', $now)
                             ->whereNull('ends_at');
-                    })
+                    });
                 });
             })->get();
     }
