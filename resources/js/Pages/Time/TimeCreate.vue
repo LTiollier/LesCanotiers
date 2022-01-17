@@ -42,7 +42,7 @@
                             <list-selector :items="cycles" @click="setSelectedValue($event, 'cycle')">
                                 <template v-slot:default="slotProps">
                                     {{ slotProps.item.vegetable.name }} - {{ slotProps.item.parcel.name }}
-                                    <br>({{ getFrenchDateStyle(slotProps.item.starts_at) }} au {{ getFrenchDateStyle(slotProps.item.ends_at) }})
+                                    <br>({{ getFrenchDateStyle(slotProps.item.starts_at) }} au {{ slotProps.item.ends_at ? getFrenchDateStyle(slotProps.item.ends_at) : '--/--/---' }})
                                 </template>
                             </list-selector>
                         </v-stepper-content>
