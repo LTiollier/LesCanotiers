@@ -26,22 +26,4 @@ class VegetableCategoryRepository
     {
         return $this->model->all();
     }
-
-    public function getFromNow()
-    {
-        return $this->model
-            ->with('vegetables.cycles.vegetable', 'vegetables.cycles.parcel')
-            ->whereHas('vegetables', function ($query) {
-                $query->whereHas('cycles', function ($query) {
-                    $now = now();
-                    $query->where(function ($query) use ($now) {
-                        $query->whereDate('starts_at', '<=', $now)
-                            ->whereDate('ends_at', '>=', $now);
-                    })->orWhere(function ($query) use ($now) {
-                        $query->whereDate('starts_at', '<=', $now)
-                            ->whereNull('ends_at');
-                    });
-                }, '>=', 1);
-            })->get();
-    }
 }

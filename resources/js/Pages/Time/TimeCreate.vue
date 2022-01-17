@@ -13,32 +13,10 @@
                             editable
                             :complete="step > 1"
                             step="1">
-                            Choisir une catégorie de légume
-                        </v-stepper-step>
-
-                        <v-stepper-content step="1">
-                            <list-selector :items="vegetableCategories" @click="setSelectedValue($event, 'vegetableCategory')" />
-                        </v-stepper-content>
-
-                        <v-stepper-step
-                            :editable="step > 2"
-                            :complete="step > 2"
-                            step="2">
-                            Choisir un légume
-                        </v-stepper-step>
-
-                        <v-stepper-content step="2">
-                            <list-selector :items="vegetables" @click="setSelectedValue($event, 'vegetable')" />
-                        </v-stepper-content>
-
-                        <v-stepper-step
-                            :editable="step > 3"
-                            :complete="step > 3"
-                            step="3">
                             Choisir un cycle
                         </v-stepper-step>
 
-                        <v-stepper-content step="3">
+                        <v-stepper-content step="1">
                             <list-selector :items="cycles" @click="setSelectedValue($event, 'cycle')">
                                 <template v-slot:default="slotProps">
                                     {{ slotProps.item.vegetable.name }} - {{ slotProps.item.parcel.name }}
@@ -48,24 +26,24 @@
                         </v-stepper-content>
 
                         <v-stepper-step
-                            :editable="step > 4"
-                            :complete="step > 4"
-                            step="4">
+                            :editable="step > 2"
+                            :complete="step > 2"
+                            step="2">
                             Choisir une activité
                         </v-stepper-step>
 
-                        <v-stepper-content step="4">
+                        <v-stepper-content step="2">
                             <list-selector :items="activities" @click="setSelectedValue($event, 'activity')" />
                         </v-stepper-content>
 
                         <v-stepper-step
-                            :editable="step > 5"
-                            :complete="step > 5"
-                            step="5">
+                            :editable="step > 3"
+                            :complete="step > 3"
+                            step="3">
                             Rentrer un temps
                         </v-stepper-step>
 
-                        <v-stepper-content step="5">
+                        <v-stepper-content step="3">
                             <v-select
                                 v-model="time"
                                 :items="times"
@@ -74,13 +52,13 @@
                         </v-stepper-content>
 
                         <v-stepper-step
-                            :editable="step > 6"
-                            :complete="step > 6"
-                            step="6">
+                            :editable="step > 4"
+                            :complete="step > 4"
+                            step="4">
                             Rentrer la quantité récolté
                         </v-stepper-step>
 
-                        <v-stepper-content step="6">
+                        <v-stepper-content step="4">
                             <v-text-field
                                 v-model="quantity"
                                 label="Quantité (Kg)"
@@ -91,13 +69,13 @@
                         </v-stepper-content>
 
                         <v-stepper-step
-                            :editable="step > 7"
-                            :complete="step > 7"
-                            step="7">
+                            :editable="step > 5"
+                            :complete="step > 5"
+                            step="5">
                             Choisir une date
                         </v-stepper-step>
 
-                        <v-stepper-content step="7">
+                        <v-stepper-content step="5">
                             <date-input v-model="date" input-format="YYYY-MM-DD" />
                             <v-btn v-if="date" elevation="2" color="primary" @click="submit">
                                 Ajouter
@@ -120,7 +98,7 @@ export default {
     name: "TimeCreate",
     components: {DateInput, ListSelector, BaseLayout},
     props: {
-        vegetableCategories: {
+        cycles: {
             required: true,
             type: Array
         },
@@ -132,8 +110,6 @@ export default {
     data() {
         return {
             step: 1,
-            vegetableCategory: null,
-            vegetable: null,
             cycle: null,
             activity: null,
             time: null,
@@ -155,16 +131,6 @@ export default {
                 {text: '6 heures 30 minutes', value: 390},
                 {text: '7 heures', value: 420},
             ]
-        }
-    },
-    computed: {
-        vegetables() {
-            if (this.vegetableCategory === null) return [];
-            return this.vegetableCategory.vegetables;
-        },
-        cycles() {
-            if (this.vegetable === null) return [];
-            return this.vegetable.cycles;
         }
     },
     methods: {

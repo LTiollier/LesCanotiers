@@ -80,4 +80,23 @@ class CycleRepository
             ->whereDate('ends_at', '<=', $end)
             ->get();
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder[]|Collection
+     */
+    public function getFromNow()
+    {
+        $now = now();
+
+        return $this->model
+            ->where(function ($query) use ($now) {
+                $query->whereDate('starts_at', '<=', $now)
+                    ->whereDate('ends_at', '>=', $now);
+            })->orWhere(function ($query) use ($now) {
+                $query->whereDate('starts_at', '<=', $now)
+                    ->whereNull('ends_at');
+            })
+                ->with(['vegetable', 'parcel'])
+                ->get();
+    }
 }

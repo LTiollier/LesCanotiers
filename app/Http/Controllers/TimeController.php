@@ -10,11 +10,11 @@ use App\Http\Controllers\Traits\CRUD\HasStore;
 use App\Http\Controllers\Traits\CRUD\HasUpdate;
 use App\Http\Requests\StoreTimeRequest;
 use App\Http\Resources\ActivityResource;
+use App\Http\Resources\CycleResource;
 use App\Http\Resources\TimeResource;
-use App\Http\Resources\VegetableCategoryResource;
 use App\Repositories\ActivityRepository;
+use App\Repositories\CycleRepository;
 use App\Repositories\TimeRepository;
-use App\Repositories\VegetableCategoryRepository;
 
 class TimeController extends Controller
 {
@@ -30,17 +30,17 @@ class TimeController extends Controller
         'cycle.parcel',
     ];
 
-    /** @var VegetableCategoryRepository  */
-    protected $vegetableCategoryRepository;
+    /** @var CycleRepository  */
+    protected $cycleRepository;
 
     /** @var ActivityRepository  */
     protected $activityRepository;
 
     public function __construct(
-        VegetableCategoryRepository $vegetableCategoryRepository,
+        CycleRepository $cycleRepository,
         ActivityRepository $activityRepository
     ) {
-        $this->vegetableCategoryRepository = $vegetableCategoryRepository;
+        $this->cycleRepository = $cycleRepository;
         $this->activityRepository = $activityRepository;
     }
 
@@ -49,11 +49,11 @@ class TimeController extends Controller
      */
     protected function additionalProps(): array
     {
-        $vegetableCategories = $this->vegetableCategoryRepository->getFromNow();
+        $cycles = $this->cycleRepository->getFromNow();
         $activities = $this->activityRepository->all();
 
         return [
-            'vegetableCategories' => VegetableCategoryResource::collection($vegetableCategories),
+            'cycles' => CycleResource::collection($cycles),
             'activities' => ActivityResource::collection($activities)
         ];
     }
