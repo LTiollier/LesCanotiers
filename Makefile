@@ -8,7 +8,7 @@ update: vendor package-lock.json public/js/vendor.js
 
 ## install
 install: .env vendor node_modules public/js/vendor.js
-	php artisan key:generate
+	sail artisan key:generate
 
 ## install database
 install_db:
@@ -18,18 +18,18 @@ install_db:
 
 ## build ci
 build_ci: .env vendor
-	php artisan key:generate
+	sail artisan key:generate
 
 ## reset project
 reset:
-	composer install
+	sail composer install
 	npm install
 	rm -rf public/js/*.js
 	rm -rf public/css/*.css
 	npm run dev
 	make fresh
-	php artisan cache:clear
-	php artisan config:clear
+	sail artisan cache:clear
+	sail artisan config:clear
 
 ## code analysis
 testing:
@@ -77,8 +77,8 @@ refresh:
 
 ##  fresh
 fresh:
-	php artisan migrate:fresh --seed
-	#php artisan migrate:fresh --database mysql_test
+	sail artisan migrate:fresh --seed
+	#sail artisan migrate:fresh --database mysql_test
 
 #####
 # Javascript
