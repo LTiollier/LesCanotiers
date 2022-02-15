@@ -2,79 +2,70 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Traits\CRUD\HasCreate;
-use App\Http\Controllers\Traits\CRUD\HasDestroy;
-use App\Http\Controllers\Traits\CRUD\HasEdit;
-use App\Http\Controllers\Traits\CRUD\HasIndex;
-use App\Http\Controllers\Traits\CRUD\HasStore;
-use App\Http\Controllers\Traits\CRUD\HasUpdate;
 use App\Http\Requests\StoreVegetableRequest;
 use App\Http\Resources\VegetableCategoryResource;
 use App\Http\Resources\VegetableResource;
 use App\Models\Vegetable;
 use App\Repositories\VegetableCategoryRepository;
 use App\Repositories\VegetableRepository;
+use Illuminate\Http\RedirectResponse;
+use Inertia\Inertia;
+use Inertia\Response;
+use WebId\Flan\Filters\Base\FilterFactory;
 
 class VegetableController extends Controller
 {
-    use HasIndex, HasCreate, HasStore, HasEdit, HasUpdate, HasDestroy;
+    public function __construct(
+        private VegetableCategoryRepository $vegetableCategoryRepository,
+        private VegetableRepository $vegetableRepository
+    ) {
+    }
 
-    /**
-     * @var string[]
-     */
-    protected $editRelations = ['vegetableCategory'];
-
-    protected function getRepository()
+    public function index(): Response
     {
-        return app(VegetableRepository::class);
+        return Inertia::render('Vegetable/VegetableIndex', [
+            'filterConfigs' => FilterFactory::create('vegetables')->getConfiguration()
+        ]);
+    }
+
+    public function create(): Response
+    {
+        return Inertia::render('Vegetable/VegetableCreate', [
+            'vegetableCategories' => VegetableCategoryResource::collection($this->vegetableCategoryRepository->all())
+        ]);
+    }
+
+    public function store(StoreVegetableRequest $request): RedirectResponse
+    {
+        $this->vegetableRepository->create($request->validated());
+
+        return redirect()->route('vegetables.index');
+    }
+
+    public function edit(Vegetable $vegetable): Response
+    {
+        $vegetable->load('vegetableCategory');
+
+        return Inertia::render('Vegetable/VegetableEdit', [
+            'vegetable' => VegetableResource::make($vegetable),
+            'vegetableCategories' => VegetableCategoryResource::collection($this->vegetableCategoryRepository->all())
+        ]);
+    }
+
+    public function update(Vegetable $vegetable, StoreVegetableRequest $request): RedirectResponse
+    {
+        $this->vegetableRepository->update($vegetable, $request->validated());
+
+        return redirect()->route('vegetables.index');
     }
 
     /**
-     * @return string
+     * @throws \Exception
      */
-    protected function getInertiaComponentTemplate(): string
+    public function destroy(Vegetable $vegetable): RedirectResponse
     {
-        return 'Vegetable/Vegetable';
-    }
+        $this->vegetableRepository->delete($vegetable);
 
-    /**
-     * @return string
-     */
-    protected function getSingularModelName(): string
-    {
-        return 'vegetable';
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoreRequestClass(): string
-    {
-        return StoreVegetableRequest::class;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getModelClass(): string
-    {
-        return Vegetable::class;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getModelResourceClass(): string
-    {
-        return VegetableResource::class;
-    }
-
-    protected function additionalProps(): array
-    {
-        $vegetableCategoryRepository = app(VegetableCategoryRepository::class);
-
-        return [
-            'vegetableCategories' => VegetableCategoryResource::collection($vegetableCategoryRepository->all())
-        ];
+        return redirect()->route('vegetables.index');
     }
 }

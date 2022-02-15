@@ -2,75 +2,61 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Traits\CRUD\HasCreate;
-use App\Http\Controllers\Traits\CRUD\HasDestroy;
-use App\Http\Controllers\Traits\CRUD\HasEdit;
-use App\Http\Controllers\Traits\CRUD\HasIndex;
-use App\Http\Controllers\Traits\CRUD\HasStore;
-use App\Http\Controllers\Traits\CRUD\HasUpdate;
 use App\Http\Requests\StoreVegetableCategoryRequest;
 use App\Http\Resources\VegetableCategoryResource;
 use App\Models\VegetableCategory;
 use App\Repositories\VegetableCategoryRepository;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
+use Inertia\Response;
 use WebId\Flan\Filters\Base\FilterFactory;
 
 class VegetableCategoryController extends Controller
 {
-    use HasIndex, HasCreate, HasStore, HasEdit, HasUpdate, HasDestroy;
-
-    /**
-     * @return \Inertia\Response
-     */
-    public function index()
+    public function __construct(private VegetableCategoryRepository $vegetableCategoryRepository)
     {
-        return Inertia::render($this->getInertiaComponentTemplate() . 'Index', [
+    }
+
+    public function index(): Response
+    {
+        return Inertia::render('VegetableCategory/VegetableCategoryIndex', [
             'filterConfigs' => FilterFactory::create('vegetablecategories')->getConfiguration()
         ]);
     }
 
-    protected function getRepository()
+    public function create(): Response
     {
-        return app(VegetableCategoryRepository::class);
+        return Inertia::render('VegetableCategory/VegetableCategoryCreate');
+    }
+
+    public function store(StoreVegetableCategoryRequest $request): RedirectResponse
+    {
+        $this->vegetableCategoryRepository->create($request->validated());
+
+        return redirect()->route('vegetableCategories.index');
+    }
+
+    public function edit(VegetableCategory $vegetableCategory): Response
+    {
+        return Inertia::render('VegetableCategory/VegetableCategoryEdit', [
+            'vegetableCategory' => VegetableCategoryResource::make($vegetableCategory),
+        ]);
+    }
+
+    public function update(VegetableCategory $vegetableCategory, StoreVegetableCategoryRequest $request): RedirectResponse
+    {
+        $this->vegetableCategoryRepository->update($vegetableCategory, $request->validated());
+
+        return redirect()->route('vegetableCategories.index');
     }
 
     /**
-     * @return string
+     * @throws \Exception
      */
-    protected function getInertiaComponentTemplate(): string
+    public function destroy(VegetableCategory $vegetableCategory): RedirectResponse
     {
-        return 'VegetableCategory/VegetableCategory';
-    }
+        $this->vegetableCategoryRepository->delete($vegetableCategory);
 
-    /**
-     * @return string
-     */
-    protected function getSingularModelName(): string
-    {
-        return 'vegetableCategory';
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoreRequestClass(): string
-    {
-        return StoreVegetableCategoryRequest::class;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getModelClass(): string
-    {
-        return VegetableCategory::class;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getModelResourceClass(): string
-    {
-        return VegetableCategoryResource::class;
+        return redirect()->route('vegetableCategories.index');
     }
 }
