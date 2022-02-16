@@ -1,47 +1,52 @@
 <?php
 
+use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\CycleController;
+use App\Http\Controllers\ParcelController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\TimeController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\VegetableCategoryController;
+use App\Http\Controllers\VegetableController;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::namespace('Auth')->group(function () {
     Route::blacklist(function () {
-        Route::get('login', [\App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
-        Route::get('password/reset/{token}', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+        Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+        Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
     });
-    Route::post('login', [\App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login.create');
-    Route::get('logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
-    Route::get('password/reset', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-    Route::post('password/email', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-    Route::post('password/reset', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'reset'])->name('password.update');
+    Route::post('login', [LoginController::class, 'login'])->name('login.create');
+    Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+    Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+    Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 });
 
 Route::middleware('auth')->group(function () {
-    /**
-     * CRUD
-     */
-    Route::crud('UserController', User::class, 'user', ['show'], function () {
-        Route::bind('user', function ($value) {
-            if ($value === "me") {
-                return Auth::guard()->user();
-            }
-            return User::findOrFail($value);
-        });
-    });
+    Route::resources([
+        'users' => UserController::class,
+        'times' => TimeController::class
+    ], ['except' => ['show']]);
 
 
     Route::middleware('role:' . User::_ROLE_ADMIN)->group(function () {
-        Route::get('/report/export/{startsAt?}/{endsAt?}', [\App\Http\Controllers\ReportController::class, 'exportCycles'])->name('cycles.report.export');
-        Route::get('/report/{startsAt?}/{endsAt?}', [\App\Http\Controllers\ReportController::class, 'index'])->name('report');
-        Route::get('/cycles/{cycle}/export', [\App\Http\Controllers\ReportController::class, 'exportCycle'])->name('cycles.report');
-        Route::crud('VegetableCategoryController', \App\Models\VegetableCategory::class, 'vegetableCategory');
-        Route::crud('VegetableController', \App\Models\Vegetable::class, 'vegetable');
-        Route::crud('ParcelController', \App\Models\Parcel::class, 'parcel');
-        Route::crud('CycleController', \App\Models\Cycle::class, 'cycle');
-        Route::crud('ActivityController', \App\Models\Activity::class, 'activity');
-    });
+        Route::resources([
+            'cycles' => CycleController::class,
+            'parcels' => ParcelController::class,
+            'vegetables' => VegetableController::class,
+            'vegetableCategories' => VegetableCategoryController::class,
+            'activities' => ActivityController::class
+        ], ['except' => ['show']]);
 
-    Route::crud('TimeController', \App\Models\Time::class, 'time');
+
+        Route::get('/report/export/{startsAt?}/{endsAt?}', [ReportController::class, 'exportCycles'])->name('cycles.report.export');
+        Route::get('/report/{startsAt?}/{endsAt?}', [ReportController::class, 'index'])->name('report');
+        Route::get('/cycles/{cycle}/export', [ReportController::class, 'exportCycle'])->name('cycles.report');
+    });
 
     Route::redirect('/', route('times.create'))->name('home');
 });

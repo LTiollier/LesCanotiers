@@ -2,12 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Traits\CRUD\HasCreate;
-use App\Http\Controllers\Traits\CRUD\HasDestroy;
-use App\Http\Controllers\Traits\CRUD\HasEdit;
-use App\Http\Controllers\Traits\CRUD\HasIndex;
-use App\Http\Controllers\Traits\CRUD\HasStore;
-use App\Http\Controllers\Traits\CRUD\HasUpdate;
 use App\Http\Requests\StoreCycleRequest;
 use App\Http\Resources\CycleResource;
 use App\Http\Resources\ParcelResource;
@@ -16,69 +10,71 @@ use App\Models\Cycle;
 use App\Repositories\CycleRepository;
 use App\Repositories\ParcelRepository;
 use App\Repositories\VegetableRepository;
+use Illuminate\Http\RedirectResponse;
+use Inertia\Inertia;
+use Inertia\Response;
+use WebId\Flan\Filters\Base\FilterFactory;
 
 class CycleController extends Controller
 {
-    use HasIndex, HasCreate, HasStore, HasEdit, HasUpdate, HasDestroy;
+    public function __construct(
+        private CycleRepository $cycleRepository,
+        private VegetableRepository $vegetableRepository,
+        private ParcelRepository $parcelRepository
+    ) {
+    }
 
-    /**
-     * @var array
-     */
-    protected $editRelations = ['vegetable', 'parcel', 'times.activity'];
-
-    protected function getRepository()
+    public function index(): Response
     {
-        return app(CycleRepository::class);
+        return Inertia::render('Cycle/CycleIndex', [
+            'filterConfigs' => FilterFactory::create('cycles')->getConfiguration()
+        ]);
+    }
+
+    public function create(): Response
+    {
+        return Inertia::render('Cycle/CycleCreate', [
+            'vegetables' => VegetableResource::collection($this->vegetableRepository->all()),
+            'parcels' => ParcelResource::collection($this->parcelRepository->all())
+        ]);
+    }
+
+    public function store(StoreCycleRequest $request): RedirectResponse
+    {
+        $this->cycleRepository->create($request->validated());
+
+        return redirect()->route('cycles.index');
+    }
+
+    public function edit(Cycle $cycle): Response
+    {
+        $cycle->load([
+            'vegetable',
+            'parcel',
+            'times.activity'
+        ]);
+
+        return Inertia::render('Cycle/CycleEdit', [
+            'cycle' => CycleResource::make($cycle),
+            'vegetables' => VegetableResource::collection($this->vegetableRepository->all()),
+            'parcels' => ParcelResource::collection($this->parcelRepository->all())
+        ]);
+    }
+
+    public function update(Cycle $cycle, StoreCycleRequest $request): RedirectResponse
+    {
+        $this->cycleRepository->update($cycle, $request->validated());
+
+        return redirect()->route('cycles.index');
     }
 
     /**
-     * @return string
+     * @throws \Exception
      */
-    protected function getInertiaComponentTemplate(): string
+    public function destroy(Cycle $cycle): RedirectResponse
     {
-        return 'Cycle/Cycle';
-    }
+        $this->cycleRepository->delete($cycle);
 
-    /**
-     * @return string
-     */
-    protected function getSingularModelName(): string
-    {
-        return 'cycle';
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoreRequestClass(): string
-    {
-        return StoreCycleRequest::class;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getModelClass(): string
-    {
-        return Cycle::class;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getModelResourceClass(): string
-    {
-        return CycleResource::class;
-    }
-
-    protected function additionalProps(): array
-    {
-        $vegetableRepository = app(VegetableRepository::class);
-        $parcelRepository = app(ParcelRepository::class);
-
-        return [
-            'vegetables' => VegetableResource::collection($vegetableRepository->all()),
-            'parcels' => ParcelResource::collection($parcelRepository->all())
-        ];
+        return redirect()->route('cycles.index');
     }
 }

@@ -3,11 +3,9 @@
 namespace App\Providers;
 
 use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Str;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -36,24 +34,12 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        Route::macro('crud', function (
-            string $controller,
-            string $modelClass,
-            string $singularModel,
-            array $excepts = ['show'],
-            callable $bind = null
-        ) {
-            Route::resource(Str::plural($singularModel), $controller)->except($excepts);
-            if ($bind !== null) {
-                $bind();
-                return;
+        Route::bind('user', function ($value) {
+            if ($value === "me") {
+                return Auth::user();
             }
 
-            Route::bind($singularModel, function ($value) use ($modelClass) {
-                /** @var Model $model */
-                $model = app($modelClass);
-                return $model::findOrFail($value);
-            });
+            return User::findOrFail($value);
         });
     }
 

@@ -10,36 +10,19 @@ use App\Services\ReportService;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Inertia\Inertia;
+use Inertia\Response;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\Writer\Exception;
 
 class ReportController extends Controller
 {
-    /** @var CycleRepository  */
-    protected $cycleRepository;
-
-    /** @var ReportService  */
-    protected $reportService;
-
-    /**
-     * ReportController constructor.
-     * @param CycleRepository $cycleRepository
-     * @param ReportService $reportService
-     */
     public function __construct(
-        CycleRepository $cycleRepository,
-        ReportService $reportService
+        private CycleRepository $cycleRepository,
+        private ReportService $reportService
     ) {
-        $this->cycleRepository = $cycleRepository;
-        $this->reportService = $reportService;
     }
 
-    /**
-     * @param string|null $startsAt
-     * @param string|null $endsAt
-     * @return \Inertia\Response
-     */
-    public function index(string $startsAt = null, string $endsAt = null)
+    public function index(string $startsAt = null, string $endsAt = null): Response
     {
         $startsAt = $startsAt ? CarbonImmutable::parse($startsAt) : CarbonImmutable::now()->startOfYear();
         $endsAt = $endsAt ? CarbonImmutable::parse($endsAt) : CarbonImmutable::now()->endOfYear();
@@ -54,8 +37,6 @@ class ReportController extends Controller
     }
 
     /**
-     * @param Cycle $cycle
-     * @return mixed
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
     public function exportCycle(Cycle $cycle)
@@ -77,9 +58,6 @@ class ReportController extends Controller
     }
 
     /**
-     * @param string|null $startsAt
-     * @param string|null $endsAt
-     * @return mixed
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
     public function exportCycles(string $startsAt = null, string $endsAt = null)

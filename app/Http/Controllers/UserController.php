@@ -2,119 +2,77 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Traits\CRUD\HasCreate;
-use App\Http\Controllers\Traits\CRUD\HasDestroy;
-use App\Http\Controllers\Traits\CRUD\HasEdit;
-use App\Http\Controllers\Traits\CRUD\HasIndex;
-use App\Http\Controllers\Traits\CRUD\HasStore;
-use App\Http\Controllers\Traits\CRUD\HasUpdate;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Repositories\UserRepository;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
+use Inertia\Inertia;
+use Inertia\Response;
+use WebId\Flan\Filters\Base\FilterFactory;
 
 class UserController extends Controller
 {
-    use HasCreate, HasStore, HasEdit, HasUpdate, HasDestroy, HasIndex {
-        HasIndex::index as indexTrait;
-        HasStore::store as storeTrait;
+    public function __construct(private UserRepository $userRepository)
+    {
     }
 
-    /**
-     * @return \Inertia\Response
-     */
-    public function index()
+    public function index(): Response
     {
         $this->middleware('role:' . User::_ROLE_ADMIN);
 
-        return $this->indexTrait();
+        return Inertia::render('User/UserIndex', [
+            'filterConfigs' => FilterFactory::create('users')->getConfiguration()
+        ]);
     }
 
-    public function store()
+    public function create(): Response
+    {
+        return Inertia::render('User/UserCreate', [
+            'roles' => formatForSelect(User::ROLES)
+        ]);
+    }
+
+    public function store(StoreUserRequest $request): RedirectResponse
     {
         $this->middleware('role:' . User::_ROLE_ADMIN);
 
-        return $this->storeTrait();
+        $this->userRepository->create($request->validated());
+
+        return redirect()->route('users.index');
+    }
+
+    public function edit(User $user): Response
+    {
+        return Inertia::render('User/UserEdit', [
+            'user' => UserResource::make($user),
+            'roles' => formatForSelect(User::ROLES)
+        ]);
+    }
+
+    public function update(User $user, StoreUserRequest $request): RedirectResponse
+    {
+        $this->userRepository->update($user, $request->validated());
+
+        return redirect()->route('users.index');
     }
 
     /**
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function delete(Request $request)
+    public function destroy(User $user): RedirectResponse
     {
         $this->middleware('role:' . User::_ROLE_ADMIN);
 
-        $modelName = $this->getSingularModelName();
-        $model = $request->$modelName;
-
-        $this->getRepository()->delete($model);
-
-        /** @var User $user */
-        $user = auth()->user();
-        if ($user->getKey() === $model->getKey()) {
+        /** @var User $auth */
+        $auth = auth()->user();
+        if ($auth->getKey() === $user->getKey()) {
             Auth::logout();
         }
 
-        return redirect()->route(Str::plural($this->getSingularModelName()) . '.index');
-    }
+        $this->userRepository->delete($user);
 
-    protected function getRepository()
-    {
-        return app(UserRepository::class);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getInertiaComponentTemplate(): string
-    {
-        return 'User/User';
-    }
-
-    /**
-     * @return string
-     */
-    protected function getSingularModelName(): string
-    {
-        return 'user';
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoreRequestClass(): string
-    {
-        return StoreUserRequest::class;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getModelClass(): string
-    {
-        return User::class;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getModelResourceClass(): string
-    {
-        return UserResource::class;
-    }
-
-    /**
-     * @return array
-     */
-    protected function additionalProps(): array
-    {
-        return [
-            'roles' => formatForSelect(User::ROLES)
-        ];
+        return redirect()->route('users.index');
     }
 }
